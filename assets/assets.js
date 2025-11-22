@@ -38,8 +38,10 @@ import right_arrow_bold_dark from './right-arrow-bold-dark.png';
 import dipna from './dipna.png';
 import dipnaheader from './dipna99.png';
 import userdipna from './userdipna.png';
+import witedipna from './witedipna.png';
 
 export const assets = {
+    witedipna,
     userdipna,
     dipnaheader,
     dipna,
@@ -109,12 +111,12 @@ export const serviceData = [
     { icon: assets.web_icon, title: 'Web design', description: 'Web development is the process of building, programming...', link: '' },
     { icon: assets.mobile_icon, title: 'Mobile app', description: 'Mobile app development involves creating software for mobile devices...', link: '' },
     { icon: assets.ui_icon, title: 'UI/UX design', description: 'UI/UX design focuses on creating a seamless user experience...', link: '' },
-    { icon: assets.graphics_icon, title: 'Graphics design', description: 'Creative design solutions to enhance visual communication...', link: '' },
+   
 ]
 
 export const infoList = [
     { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'Mern Stacks, JavaScript React Js, Next Js, Java, PHP,HTML, CSS' },
-    { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'Bsc (Hon) in Data Science' },
+    { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'Bsc (Hon) in Data Science in SLIIT' },
     { icon: assets.project_icon, iconDark: assets.project_icon_dark, title: 'Projects', description: 'Built more than 5 projects' }
 ];
 

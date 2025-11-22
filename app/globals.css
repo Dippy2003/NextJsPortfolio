@@ -1,14 +1,29 @@
 @import "tailwindcss";
 
-/* FONTS */
+/* ==========================================
+   THEME EXTENSIONS (Tailwind v4)
+   ========================================== */
 @theme {
+  /* FONTS */
   --font-outfit: "Outfit", sans-serif;
   --font-ovo: "Ovo", serif;
+
+  /* CUSTOM COLORS */
+  --color-lightHover: #fcf4ff;
+  --color-darkHover: #2a004a;
+  --color-darkTheme: #11001F;
 
   /* CUSTOM BOX SHADOWS */
   --shadow-black: 4px 4px 0 #000;
   --shadow-white: 4px 4px 0 #fff;
+
+  /* CUSTOM RESPONSIVE GRID */
+  --grid-cols-auto: repeat(auto-fit, minmax(200px, 1fr));
 }
+
+/* ==========================================
+   UTILITIES
+   ========================================== */
 
 /* FONT UTILITIES */
 @utility font-outfit {
@@ -27,3 +42,38 @@
 @utility shadow-white {
   box-shadow: var(--shadow-white);
 }
+
+/* CUSTOM GRID UTILITY */
+@utility grid-cols-auto {
+  grid-template-columns: var(--grid-cols-auto);
+}
+
+/* CUSTOM COLOR UTILITIES */
+@utility bg-lightHover {
+  background-color: var(--color-lightHover);
+}
+
+@utility bg-darkHover {
+  background-color: var(--color-darkHover);
+}
+
+@utility bg-darkTheme {
+  background-color: var(--color-darkTheme);
+}
+
+@utility text-lightHover {
+  color: var(--color-lightHover);
+}
+
+@utility text-darkHover {
+  color: var(--color-darkHover);
+}
+
+@utility text-darkTheme {
+  color: var(--color-darkTheme);
+}
+
+/* ==========================================
+   DARK MODE (Tailwind v4)
+   ========================================== */
+@variant dark (&:where(.dark, .dark *)) {}
