@@ -105,7 +105,7 @@ export const getWorkData = () => [
         technologies: ['MongoDB', 'Node.js', 'React'],
     },
     {
-        title: 'Geo based app',
+        title: 'Health tracker app',
         description: 'Mobile App',
         bgImage: assets.mobile,
         link: 'https://github.com/Dippy2003/Mobile-Application',
@@ -119,7 +119,7 @@ export const getWorkData = () => [
         technologies: ['Kotlin'],
     },
     {
-        title: 'Photography site',
+        title: 'Jewelry shop website',
         description: 'Web Design',
         bgImage: assets.webdd,
         link: 'https://www.linkedin.com/posts/dipna-wijesinghe-50401a396_uiux-figma-webdesign-activity-7396429363782619136-Zj1j?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEaNmgABQ5Nh4MXafQNqTF2dCitXtGQdTLw',
