@@ -242,7 +242,8 @@ export const serviceData = [
     { icon: assets.web_icon, title: 'Web design', description: 'Web development is the process of building, programming...', link: '' },
     { icon: assets.mobile_icon, title: 'Mobile app', description: 'Mobile app development involves creating software for mobile devices...', link: '' },
     { icon: assets.ui_icon, title: 'UI/UX design', description: 'UI/UX design focuses on creating a seamless user experience...', link: '' },
-   
+    { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg', title: 'AI/ML & Data Science', description: 'Building and training machine learning models for classification, computer vision, and predictive analytics...', link: '' },
+    { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', title: 'AI agents & automation', description: 'Designing RAG pipelines, multi-agent systems, and workflow automations powered by LLMs...', link: '' },
 ]
 
 export const infoList = [
