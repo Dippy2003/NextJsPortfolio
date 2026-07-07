@@ -132,6 +132,38 @@ export const getWorkData = () => [
         link: 'https://www.linkedin.com/posts/dipna-wijesinghe-50401a396_i-designed-unimate-in-figma-as-an-all-in-one-activity-7397117740215451648-MNtx?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEaNmgABQ5Nh4MXafQNqTF2dCitXtGQdTLw',
         technologies: ['Figma'],
     },
+    {
+        title: 'KaratPOS',
+        description: 'Jewelry POS & Inventory System',
+        gradient: 'from-amber-500 to-yellow-700',
+        emoji: '💎',
+        link: 'https://github.com/Dippy2003/KaratPOS',
+        technologies: ['Python', 'PySide6', 'SQLite'],
+    },
+    {
+        title: 'Chest X-Ray Diagnosis',
+        description: 'Multi-Label Medical Imaging Classifier',
+        gradient: 'from-sky-500 to-blue-700',
+        emoji: '🩻',
+        link: 'https://github.com/Dippy2003/chest-xray-multilabel-diagnosis2',
+        technologies: ['Python', 'Deep Learning', 'Jupyter'],
+    },
+    {
+        title: 'Kidney Disease Classification',
+        description: 'ML Disease Classification',
+        gradient: 'from-rose-500 to-red-700',
+        emoji: '🧬',
+        link: 'https://github.com/Dippy2003/Kidney_Disease_Classification',
+        technologies: ['Python', 'Machine Learning', 'Jupyter'],
+    },
+    {
+        title: 'Data-Efficient ViT',
+        description: 'Vision Transformer Research',
+        gradient: 'from-fuchsia-500 to-purple-700',
+        emoji: '🖼️',
+        link: 'https://github.com/Dippy2003/data-efficient-vit',
+        technologies: ['Python', 'PyTorch', 'ViT'],
+    },
 ]
 
 export const serviceData = [
