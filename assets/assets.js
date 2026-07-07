@@ -247,9 +247,9 @@ export const serviceData = [
 ]
 
 export const infoList = [
-    { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'Mern Stacks, JavaScript React Js, Next Js, Java, PHP,HTML, CSS' },
+    { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'Python, JavaScript, TypeScript, SQL, Java, PHP, Kotlin, C++, HTML, CSS' },
     { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'Bsc (Hon) in Data Science in SLIIT' },
-    { icon: assets.project_icon, iconDark: assets.project_icon_dark, title: 'Projects', description: 'Built more than 5 projects' }
+    { icon: assets.project_icon, iconDark: assets.project_icon_dark, title: 'Projects', description: 'Built 15+ projects across AI/ML, data engineering, and full-stack development' }
 ];
 
 export const toolsData = [
