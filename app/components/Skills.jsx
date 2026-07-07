@@ -67,7 +67,11 @@ const Skills = ({ isDarkMode }) => {
     },
     {
       category: "Database",
-      technologies: ["MongoDB", "Firebase", "MySQL"],
+      technologies: ["MongoDB", "Firebase", "MySQL", "SQL Server"],
+    },
+    {
+      category: "Data Engineering & BI",
+      technologies: ["SQL Server", "SSAS", "Power BI", "ETL", "Pandas"],
     },
     {
       category: "DevOps & Tools",
