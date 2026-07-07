@@ -20,7 +20,7 @@ const Header = ({isDarkMode}) => {
         transition={{duration:0.6 ,delay:0.3}}
     
     className='flex items-end gap-2 text-xl md:text-2xl mb-3 font-ovo'
-             >Hi! I'm Dipna Wijesinghe <Image src={assets.hand_icon} alt='' width={24} height={24} className='w-6'/> </motion.h3>
+             >Hi! I&apos;m Dipna Wijesinghe <Image src={assets.hand_icon} alt='' width={24} height={24} className='w-6'/> </motion.h3>
              <motion.h1 
              initial={{y:-30, opacity:0}}
         whileInView={{y:0, opacity:1}}
