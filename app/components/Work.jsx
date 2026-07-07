@@ -29,8 +29,8 @@ const Work = ({isDarkMode}) => {
         whileInView={{ opacity:1}}
         transition={{duration:0.7,delay:0.5}}
         className="text-center max-w-2xl mx-auto mt-5 mb-12 font-ovo">
-        I offer a range of services including web design, mobile app development,
-        UI/UX design, and creative solutions to bring your ideas to life.
+        A selection of recent work spanning AI/ML, computer vision, LLM agents &amp;
+        RAG systems, data engineering &amp; BI, and full-stack/mobile development.
       </motion.p>
 
       {/* GRID */}
