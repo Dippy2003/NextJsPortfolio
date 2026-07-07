@@ -79,26 +79,18 @@
 @variant dark (&:where(.dark, .dark *)) {}
 
 /* ==========================================
-   SLIM ACCENT SCROLLBAR (e.g. GitHub calendar)
+   HIDDEN SCROLLBAR (e.g. GitHub calendar)
+   Touch/trackpad scrolling still works; we just don't render a
+   visible track. Newer Chromium renders both the standard
+   scrollbar-color box AND legacy ::-webkit-scrollbar styling at
+   once, which looked like two stacked scrollbars — hiding it
+   avoids that entirely instead of trying to reconcile the two.
    ========================================== */
-.slim-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.45) transparent;
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.slim-scrollbar::-webkit-scrollbar {
-  height: 6px;
-}
-
-.slim-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.slim-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(139, 92, 246, 0.45);
-  border-radius: 9999px;
-}
-
-.slim-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(139, 92, 246, 0.7);
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
