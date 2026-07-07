@@ -40,7 +40,7 @@ const Work = ({isDarkMode}) => {
         transition={{duration:0.9 ,delay:0.6}}
   
      
-     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 dark:text-white">
+     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 dark:text-white">
 
         {workData.map((project, index) => {
           const CardWrapper = project.link ? motion.a : motion.div;
@@ -50,55 +50,40 @@ const Work = ({isDarkMode}) => {
             rel: "noopener noreferrer"
           } : {};
 
-          const hasImage = Boolean(project.bgImage);
-
           return (
           <CardWrapper
             key={index}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.03 }}
             transition={{duration:0.3}}
-            className={`aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group block ${!hasImage ? `bg-linear-to-br ${project.gradient || 'from-slate-600 to-slate-800'}` : ''}`}
-            style={hasImage ? { backgroundImage: `url(${typeof project.bgImage === 'string' ? project.bgImage : (project.bgImage?.src || project.bgImage)})` } : undefined}
+            className="border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer transition duration-500 hover:shadow-md hover:bg-gray-50 hover:-translate-y-1 hover:shadow-black dark:border-white/40 dark:hover:shadow-white dark:hover:bg-darkHover/50 flex flex-col h-full"
             {...wrapperProps}
           >
-            {/* Emoji/category badge for projects without a screenshot */}
-            {!hasImage && (
-              <span className="absolute top-5 left-5 text-4xl drop-shadow-sm">
-                {project.emoji || '💻'}
-              </span>
-            )}
+            <div className="flex-1">
+              <h3 className="font-semibold text-lg text-gray-800 dark:text-white">{project.title}</h3>
+              <p className="text-sm text-gray-600 dark:text-white/70 mt-1">{project.description}</p>
+            </div>
 
-            {/* Floating white info card */}
-            <div 
-              className="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7"
-            >
-              {/* Text section */}
-              <div className="flex-1">
-                <h2 className="font-semibold">{project.title}</h2>
-                <p className="text-sm text-gray-700">{project.description}</p>
-                {project.technologies && (
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span key={techIndex} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded dark:bg-darkHover dark:text-white/80">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
+            <div className="flex items-end justify-between mt-4">
+              {project.technologies && (
+                <div className="flex flex-wrap gap-1.5">
+                  {project.technologies.map((tech, techIndex) => (
+                    <span key={techIndex} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded dark:bg-darkHover dark:text-white/80">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
 
-              {/* NEW CIRCULAR SHADOW BUTTON */}
-              <div 
-                className="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition pointer-events-none"
-              >
-                <Image 
-                  src={assets.send_icon} 
-                  alt="send icon" 
-                  width={20} height={20}
-                  className="w-5"
-                />
-              </div>
-
+              {project.link && (
+                <div className="shrink-0 ml-3 border rounded-full border-black w-8 aspect-square flex items-center justify-center dark:border-white/60">
+                  <Image
+                    src={assets.send_icon}
+                    alt="open project"
+                    width={16} height={16}
+                    className="w-4 dark:invert"
+                  />
+                </div>
+              )}
             </div>
 
           </CardWrapper>
