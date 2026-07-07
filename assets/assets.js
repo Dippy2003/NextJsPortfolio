@@ -164,6 +164,30 @@ export const getWorkData = () => [
         link: 'https://github.com/Dippy2003/data-efficient-vit',
         technologies: ['Python', 'PyTorch', 'ViT'],
     },
+    {
+        title: 'RAG-N',
+        description: 'Retrieval-Augmented Generation System',
+        gradient: 'from-emerald-500 to-teal-700',
+        emoji: '🔎',
+        link: 'https://github.com/Dippy2003/RAG-N',
+        technologies: ['Python', 'RAG', 'LLM'],
+    },
+    {
+        title: 'Content Crew',
+        description: 'Multi-Agent Content Generator',
+        gradient: 'from-orange-500 to-amber-700',
+        emoji: '✍️',
+        link: 'https://github.com/Dippy2003/content-crew',
+        technologies: ['Python', 'CrewAI', 'Groq'],
+    },
+    {
+        title: 'Email Triage Bot',
+        description: 'AI Support Ticket Router',
+        gradient: 'from-indigo-500 to-violet-700',
+        emoji: '📧',
+        link: 'https://github.com/Dippy2003/n8n-email-triage-bot',
+        technologies: ['n8n', 'OpenAI', 'Automation'],
+    },
 ]
 
 export const serviceData = [
