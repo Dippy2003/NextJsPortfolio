@@ -2,7 +2,20 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { GitHubCalendar } from "react-github-calendar";
+import dynamic from "next/dynamic";
+
+// react-github-calendar fetches its data client-side and renders
+// differently on the server, so it must be excluded from SSR entirely
+// to avoid a hydration mismatch.
+const GitHubCalendar = dynamic(
+  () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[152px] w-[650px] max-w-full animate-pulse rounded-lg bg-gray-200 dark:bg-white/5" />
+    ),
+  }
+);
 
 const GITHUB_USERNAME = "Dippy2003";
 
