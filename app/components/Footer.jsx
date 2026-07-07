@@ -22,7 +22,7 @@ const Footer = ({isDarkMode}) => {
         className="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-6 py-6"
       >
         {/* Left side */}
-        <p className="font-ovo mb-4 sm:mb-0">© 2025 Dipna. All rights reserved.</p>
+        <p className="font-ovo mb-4 sm:mb-0">© 2026 Dipna. All rights reserved.</p>
 
         {/* Social links */}
         <ul className="flex items-center gap-10 justify-center font-ovo">
