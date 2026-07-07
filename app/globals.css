@@ -77,3 +77,28 @@
    DARK MODE (Tailwind v4)
    ========================================== */
 @variant dark (&:where(.dark, .dark *)) {}
+
+/* ==========================================
+   SLIM ACCENT SCROLLBAR (e.g. GitHub calendar)
+   ========================================== */
+.slim-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.45) transparent;
+}
+
+.slim-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.slim-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slim-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(139, 92, 246, 0.45);
+  border-radius: 9999px;
+}
+
+.slim-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(139, 92, 246, 0.7);
+}

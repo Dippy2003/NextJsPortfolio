@@ -44,7 +44,7 @@ const GithubActivity = ({ isDarkMode }) => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.2 }}
-        className="max-w-4xl mx-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-darkHover/30 backdrop-blur-sm shadow-sm p-6 sm:p-8 overflow-x-auto"
+        className="slim-scrollbar max-w-4xl mx-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-darkHover/30 backdrop-blur-sm shadow-sm p-6 sm:p-8 overflow-x-auto pb-4"
       >
         <div className="min-w-[650px] flex justify-center">
           <GitHubCalendar
