@@ -62,8 +62,11 @@ const About = ({isDarkMode}) => {
         className="flex-1">
           <p className="mb-10 max-w-2xl font-ovo">
             I’m a self-driven Data Science undergraduate passionate about turning
-            data into meaningful insights. With strong analytical skills and a 
-            problem-solving mindset, I aim to contribute to impactful, innovative 
+            data into meaningful insights. My recent work spans machine learning
+            and computer vision (medical image classification, vision transformers),
+            LLM-powered AI agents and RAG systems, and data engineering &amp; BI
+            (ETL pipelines, OLAP cubes, Power BI dashboards) — alongside full-stack
+            and mobile development. I aim to contribute to impactful, innovative
             projects while continuously learning and improving.
           </p>
 
