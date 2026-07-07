@@ -212,6 +212,30 @@ export const getWorkData = () => [
         link: 'https://github.com/Dippy2003/Hotel-booking-analytics-dashboard-POWER-BI',
         technologies: ['Power BI', 'DAX'],
     },
+    {
+        title: 'Document Similarity Analyzer',
+        description: 'Plagiarism Checker (Custom DSA)',
+        gradient: 'from-slate-600 to-gray-800',
+        emoji: '📄',
+        link: 'https://github.com/Dippy2003/Document-Similarity-Analyzer',
+        technologies: ['C++', 'Data Structures'],
+    },
+    {
+        title: 'Smart Campus',
+        description: 'Campus Management Web App',
+        gradient: 'from-green-500 to-emerald-700',
+        emoji: '🏫',
+        link: 'https://github.com/Dippy2003/Smart_campus',
+        technologies: ['JavaScript'],
+    },
+    {
+        title: 'Gold Price Tracker',
+        description: 'Real-Time Precious Metals Tracker',
+        gradient: 'from-yellow-400 to-amber-600',
+        emoji: '🪙',
+        link: 'https://github.com/Dippy2003/Gold-price-tracker',
+        technologies: ['JavaScript', 'CSS'],
+    },
 ]
 
 export const serviceData = [
