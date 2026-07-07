@@ -77,6 +77,10 @@ const Skills = ({ isDarkMode }) => {
       category: "DevOps & Tools",
       technologies: ["Git", "GitHub", "VSCode", "Figma", "AWS"],
     },
+    {
+      category: "AI Agents & LLM Tooling",
+      technologies: ["OpenAI", "LangChain", "CrewAI", "RAG", "n8n", "Groq"],
+    },
   ];
 
   return (
