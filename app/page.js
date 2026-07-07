@@ -3,6 +3,7 @@
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import GithubActivity from './components/GithubActivity';
 import Header from './components/Header';
 import PNavbar from './components/p_navbar';
 import Services from './components/Services';
@@ -44,6 +45,7 @@ export default function Home() {
       <About isDarkMode={isDarkMode} />
       <Skills isDarkMode={isDarkMode} />
       <Services isDarkMode={isDarkMode} />
+      <GithubActivity isDarkMode={isDarkMode} />
       <Work isDarkMode={isDarkMode} />
       <Contact isDarkMode={isDarkMode} />
       <Footer isDarkMode={isDarkMode} />
