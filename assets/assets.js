@@ -188,6 +188,30 @@ export const getWorkData = () => [
         link: 'https://github.com/Dippy2003/n8n-email-triage-bot',
         technologies: ['n8n', 'OpenAI', 'Automation'],
     },
+    {
+        title: 'Hotel Data Warehouse ETL',
+        description: 'ETL Pipeline & BI Warehouse',
+        gradient: 'from-cyan-600 to-blue-800',
+        emoji: '🏨',
+        link: 'https://github.com/Dippy2003/Hotel-data-warehouse-ETL-bi',
+        technologies: ['ETL', 'Data Warehouse', 'SQL'],
+    },
+    {
+        title: 'Hotel DW SSAS Cube',
+        description: 'OLAP Cube for Booking Analytics',
+        gradient: 'from-blue-600 to-indigo-800',
+        emoji: '📊',
+        link: 'https://github.com/Dippy2003/Hotel-DW-SQL-Server-Analysis-Services-Cube',
+        technologies: ['SSAS', 'OLAP', 'SQL Server'],
+    },
+    {
+        title: 'Hotel Booking Dashboard',
+        description: 'Power BI Analytics Dashboard',
+        gradient: 'from-yellow-500 to-orange-700',
+        emoji: '📈',
+        link: 'https://github.com/Dippy2003/Hotel-booking-analytics-dashboard-POWER-BI',
+        technologies: ['Power BI', 'DAX'],
+    },
 ]
 
 export const serviceData = [
