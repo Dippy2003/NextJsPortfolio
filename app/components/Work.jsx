@@ -50,15 +50,24 @@ const Work = ({isDarkMode}) => {
             rel: "noopener noreferrer"
           } : {};
 
+          const hasImage = Boolean(project.bgImage);
+
           return (
           <CardWrapper
             key={index}
             whileHover={{ scale: 1.05 }}
             transition={{duration:0.3}}
-            className="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group block"
-            style={{ backgroundImage: `url(${typeof project.bgImage === 'string' ? project.bgImage : (project.bgImage?.src || project.bgImage)})` }}
+            className={`aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group block ${!hasImage ? `bg-linear-to-br ${project.gradient || 'from-slate-600 to-slate-800'}` : ''}`}
+            style={hasImage ? { backgroundImage: `url(${typeof project.bgImage === 'string' ? project.bgImage : (project.bgImage?.src || project.bgImage)})` } : undefined}
             {...wrapperProps}
           >
+            {/* Emoji/category badge for projects without a screenshot */}
+            {!hasImage && (
+              <span className="absolute top-5 left-5 text-4xl drop-shadow-sm">
+                {project.emoji || '💻'}
+              </span>
+            )}
+
             {/* Floating white info card */}
             <div 
               className="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7"
