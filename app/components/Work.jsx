@@ -113,8 +113,8 @@ const Work = ({isDarkMode}) => {
         transition={{duration:1.1 ,delay:0.5}}
       
       
-      href="https://www.linkedin.com/in/dipna-wijesinghe-50401a396/?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener noreferrer" className='w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto my-20 hover:bg-lightHover hover:shadow-md hover:-translate-y-1 duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover'>
-        Show more <Image src={isDarkMode ? assets.right_arrow_bold_dark: assets.right_arrow_bold} alt="right arrow" width={16} height={16} className="w-4 inline-block ml-2"/>
+      href="https://github.com/Dippy2003?tab=repositories" target="_blank" rel="noopener noreferrer" className='w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto my-20 hover:bg-lightHover hover:shadow-md hover:-translate-y-1 duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover'>
+        Show more on GitHub <Image src={isDarkMode ? assets.right_arrow_bold_dark: assets.right_arrow_bold} alt="right arrow" width={16} height={16} className="w-4 inline-block ml-2"/>
       </motion.a>
 
     </motion.div>
