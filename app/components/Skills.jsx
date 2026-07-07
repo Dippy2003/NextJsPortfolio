@@ -47,7 +47,11 @@ const Skills = ({ isDarkMode }) => {
   const skillsData = [
     {
       category: "Languages",
-      technologies: ["JavaScript", "TypeScript", "Java", "PHP", "Kotlin", "Python", "C++", "C", "HTML", "CSS"],
+      technologies: ["JavaScript", "TypeScript", "Java", "PHP", "Kotlin", "Python", "C++", "C", "SQL", "HTML", "CSS"],
+    },
+    {
+      category: "AI / Machine Learning",
+      technologies: ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "OpenCV", "Pandas", "NumPy", "Jupyter"],
     },
     {
       category: "Frontend",
