@@ -96,7 +96,7 @@ const Skills = ({ isDarkMode }) => {
         initial={{ y: -20, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="text-center text-4xl md:text-5xl font-ovo mb-3 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent"
+        className="text-center text-4xl md:text-5xl font-ovo mb-3 bg-linear-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent"
       >
         Skills & Technologies
       </motion.h2>
@@ -138,7 +138,7 @@ const Skills = ({ isDarkMode }) => {
                     whileInView={{ scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.05 * techIndex }}
                     whileHover={{ scale: 1.1 }}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-500/20 dark:to-purple-500/20 border border-blue-500/20 dark:border-purple-400/30 text-sm font-medium text-gray-700 dark:text-white/90 hover:from-blue-500/20 hover:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:to-purple-500/30 transition-all duration-300 cursor-default"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-linear-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-500/20 dark:to-purple-500/20 border border-blue-500/20 dark:border-purple-400/30 text-sm font-medium text-gray-700 dark:text-white/90 hover:from-blue-500/20 hover:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:to-purple-500/30 transition-all duration-300 cursor-default"
                   >
                     {iconUrl && (
                       <Image
