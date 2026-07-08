@@ -8,6 +8,16 @@ A personal portfolio site built with Next.js, showcasing projects across AI/ML, 
 ![Motion](https://img.shields.io/badge/Motion-12-FF0055?style=for-the-badge&logo=framer&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
 
+## Features
+
+- **Dark / light mode** with system-preference detection and a manual toggle
+- **About & Skills** — categorized tech skills (AI/ML, Data Engineering & BI, AI Agents & LLM Tooling, Web, Mobile, DevOps) with live logo icons
+- **Services** — web, mobile, UI/UX, AI/ML, and AI-agent/automation offerings
+- **Live GitHub contribution graph** — fetched client-side in real time from the public GitHub contributions API, no token required
+- **Work** — projects grouped by category (AI & Machine Learning, AI Agents & RAG, Data Engineering & BI, Software & Desktop Apps, Mobile Development, UI/UX & Design), newest work flagged with a "New" badge, every card links straight to its GitHub repository
+- **Contact form** powered by Web3Forms
+- Built with the React Compiler enabled for automatic memoization
+
 ## Getting Started
 
 First, run the development server:
