@@ -67,3 +67,10 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 ## Deployment
 
 The easiest way to deploy this app is via the [Vercel Platform](https://vercel.com/new). Import the repository, keep the default Next.js build settings, and deploy — see the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for other hosting options.
+
+## Author
+
+**Dipna Wijesinghe** — Data Science undergraduate (SLIIT), focused on AI/ML, data engineering & BI, and full-stack development.
+
+- GitHub: [@Dippy2003](https://github.com/Dippy2003)
+- LinkedIn: [dipna-wijesinghe](https://www.linkedin.com/in/dipna-wijesinghe-50401a396/)
