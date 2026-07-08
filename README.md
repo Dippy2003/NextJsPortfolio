@@ -18,6 +18,17 @@ A personal portfolio site built with Next.js, showcasing projects across AI/ML, 
 - **Contact form** powered by Web3Forms
 - Built with the React Compiler enabled for automatic memoization
 
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| [Next.js 16](https://nextjs.org) (App Router, Turbopack) | Framework / rendering |
+| [React 19](https://react.dev) | UI library |
+| [Tailwind CSS 4](https://tailwindcss.com) | Styling |
+| [Motion](https://motion.dev) | Animations |
+| [react-github-calendar](https://github.com/grubersjoe/react-github-calendar) | Live GitHub contributions graph |
+| [ESLint 9](https://eslint.org) | Linting |
+
 ## Getting Started
 
 First, run the development server:
