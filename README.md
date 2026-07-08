@@ -29,6 +29,19 @@ A personal portfolio site built with Next.js, showcasing projects across AI/ML, 
 | [react-github-calendar](https://github.com/grubersjoe/react-github-calendar) | Live GitHub contributions graph |
 | [ESLint 9](https://eslint.org) | Linting |
 
+## Project Structure
+
+```
+app/
+├── components/    # Navbar, Header, About, Skills, Services, GithubActivity, Work, Contact, Footer
+├── layout.js      # Root layout, fonts, metadata
+├── page.js        # Assembles all sections, handles dark mode state
+└── globals.css    # Tailwind theme + custom utilities
+assets/
+└── assets.js      # Work/skills/services data and local image imports
+public/            # Static files (resume, misc images)
+```
+
 ## Getting Started
 
 First, run the development server:
