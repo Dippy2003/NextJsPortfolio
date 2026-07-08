@@ -55,6 +55,15 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser. T
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to load the Outfit and Ovo font families.
 
+## Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server (Turbopack) |
+| `npm run build` | Create a production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | Run ESLint |
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
