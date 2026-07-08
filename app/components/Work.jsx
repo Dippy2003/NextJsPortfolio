@@ -1,4 +1,5 @@
 import { getWorkData, workCategoryOrder, assets } from '@/assets/assets'
+import { getTechIcon } from '@/assets/techIcons'
 
 const workData = getWorkData();
 const groupedWork = workCategoryOrder
@@ -99,11 +100,23 @@ const Work = ({isDarkMode}) => {
 
               {project.technologies && (
                 <div className="flex flex-wrap gap-1.5 mt-4">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span key={techIndex} className="text-xs font-medium bg-purple-500/10 text-purple-700 dark:bg-purple-400/10 dark:text-purple-200 px-2.5 py-1 rounded-full">
-                      {tech}
-                    </span>
-                  ))}
+                  {project.technologies.map((tech, techIndex) => {
+                    const techIcon = getTechIcon(tech);
+                    return (
+                      <span key={techIndex} className="inline-flex items-center gap-1.5 text-xs font-medium bg-purple-500/10 text-purple-700 dark:bg-purple-400/10 dark:text-purple-200 px-2.5 py-1 rounded-full">
+                        {techIcon && (
+                          <Image
+                            src={techIcon}
+                            alt=""
+                            width={12} height={12}
+                            className="w-3 h-3"
+                            unoptimized
+                          />
+                        )}
+                        {tech}
+                      </span>
+                    );
+                  })}
                 </div>
               )}
             </div>
