@@ -98,6 +98,7 @@ export const assets = {
 
 // Category display order — newest/most active areas of work lead the section.
 export const workCategoryOrder = [
+    'Sports Analytics',
     'AI & Machine Learning',
     'AI Agents & RAG',
     'Data Engineering & BI',
@@ -107,6 +108,14 @@ export const workCategoryOrder = [
 ];
 
 export const getWorkData = () => [
+    {
+        title: 'PlayerPulse',
+        description: 'Explainable Football Workload & Fatigue-Risk Analytics',
+        link: 'https://github.com/Dippy2003/football-fatigue-analytics',
+        technologies: ['Python', 'FastAPI', 'React', 'TypeScript'],
+        category: 'Sports Analytics',
+        isNew: true,
+    },
     {
         title: 'Chest X-Ray Diagnosis',
         description: 'Multi-Label Medical Imaging Classifier',
