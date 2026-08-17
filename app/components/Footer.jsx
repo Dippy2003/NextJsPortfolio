@@ -17,7 +17,7 @@ const Footer = ({isDarkMode}) => {
        
       </div>
 
-      {/* Bottom Section — Divider + Socials */}
+      {/* Bottom Section: Divider + Socials */}
       <div
         className="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-6 py-6"
       >

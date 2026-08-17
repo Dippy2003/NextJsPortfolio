@@ -14,7 +14,7 @@ const ovo = Ovo({
 export const metadata = {
   title: "Dipna Wijesinghe | Portfolio",
   description:
-    "Dipna Wijesinghe — Data Science undergraduate specializing in AI/ML, computer vision, LLM agents & RAG systems, data engineering & BI, and full-stack development.",
+    "Dipna Wijesinghe, Data Science undergraduate specializing in AI/ML, computer vision, LLM agents & RAG systems, data engineering & BI, and full-stack development.",
 };
 
 export default function RootLayout({ children }) {

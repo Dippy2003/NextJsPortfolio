@@ -83,7 +83,7 @@
    Touch/trackpad scrolling still works; we just don't render a
    visible track. Newer Chromium renders both the standard
    scrollbar-color box AND legacy ::-webkit-scrollbar styling at
-   once, which looked like two stacked scrollbars — hiding it
+   once, which looked like two stacked scrollbars. Hiding it
    avoids that entirely instead of trying to reconcile the two.
    ========================================== */
 .hide-scrollbar {

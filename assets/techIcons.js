@@ -39,6 +39,8 @@ const TECH_ICON_MAP = {
   "LangChain": "https://cdn.simpleicons.org/langchain",
   "CrewAI": "https://cdn.simpleicons.org/crewai",
   "n8n": "https://cdn.simpleicons.org/n8n",
+  "Streamlit": "https://cdn.simpleicons.org/streamlit",
+  "YOLO": "https://cdn.simpleicons.org/yolo",
 };
 
 export const getTechIcon = (tech) => TECH_ICON_MAP[tech] || null;

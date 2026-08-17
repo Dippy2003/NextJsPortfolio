@@ -96,7 +96,7 @@ export const assets = {
     ui
 };
 
-// Category display order — newest/most active areas of work lead the section.
+// Category display order: newest/most active areas of work lead the section.
 export const workCategoryOrder = [
     'Sports Analytics',
     'AI & Machine Learning',
@@ -108,6 +108,14 @@ export const workCategoryOrder = [
 ];
 
 export const getWorkData = () => [
+    {
+        title: 'RepVision',
+        description: 'Real-Time Rep Counting & Form Feedback with Pose Estimation',
+        link: 'https://github.com/Dippy2003/repvision-yolo-pose',
+        technologies: ['Python', 'YOLO', 'OpenCV', 'PyTorch'],
+        category: 'Sports Analytics',
+        isNew: true,
+    },
     {
         title: 'PlayerPulse',
         description: 'Explainable Football Workload & Fatigue-Risk Analytics',
@@ -138,6 +146,14 @@ export const getWorkData = () => [
         link: 'https://github.com/Dippy2003/data-efficient-vit',
         technologies: ['Python', 'PyTorch', 'ViT'],
         category: 'AI & Machine Learning',
+    },
+    {
+        title: 'Pinecone RAG Studio',
+        description: 'Semantic Search over Lecture Notes with Vector Embeddings',
+        link: 'https://github.com/Dippy2003/pinecone-rag-studio',
+        technologies: ['Python', 'Pinecone', 'Streamlit', 'RAG'],
+        category: 'AI Agents & RAG',
+        isNew: true,
     },
     {
         title: 'RAG-N',
@@ -179,6 +195,13 @@ export const getWorkData = () => [
         title: 'Hotel Booking Dashboard',
         description: 'Power BI Analytics Dashboard',
         link: 'https://github.com/Dippy2003/Hotel-booking-analytics-dashboard-POWER-BI',
+        technologies: ['Power BI', 'DAX'],
+        category: 'Data Engineering & BI',
+    },
+    {
+        title: 'EV Adoption Analytics',
+        description: 'Power BI Dashboard on Electric Vehicle Market Trends',
+        link: 'https://github.com/Dippy2003/Electric-Vehicles-Analytics',
         technologies: ['Power BI', 'DAX'],
         category: 'Data Engineering & BI',
     },

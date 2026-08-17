@@ -34,7 +34,7 @@ const About = ({isDarkMode}) => {
       
       className="flex w-full flex-col lg:flex-row items-start gap-20 my-20">
 
-        {/* LEFT SIDE — Image */}
+        {/* LEFT SIDE: Image */}
         <motion.div 
 
         initial={{opacity:0 ,scale:0.9}}
@@ -52,7 +52,7 @@ const About = ({isDarkMode}) => {
           />
         </motion.div>
 
-        {/* RIGHT SIDE — Text + Info List */}
+        {/* RIGHT SIDE: Text + Info List */}
         <motion.div 
         initial={{opacity:0 }}
     whileInView={{opacity:1}}
@@ -65,7 +65,7 @@ const About = ({isDarkMode}) => {
             data into meaningful insights. My recent work spans machine learning
             and computer vision (medical image classification, vision transformers),
             LLM-powered AI agents and RAG systems, and data engineering &amp; BI
-            (ETL pipelines, OLAP cubes, Power BI dashboards) — alongside full-stack
+            (ETL pipelines, OLAP cubes, Power BI dashboards), alongside full-stack
             and mobile development. I aim to contribute to impactful, innovative
             projects while continuously learning and improving.
           </p>

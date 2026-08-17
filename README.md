@@ -1,6 +1,6 @@
-# Dipna Wijesinghe — Portfolio
+# Dipna Wijesinghe Portfolio
 
-A personal portfolio site built with Next.js, showcasing projects across AI/ML, data engineering & BI, LLM agents, and full-stack development — with a live GitHub contributions graph pulled in real time.
+A personal portfolio site built with Next.js, showcasing projects across AI/ML, data engineering & BI, LLM agents, and full-stack development, with a live GitHub contributions graph pulled in real time.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
@@ -11,10 +11,10 @@ A personal portfolio site built with Next.js, showcasing projects across AI/ML, 
 ## Features
 
 - **Dark / light mode** with system-preference detection and a manual toggle
-- **About & Skills** — categorized tech skills (AI/ML, Data Engineering & BI, AI Agents & LLM Tooling, Web, Mobile, DevOps) with live logo icons
-- **Services** — web, mobile, UI/UX, AI/ML, and AI-agent/automation offerings
-- **Live GitHub contribution graph** — fetched client-side in real time from the public GitHub contributions API, no token required
-- **Work** — projects grouped by category (AI & Machine Learning, AI Agents & RAG, Data Engineering & BI, Software & Desktop Apps, Mobile Development, UI/UX & Design), newest work flagged with a "New" badge, every card links straight to its GitHub repository
+- **About & Skills**: categorized tech skills (AI/ML, Data Engineering & BI, AI Agents & LLM Tooling, Web, Mobile, DevOps) with live logo icons
+- **Services**: web, mobile, UI/UX, AI/ML, and AI-agent/automation offerings
+- **Live GitHub contribution graph**: fetched client-side in real time from the public GitHub contributions API, no token required
+- **Work**: projects grouped by category (Sports Analytics, AI & Machine Learning, AI Agents & RAG, Data Engineering & BI, Software & Desktop Apps, Mobile Development, UI/UX & Design), newest work flagged with a "New" badge, every card links straight to its GitHub repository
 - **Contact form** powered by Web3Forms
 - Built with the React Compiler enabled for automatic memoization
 
@@ -66,11 +66,11 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Deployment
 
-The easiest way to deploy this app is via the [Vercel Platform](https://vercel.com/new). Import the repository, keep the default Next.js build settings, and deploy — see the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for other hosting options.
+The easiest way to deploy this app is via the [Vercel Platform](https://vercel.com/new). Import the repository, keep the default Next.js build settings, and deploy. See the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for other hosting options.
 
 ## Author
 
-**Dipna Wijesinghe** — Data Science undergraduate (SLIIT), focused on AI/ML, data engineering & BI, and full-stack development.
+**Dipna Wijesinghe** is a Data Science undergraduate (SLIIT), focused on AI/ML, data engineering & BI, and full-stack development.
 
 - GitHub: [@Dippy2003](https://github.com/Dippy2003)
 - LinkedIn: [dipna-wijesinghe](https://www.linkedin.com/in/dipna-wijesinghe-50401a396/)
