@@ -23,6 +23,10 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
 - `KeyboardScene.jsx` uses React Three Fiber 9 (React 19 compatible), Three.js,
   and rounded Drei geometry. The renderer loads near the toolkit section,
   lowers pixel density, and stops continuous rendering outside the viewport.
+  The board rotates slowly until the pointer enters its scene, then stays still
+  for selection and resumes on exit. Neutral keycaps carry full-color technology
+  logos. SVG assets have explicit texture dimensions and are rendered in sRGB
+  on raised, double-sided label planes.
 - Skill buttons are always present. The list view also works without WebGL,
   and system reduced motion uses that view automatically.
 - `HeroComposition.jsx` powers the orbiting technologies through Remotion Player.

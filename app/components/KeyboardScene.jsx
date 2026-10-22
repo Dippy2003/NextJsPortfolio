@@ -3,12 +3,17 @@
 import { Suspense, useEffect, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { RoundedBox, useTexture } from '@react-three/drei';
-import { MathUtils } from 'three';
+import { DoubleSide, MathUtils, SRGBColorSpace } from 'three';
 import { skills } from '../data/portfolio';
+
+function prepareLogo(texture) {
+  texture.colorSpace = SRGBColorSpace;
+  texture.needsUpdate = true;
+}
 
 function Keycap({ skill, index, active, onSelect, group, motionEnabled }) {
   const ref = useRef(null);
-  const texture = useTexture(`/tech/${skill.id}.svg`);
+  const texture = useTexture(`/tech/${skill.id}.svg`, prepareLogo);
   const selected = active === skill.id;
   const dim = group !== 'All keys' && skill.group !== group;
   const x = ((index % 5) - 2) * 1.07;
@@ -44,32 +49,36 @@ function Keycap({ skill, index, active, onSelect, group, motionEnabled }) {
         }}
       >
         <meshStandardMaterial
-          color={dim ? '#46433b' : skill.color}
-          roughness={0.36}
-          metalness={0.12}
-          emissive={selected ? skill.color : '#000000'}
-          emissiveIntensity={selected ? 0.16 : 0}
+          color={dim ? '#787b70' : selected ? '#dfc391' : '#e6e4dc'}
+          roughness={0.48}
+          metalness={0.05}
+          emissive={selected ? '#b18442' : '#000000'}
+          emissiveIntensity={selected ? 0.06 : 0}
         />
       </RoundedBox>
-      <mesh position={[0, 0.255, -0.04]} rotation={[-Math.PI / 2, 0, 0]} raycast={() => null}>
-        <planeGeometry args={[0.44, 0.44]} />
-        <meshBasicMaterial map={texture} transparent toneMapped={false} opacity={dim ? 0.25 : 1} />
+      <mesh position={[0, 0.28, -0.015]} rotation={[-Math.PI / 2, 0, 0]} raycast={() => null}>
+        <planeGeometry args={[0.6, 0.6]} />
+        <meshBasicMaterial
+          map={texture}
+          transparent
+          alphaTest={0.03}
+          side={DoubleSide}
+          toneMapped={false}
+          depthWrite={false}
+          polygonOffset
+          polygonOffsetFactor={-2}
+          opacity={dim ? 0.35 : 1}
+        />
       </mesh>
     </group>
   );
 }
 
-function Keyboard({ active, onSelect, group, motionEnabled }) {
+function Keyboard({ active, onSelect, group, motionEnabled, interacting }) {
   const keyboard = useRef(null);
-  useFrame((state, delta) => {
-    if (!keyboard.current) return;
-    const target = motionEnabled ? state.pointer.x * 0.06 : 0;
-    keyboard.current.rotation.y = MathUtils.damp(
-      keyboard.current.rotation.y,
-      -0.26 + target,
-      3,
-      delta,
-    );
+  useFrame((_, delta) => {
+    if (!keyboard.current || !motionEnabled || interacting.current) return;
+    keyboard.current.rotation.y += Math.min(delta, 0.05) * 0.16;
   });
 
   useEffect(
@@ -113,37 +122,63 @@ function Keyboard({ active, onSelect, group, motionEnabled }) {
 }
 
 export default function KeyboardScene({ active, onSelect, group, motionEnabled, inView }) {
+  const interacting = useRef(false);
   return (
-    <Canvas
-      shadows
-      dpr={[1, 1.5]}
-      camera={{ position: [5.7, 7.2, 8.4], fov: 37 }}
-      frameloop={inView ? (motionEnabled ? 'always' : 'demand') : 'never'}
-      gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
-      fallback={
-        <p className="scene-fallback">Explore the keyboard using the skill buttons below.</p>
-      }
-      onCreated={({ camera, gl }) => {
-        camera.lookAt(0, 0, 0);
-        gl.setClearColor('#000000', 0);
+    <div
+      style={{ width: '100%', height: '100%' }}
+      onPointerEnter={(event) => {
+        if (event.pointerType !== 'touch') interacting.current = true;
+      }}
+      onPointerLeave={() => {
+        interacting.current = false;
+      }}
+      onPointerDown={() => {
+        interacting.current = true;
+      }}
+      onPointerUp={(event) => {
+        if (event.pointerType === 'touch') interacting.current = false;
+      }}
+      onPointerCancel={() => {
+        interacting.current = false;
       }}
     >
-      <ambientLight intensity={1.3} />
-      <directionalLight
-        position={[-3, 8, 3]}
-        intensity={3}
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-        shadow-normalBias={0.05}
-      />
-      <directionalLight position={[5, 3, -2]} intensity={2} color="#e9b175" />
-      <Suspense fallback={null}>
-        <Keyboard active={active} onSelect={onSelect} group={group} motionEnabled={motionEnabled} />
-      </Suspense>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.37, 0]} receiveShadow>
-        <planeGeometry args={[40, 40]} />
-        <shadowMaterial transparent opacity={0.25} />
-      </mesh>
-    </Canvas>
+      <Canvas
+        shadows
+        dpr={[1, 1.5]}
+        camera={{ position: [5.7, 7.2, 8.4], fov: 37 }}
+        frameloop={inView ? (motionEnabled ? 'always' : 'demand') : 'never'}
+        gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+        fallback={
+          <p className="scene-fallback">Explore the keyboard using the skill buttons below.</p>
+        }
+        onCreated={({ camera, gl }) => {
+          camera.lookAt(0, 0, 0);
+          gl.setClearColor('#000000', 0);
+        }}
+      >
+        <ambientLight intensity={0.9} />
+        <directionalLight
+          position={[-3, 8, 3]}
+          intensity={2.2}
+          castShadow
+          shadow-mapSize={[1024, 1024]}
+          shadow-normalBias={0.05}
+        />
+        <directionalLight position={[5, 3, -2]} intensity={1.3} color="#e9b175" />
+        <Suspense fallback={null}>
+          <Keyboard
+            active={active}
+            onSelect={onSelect}
+            group={group}
+            motionEnabled={motionEnabled}
+            interacting={interacting}
+          />
+        </Suspense>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.37, 0]} receiveShadow>
+          <planeGeometry args={[40, 40]} />
+          <shadowMaterial transparent opacity={0.25} />
+        </mesh>
+      </Canvas>
+    </div>
   );
 }
