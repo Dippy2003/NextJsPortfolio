@@ -1,104 +1,94 @@
-import { assets } from '@/assets/assets'
-import Image from 'next/image'
-import React, { useRef, useState, useEffect } from 'react'
+'use client';
 
-const PNavbar = ({isDarkMode,setIsDarkMode}) => {
-  const [isScroll, setIsScroll] = useState(false);
-  const sideMenuRef = useRef();
+import { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, Menu, Moon, Pause, Play, Sun, X } from 'lucide-react';
+import { usePreferences } from './Preferences';
 
-  const openSideMenu = () => {
-    sideMenuRef.current.style.transform = "translateX(0)";
-  };
+const links = [
+  ['Work', '#work'],
+  ['My toolkit', '#skills'],
+  ['About', '#about'],
+];
 
-  const closeSideMenu = () => {
-    sideMenuRef.current.style.transform = "translateX(16rem)";
-  };
+export default function PNavbar() {
+  const [open, setOpen] = useState(false);
+  const menuButton = useRef(null);
+  const { motionEnabled, reduced, setPaused, theme, setTheme } = usePreferences();
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScroll(true);
-      } else {
-        setIsScroll(false);
+    if (!open) return;
+    const onEscape = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuButton.current?.focus();
       }
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener('keydown', onEscape);
+    return () => window.removeEventListener('keydown', onEscape);
+  }, [open]);
 
   return (
-    <>
-      {/* Background Shape */}
-      <div className="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
-        <Image src={assets.header_bg_color} alt="" width={1200} height={800} className="w-full" />
-      </div>
-
-      {/* Navbar */}
-      <nav
-        className={`w-full h-20 fixed top-0 px-5 lg:px-8 xl:px-[8%] flex items-center justify-between z-50 transition-all duration-300 ${
-          isScroll ? "bg-white/60 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20" : ""
-        }`}
-      >
-        {/* Logo */}
-        <a href="#top">
-          <Image
-            src={isDarkMode ? assets.witedipna : assets.dipna}
-            alt=""
-            width={120} height={40}
-            className="w-30 cursor-pointer mr-14"
-          />
+    <header className="site-header">
+      <nav className="nav-shell shell" aria-label="Main navigation">
+        <a className="wordmark" href="#home" aria-label="Dipna, home">
+          dipna<span>.</span>
         </a>
-
-        {/* Desktop Menu */}
-        <ul className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 ${isScroll? "":"bg-white shadow-sm bg-opacity-60 dark:border dark:border-white/50 dark:bg-transparent"} `}>
-          <li><a className="font-ovo" href="#top">Home</a></li>
-          <li><a className="font-ovo" href="#about">About me</a></li>
-          <li><a className="font-ovo" href="#skills">Skills</a></li>
-          <li><a className="font-ovo" href="#services">Services</a></li>
-          <li><a className="font-ovo" href="#work">My Work</a></li>
-          <li><a className="font-ovo" href="#contact">Contact me</a></li>
-        </ul>
-
-        {/* Right Side Buttons */}
-        <div className="flex items-center gap-4">
-          <button onClick={()=> setIsDarkMode(prev =>!prev)}>
-            <Image src={isDarkMode ?assets.sun_icon : assets.moon_icon} alt="" width={24} height={24} className="w-6" />
-          </button>
-
-          <a
-            href="#contact"
-            className="hidden lg:flex font-ovo items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4 dark:border-white/50"
+        <div className="desktop-nav">
+          {links.map(([label, href]) => (
+            <a key={href} href={href}>
+              {label}
+            </a>
+          ))}
+        </div>
+        <div className="nav-actions">
+          <button
+            className="icon-button motion-toggle"
+            onClick={() => setPaused(motionEnabled)}
+            aria-label={
+              reduced
+                ? 'Animations follow your reduced-motion preference'
+                : motionEnabled
+                  ? 'Pause animations'
+                  : 'Resume animations'
+            }
+            aria-pressed={!motionEnabled}
+            disabled={reduced}
+            title={motionEnabled ? 'Pause animations' : 'Animations paused'}
           >
-            Contact
-            <Image src={isDarkMode ? assets.arrow_icon_dark : assets.arrow_icon} alt="" width={12} height={12} className="w-3" />
+            {motionEnabled ? <Pause size={15} /> : <Play size={15} />}
+          </button>
+          <button
+            className="icon-button"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          >
+            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+          </button>
+          <a className="nav-contact" href="#contact">
+            Let’s talk <ArrowUpRight size={16} />
           </a>
-
-          <button className="block md:hidden ml-3" onClick={openSideMenu}>
-            <Image src={ isDarkMode ? assets.menu_white:assets.menu_black} alt="" width={24} height={24} className="w-6" />
+          <button
+            ref={menuButton}
+            className="icon-button menu-toggle"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? 'Close navigation' : 'Open navigation'}
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-
-        {/* Mobile Side Menu */}
-        <ul
-          ref={sideMenuRef}
-          className="flex md:hidden flex-col gap-4 py-20 px-10 fixed right-0 top-0 bottom-0 w-64 h-screen z-50 bg-rose-50 transition-transform duration-500 dark:bg-darkHover dark:text-white"
-          style={{ transform: "translateX(16rem)" }}
-        >
-          <div className="absolute right-6 top-6" onClick={closeSideMenu}>
-            <Image src={ isDarkMode ? assets.close_white:assets.close_black} alt="" width={20} height={20} className="w-5 cursor-pointer" />
-          </div>
-
-          <li><a onClick={closeSideMenu} className="font-ovo" href="#top">Home</a></li>
-          <li><a onClick={closeSideMenu} className="font-ovo" href="#about">About me</a></li>
-          <li><a onClick={closeSideMenu} className="font-ovo" href="#skills">Skills</a></li>
-          <li><a onClick={closeSideMenu} className="font-ovo" href="#services">Services</a></li>
-          <li><a onClick={closeSideMenu} className="font-ovo" href="#work">My Work</a></li>
-          <li><a onClick={closeSideMenu} className="font-ovo" href="#contact">Contact me</a></li>
-        </ul>
       </nav>
-    </>
+      {open && (
+        <nav className="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+          {[...links, ['Contact', '#contact']].map(([label, href]) => (
+            <a key={href} href={href} onClick={() => setOpen(false)}>
+              {label}
+              <ArrowUpRight size={18} />
+            </a>
+          ))}
+        </nav>
+      )}
+    </header>
   );
-};
-
-export default PNavbar;
+}

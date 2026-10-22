@@ -1,116 +1,77 @@
-import { assets, infoList, toolsData } from '@/assets/assets'
-import React from 'react'
 import Image from 'next/image';
-import { motion } from "motion/react"
+import { ArrowUpRight, GraduationCap, MapPin } from 'lucide-react';
+import portrait from '@/assets/userdipna.png';
+import { profile, projects } from '../data/portfolio';
+import Reveal from './Reveal';
+import SectionLabel from './SectionLabel';
 
-
-const About = ({isDarkMode}) => {
+export default function About() {
   return (
-    <motion.div 
-    initial={{opacity:0}}
-    whileInView={{opacity:1}}
-    transition={{duration:1}}
-    id="about" className="w-full px-[12%] py-10 scroll-mt-20">
-
-      {/* Titles */}
-      <motion.h4 
-      initial={{opacity:0 ,y:-20}}
-    whileInView={{opacity:1,y:0}}
-    transition={{duration:0.5 ,delay:0.3}}
-      className="text-center mb-2 text-lg font-ovo">Introduction</motion.h4>
-      <motion.h2 
-      initial={{opacity:0 ,y:-20}}
-    whileInView={{opacity:1,y:0}}
-    transition={{duration:0.5 ,delay:0.5}}
-      className="text-center text-5xl font-ovo">About Me</motion.h2>
-
-      {/* Main Layout */}
-      <motion.div 
-      initial={{opacity:0 }}
-    whileInView={{opacity:1}}
-    transition={{duration:0.8}}
-      
-      
-      
-      className="flex w-full flex-col lg:flex-row items-start gap-20 my-20">
-
-        {/* LEFT SIDE: Image */}
-        <motion.div 
-
-        initial={{opacity:0 ,scale:0.9}}
-    whileInView={{opacity:1,scale:1}}
-    transition={{duration:0.6}}
-        
-        
-        
-        className="w-64 sm:w-80 rounded-3xl max-w-none">
+    <section id="about" className="about-section section shell">
+      <Reveal>
+        <SectionLabel number="03">THE PERSON BEHIND THE PROJECTS</SectionLabel>
+      </Reveal>
+      <div className="about-layout">
+        <Reveal className="about-photo">
           <Image
-            src={assets.userdipna}
-            alt="user"
-            width={320} height={320}
-            className="w-full rounded-3xl object-cover"
+            src={portrait}
+            alt="Dipna Wijesinghe, Data Science undergraduate"
+            sizes="(max-width: 700px) 80vw, 360px"
           />
-        </motion.div>
-
-        {/* RIGHT SIDE: Text + Info List */}
-        <motion.div 
-        initial={{opacity:0 }}
-    whileInView={{opacity:1}}
-    transition={{duration:0.8,delay:0.6}}
-        
-        
-        className="flex-1">
-          <p className="mb-10 max-w-2xl font-ovo">
-            I’m a self-driven Data Science undergraduate passionate about turning
-            data into meaningful insights. My recent work spans machine learning
-            and computer vision (medical image classification, vision transformers),
-            LLM-powered AI agents and RAG systems, and data engineering &amp; BI
-            (ETL pipelines, OLAP cubes, Power BI dashboards), alongside full-stack
-            and mobile development. I aim to contribute to impactful, innovative
-            projects while continuously learning and improving.
+          <div className="photo-label">
+            <MapPin size={13} />
+            Sri Lanka<span>✳</span>
+          </div>
+          <span className="photo-corner corner-tl" />
+          <span className="photo-corner corner-br" />
+        </Reveal>
+        <Reveal className="about-copy">
+          <h2>
+            A curious mind.
+            <br />
+            <span className="muted-heading">A builder at heart.</span>
+          </h2>
+          <p className="about-lead">
+            Hi, I’m Dipna. I like asking questions.
+            <br />
+            Even more, I like building the answers.
           </p>
-
-          {/* Info List */}
-         <motion.ul
-         initial={{opacity:0 }}
-    whileInView={{opacity:1}}
-    transition={{duration:0.8 ,delay:1}}
-         className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl">
-
-  {infoList.map(({ icon, iconDark, title, description }, index) => (
-    <motion.li
-    whileHover={{scale:1.05}}
-      key={index}
-      className="border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer transition hover:shadow-md hover:bg-gray-50 hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-darkHover/50"
-    >
-      <Image
-        src={isDarkMode? iconDark:icon}
-        alt={title}
-        width={28} height={28}
-        className="w-7 mt-3"
-      />
-
-      <h3 className="my-4 font-semibold text-gray-700 dark:text-white">
-        {title}
-      </h3>
-
-      <p className="text-gray-600 text-sm dark:text-white/80">
-        {description}
-      </p>
-    </motion.li>
-  ))}
-
-</motion.ul>
-       
-    
-
-
-
-        </motion.div>
-      </motion.div>
-
-    </motion.div>
-  )
+          <p>
+            I’m a Data Science undergraduate at SLIIT, exploring how intelligent systems and
+            thoughtful software can turn complex problems into useful experiences.
+          </p>
+          <p>
+            My work takes me from computer vision and machine learning to RAG systems, data
+            pipelines, and full-stack applications. I learn by experimenting, connecting ideas, and
+            making things.
+          </p>
+          <div className="about-facts">
+            <div>
+              <GraduationCap size={19} />
+              <span>
+                BSc (Hons) in Data Science<small>SLIIT · Undergraduate</small>
+              </span>
+            </div>
+            <div>
+              <span className="fact-number">
+                {projects.length}
+                <span>+</span>
+              </span>
+              <span>
+                Projects & experiments<small>Across AI, data, web & mobile</small>
+              </span>
+            </div>
+          </div>
+          <a
+            className="text-link"
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            A little more about me <ArrowUpRight size={17} />
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  );
 }
-
-export default About;

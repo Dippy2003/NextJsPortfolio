@@ -1,30 +1,26 @@
-import { Outfit,Ovo} from "next/font/google";
-import "./globals.css";
+import { Outfit, Space_Grotesk } from 'next/font/google';
+import './globals.css';
 
-const outfit = Outfit({
-  
-  subsets: ["latin"],weight: ['400','500','600','700'],
-});
-const ovo = Ovo({
-  
-  subsets: ["latin"],weight: ['400'],
-});
-
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-body', display: 'swap' });
+const grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-display', display: 'swap' });
 
 export const metadata = {
-  title: "Dipna Wijesinghe | Portfolio",
+  title: 'Dipna Wijesinghe — Data, intelligence & thoughtful interfaces',
   description:
-    "Dipna Wijesinghe, Data Science undergraduate specializing in AI/ML, computer vision, LLM agents & RAG systems, data engineering & BI, and full-stack development.",
+    'The portfolio of Dipna Wijesinghe. Data Science undergraduate at SLIIT exploring AI/ML, computer vision, intelligent agents, data engineering, and full-stack development.',
+  openGraph: {
+    title: 'Dipna Wijesinghe — Portfolio',
+    description:
+      'Turning complex problems into intelligent, useful experiences. Explore my projects in AI, data, and development.',
+    type: 'website',
+  },
+  twitter: { card: 'summary', title: 'Dipna Wijesinghe — Portfolio' },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth ">
-      <body
-        className={`${outfit.className} ${ovo.className} antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white`}
-      >
-        {children}
-      </body>
+    <html lang="en" data-theme="dark">
+      <body className={`${outfit.variable} ${grotesk.variable}`}>{children}</body>
     </html>
   );
 }

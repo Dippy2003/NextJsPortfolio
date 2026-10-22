@@ -1,128 +1,200 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import Image from "next/image";
-import { getTechIcon } from "@/assets/techIcons";
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import { useInView } from 'motion/react';
+import { ArrowUpRight, CornerDownLeft, Keyboard, List, Sparkles } from 'lucide-react';
+import { allSkillCategories, projects, skillGroups, skills } from '../data/portfolio';
+import { usePreferences } from './Preferences';
+import SectionLabel from './SectionLabel';
+import Reveal from './Reveal';
+import SceneBoundary from './SceneBoundary';
 
-const Skills = ({ isDarkMode }) => {
+const KeyboardScene = dynamic(() => import('./KeyboardScene'), {
+  ssr: false,
+  loading: () => (
+    <div className="scene-loading">
+      <Keyboard size={44} strokeWidth={1} />
+      <span>Setting up the keyboard…</span>
+    </div>
+  ),
+});
 
-  const skillsData = [
-    {
-      category: "Languages",
-      technologies: ["JavaScript", "TypeScript", "Java", "PHP", "Kotlin", "Python", "C++", "C", "SQL", "HTML", "CSS"],
-    },
-    {
-      category: "AI / Machine Learning",
-      technologies: ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "OpenCV", "Pandas", "NumPy", "Jupyter"],
-    },
-    {
-      category: "Frontend",
-      technologies: ["React", "Next.js", "HTML", "CSS", "Tailwind CSS"],
-    },
-    {
-      category: "Backend",
-      technologies: ["Node.js", "Express.js", "Django"],
-    },
-    {
-      category: "Mobile Development",
-      technologies: ["Kotlin", "Android"],
-    },
-    {
-      category: "Database",
-      technologies: ["MongoDB", "Firebase", "MySQL", "SQL Server"],
-    },
-    {
-      category: "Data Engineering & BI",
-      technologies: ["SQL Server", "SSAS", "Power BI", "ETL", "Pandas"],
-    },
-    {
-      category: "DevOps & Tools",
-      technologies: ["Git", "GitHub", "VSCode", "Figma", "AWS"],
-    },
-    {
-      category: "AI Agents & LLM Tooling",
-      technologies: ["OpenAI", "LangChain", "CrewAI", "RAG", "n8n", "Groq"],
-    },
-  ];
+export default function Skills() {
+  const [active, setActive] = useState('python');
+  const [group, setGroup] = useState('All keys');
+  const [listView, setListView] = useState(false);
+  const section = useRef(null);
+  const near = useInView(section, { margin: '200px', once: true });
+  const inView = useInView(section);
+  const { motionEnabled, reduced } = usePreferences();
+  const selected = skills.find((skill) => skill.id === active);
+
+  useEffect(() => {
+    const onKey = (event) => {
+      const target = event.target;
+      if (
+        !inView ||
+        event.repeat ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey ||
+        target.isContentEditable ||
+        /^(INPUT|TEXTAREA|SELECT|BUTTON|A)$/.test(target.tagName)
+      )
+        return;
+      const skill = skills.find((item) => item.key === event.key.toLowerCase());
+      if (skill) {
+        setActive(skill.id);
+        setGroup('All keys');
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [inView]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      id="skills"
-      className="w-full px-[12%] py-20 scroll-mt-20 dark:bg-darkTheme/50"
-    >
-      {/* Title */}
-      <motion.h2
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="text-center text-4xl md:text-5xl font-ovo mb-3 bg-linear-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent"
-      >
-        Skills & Technologies
-      </motion.h2>
-      <motion.p
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="text-center text-gray-600 dark:text-white/80 mb-12 font-ovo"
-      >
-        Technologies I work with
-      </motion.p>
-
-      {/* Skills Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {skillsData.map((skill, index) => (
-          <motion.div
-            key={index}
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 * index }}
-            whileHover={{ scale: 1.02 }}
-            className="rounded-xl p-6 border border-purple-500/30 dark:border-purple-400/50 bg-white/80 dark:bg-darkHover/30 backdrop-blur-sm shadow-lg hover:shadow-purple-500/20 dark:hover:shadow-purple-400/30 transition-all duration-300"
-            style={{
-              boxShadow: isDarkMode
-                ? "0 4px 20px rgba(139, 92, 246, 0.1), 0 0 0 1px rgba(139, 92, 246, 0.2)"
-                : "0 4px 20px rgba(139, 92, 246, 0.1), 0 0 0 1px rgba(139, 92, 246, 0.1)",
-            }}
+    <section className="toolkit-section section" id="skills" ref={section}>
+      <div className="shell">
+        <Reveal>
+          <SectionLabel number="02">THE TOOLKIT</SectionLabel>
+          <div className="section-heading">
+            <h2>
+              A few keys.
+              <br />
+              <span className="muted-heading">Endless possibilities.</span>
+            </h2>
+            <p>
+              Tools I reach for to turn
+              <br />
+              “what if” into something real.
+            </p>
+          </div>
+        </Reveal>
+        <div className="toolkit-toolbar">
+          <div className="filter-tabs" role="group" aria-label="Highlight skill category">
+            {skillGroups.map((item) => (
+              <button
+                key={item}
+                className={group === item ? 'active' : ''}
+                aria-pressed={group === item}
+                onClick={() => {
+                  setGroup(item);
+                  if (item !== 'All keys') setActive(skills.find((s) => s.group === item).id);
+                }}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          <button
+            className="text-button"
+            aria-pressed={listView || reduced}
+            onClick={() => setListView(!listView)}
+            disabled={reduced}
           >
-            <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white font-ovo">
-              {skill.category}
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {skill.technologies.map((tech, techIndex) => {
-                const iconUrl = getTechIcon(tech);
+            <List size={15} />
+            {listView || reduced ? 'List view' : 'Prefer a list?'}
+          </button>
+        </div>
+        <div className="toolkit-layout">
+          <div className="keyboard-display">
+            {!listView && !reduced && (
+              <div className="keyboard-canvas" aria-hidden="true">
+                <SceneBoundary>
+                  {near && (
+                    <KeyboardScene
+                      active={active}
+                      onSelect={setActive}
+                      group={group}
+                      motionEnabled={motionEnabled}
+                      inView={inView}
+                    />
+                  )}
+                </SceneBoundary>
+              </div>
+            )}
+            <div
+              className={`skill-buttons ${listView || reduced ? 'expanded' : ''}`}
+              role="group"
+              aria-label="Explore skills"
+            >
+              {skills.map((skill) => (
+                <button
+                  key={skill.id}
+                  className={`skill-button ${active === skill.id ? 'selected' : ''} ${group !== 'All keys' && group !== skill.group ? 'dimmed' : ''}`}
+                  aria-pressed={active === skill.id}
+                  aria-label={`${skill.name}, shortcut ${skill.key.toUpperCase()}`}
+                  aria-keyshortcuts={skill.key}
+                  onClick={() => setActive(skill.id)}
+                  style={{ '--key-color': skill.color }}
+                >
+                  <Image src={`/tech/${skill.id}.svg`} width={16} height={16} alt="" />
+                  <span>{skill.name}</span>
+                  <kbd>{skill.key.toUpperCase()}</kbd>
+                </button>
+              ))}
+            </div>
+            <p className="keyboard-hint">
+              <Keyboard size={14} />
+              Click a key. Tap a skill. Or type its letter.
+              <CornerDownLeft size={13} />
+            </p>
+          </div>
+          <aside className="skill-detail" aria-live="polite" aria-atomic="true">
+            <div className="skill-detail-top">
+              <span className="mini-label">CURRENTLY EXPLORING</span>
+              <Sparkles size={15} />
+            </div>
+            <div className="detail-key" style={{ '--key-color': selected.color }}>
+              <Image src={`/tech/${selected.id}.svg`} width={42} height={42} alt="" />
+              <kbd>{selected.key.toUpperCase()}</kbd>
+            </div>
+            <span className="skill-category">{selected.group}</span>
+            <h3>{selected.name}</h3>
+            <p>{selected.description}</p>
+            <div className="related-projects">
+              <span className="mini-label">
+                {selected.projects.length ? 'EXPLORE IT IN MY WORK' : 'PART OF MY EVERYDAY TOOLKIT'}
+              </span>
+              {selected.projects.map((title) => {
+                const project = projects.find((p) => p.title === title);
                 return (
-                  <motion.div
-                    key={techIndex}
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ duration: 0.3, delay: 0.05 * techIndex }}
-                    whileHover={{ scale: 1.1 }}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-linear-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-500/20 dark:to-purple-500/20 border border-blue-500/20 dark:border-purple-400/30 text-sm font-medium text-gray-700 dark:text-white/90 hover:from-blue-500/20 hover:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:to-purple-500/30 transition-all duration-300 cursor-default"
-                  >
-                    {iconUrl && (
-                      <Image
-                        src={iconUrl}
-                        alt={tech}
-                        width={20}
-                        height={20}
-                        className="w-5 h-5"
-                        unoptimized
-                      />
-                    )}
-                    <span>{tech}</span>
-                  </motion.div>
+                  project && (
+                    <a key={title} href={project.link} target="_blank" rel="noopener noreferrer">
+                      {title}
+                      <ArrowUpRight size={15} />
+                    </a>
+                  )
                 );
               })}
+              {!selected.projects.length && (
+                <a href="#work">
+                  Discover my projects
+                  <ArrowUpRight size={15} />
+                </a>
+              )}
             </div>
-          </motion.div>
-        ))}
+          </aside>
+        </div>
+        <details className="full-toolkit">
+          <summary>
+            The complete toolkit{' '}
+            <span>
+              All languages, frameworks & tools <span aria-hidden="true">+</span>
+            </span>
+          </summary>
+          <dl>
+            {allSkillCategories.map(([name, items]) => (
+              <div key={name}>
+                <dt>{name}</dt>
+                <dd>{items}</dd>
+              </div>
+            ))}
+          </dl>
+        </details>
       </div>
-    </motion.div>
+    </section>
   );
-};
-
-export default Skills;
-
+}

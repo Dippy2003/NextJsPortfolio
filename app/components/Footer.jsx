@@ -1,65 +1,40 @@
-import React from 'react'
-import Image from 'next/image'
-import { assets } from '@/assets/assets'
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
+import { profile } from '../data/portfolio';
 
-const Footer = ({isDarkMode}) => {
+export default function Footer() {
   return (
-    <div className="mt-0"> 
-      {/* Logo + Email */}
-      <div className="text-center">
-        <Image 
-          src={isDarkMode ? assets.witedipna:assets.dipna} 
-          alt="footer-logo"
-          width={144} height={48}
-          className="w-36 mx-auto mb-2"
-        />
-
-       
+    <footer className="site-footer shell">
+      <div className="footer-top">
+        <a className="wordmark" href="#home" aria-label="Back to home">
+          dipna<span>.</span>
+        </a>
+        <p>
+          Made with curiosity.
+          <br />
+          <span>Built to keep evolving.</span>
+        </p>
+        <a className="back-top" href="#home">
+          Back to top <ArrowUp size={15} />
+        </a>
       </div>
-
-      {/* Bottom Section: Divider + Socials */}
-      <div
-        className="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-6 py-6"
-      >
-        {/* Left side */}
-        <p className="font-ovo mb-4 sm:mb-0">© 2026 Dipna. All rights reserved.</p>
-
-        {/* Social links */}
-        <ul className="flex items-center gap-10 justify-center font-ovo">
-          <li>
-            <a 
-              href="https://github.com/Dippy2003" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-              GitHub
-            </a>
-          </li>
-
-          <li>
-            <a 
-              href="https://www.linkedin.com/in/dipna-wijesinghe-50401a396/?utm_source=share_via&utm_content=profile&utm_medium=member_ios" 
-              target="_blank"
-              className="hover:underline"
-            >
-              LinkedIn
-            </a>
-          </li>
-
-          <li>
-            <a 
-              href="https://www.instagram.com/dippy_w/?igsh=YXg5c3F6cHpocXlr&utm_source=qr#" 
-              target="_blank"
-              className="hover:underline"
-            >
-              Instagram
-            </a>
-          </li>
-        </ul>
+      <div className="footer-bottom">
+        <span>© {new Date().getFullYear()} Dipna Wijesinghe</span>
+        <span className="footer-credit">DESIGNED WITH INTENT. BUILT WITH NEXT.JS.</span>
+        <div>
+          <a href={profile.github} target="_blank" rel="noopener noreferrer">
+            GitHub
+            <ArrowUpRight size={12} />
+          </a>
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+            LinkedIn
+            <ArrowUpRight size={12} />
+          </a>
+          <a href={profile.instagram} target="_blank" rel="noopener noreferrer">
+            Instagram
+            <ArrowUpRight size={12} />
+          </a>
+        </div>
       </div>
-    </div>
-  )
+    </footer>
+  );
 }
-
-export default Footer

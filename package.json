@@ -6,20 +6,38 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "format:check": "prettier --check app remotion tests docs vitest.config.mjs remotion.config.js README.md",
+    "remotion:studio": "remotion studio remotion/index.js",
+    "remotion:render": "remotion render remotion/index.js"
   },
   "dependencies": {
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
+    "@remotion/player": "4.0.537",
+    "lucide-react": "1.61.0",
     "motion": "^12.23.24",
-    "next": "16.0.10",
+    "next": "16.4.2",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-github-calendar": "^5.0.6"
+    "react-github-calendar": "^5.0.6",
+    "remotion": "4.0.537",
+    "three": "0.186.1"
   },
   "devDependencies": {
+    "@remotion/cli": "4.0.537",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.0.3",
-    "tailwindcss": "^4"
+    "eslint-config-next": "16.4.2",
+    "jsdom": "27.4.0",
+    "prettier": "3.9.10",
+    "tailwindcss": "^4",
+    "vitest": "4.1.12",
+    "zod": "4.5.4"
   }
 }
