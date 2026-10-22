@@ -14,3 +14,6 @@ and the Pinecone icon from https://github.com/gilbarbara/logos.
 Brand marks are used to identify technologies; ownership remains with each brand.
 
 sql-language.svg, ssas.svg, and etl.svg are original concept illustrations.
+
+The 256px PNG files are raster derivatives of the corresponding SVG files for
+WebGL texture compatibility. The same attribution and ownership apply.

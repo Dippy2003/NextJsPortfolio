@@ -5,7 +5,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useInView } from 'motion/react';
 import { ArrowUpRight, CornerDownLeft, Keyboard, List, Sparkles } from 'lucide-react';
-import { skillCategories, projects, skillGroups, skills } from '../data/portfolio';
+import { projects, skillGroups, skills } from '../data/portfolio';
 import { usePreferences } from './Preferences';
 import SectionLabel from './SectionLabel';
 import Reveal from './Reveal';
@@ -101,7 +101,7 @@ export default function Skills() {
         <div className="toolkit-layout">
           <div className="keyboard-display">
             {!listView && !reduced && (
-              <div className="keyboard-canvas" aria-hidden="true">
+              <div className="keyboard-canvas">
                 <SceneBoundary>
                   {near && (
                     <KeyboardScene
@@ -181,37 +181,6 @@ export default function Skills() {
               )}
             </div>
           </aside>
-        </div>
-        <div className="toolkit-catalog-heading">
-          <div>
-            <span className="mini-label">THE COMPLETE STACK</span>
-            <h3>Every layer. Every possibility.</h3>
-          </div>
-          <p>
-            {skillCategories.length} disciplines · {skills.length} technologies
-          </p>
-        </div>
-        <div className="skill-category-grid">
-          {skillCategories.map((category, index) => (
-            <Reveal key={category.title} className="skill-category-card" delay={(index % 3) * 0.04}>
-              <div className="category-card-top">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <span>{category.skills.length} tools</span>
-              </div>
-              <h3>{category.title}</h3>
-              <p>{category.note}</p>
-              <ul>
-                {category.skills.map((skill) => (
-                  <li key={skill.id}>
-                    <span className="catalog-icon">
-                      <Image src={`/tech/${skill.id}.svg`} width={20} height={20} alt="" />
-                    </span>
-                    <span>{skill.name}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          ))}
         </div>
       </div>
     </section>

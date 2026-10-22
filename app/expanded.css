@@ -326,90 +326,6 @@ html[data-motion='on'] .design-gallery-card:hover img {
 .skill-buttons.expanded {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
-.toolkit-catalog-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 25px;
-  align-items: flex-end;
-  margin-top: 65px;
-  padding-top: 35px;
-  border-top: 1px solid var(--line);
-  margin-bottom: 25px;
-}
-.toolkit-catalog-heading h3 {
-  font-size: 27px;
-  letter-spacing: -0.8px;
-  margin-top: 6px;
-}
-.toolkit-catalog-heading > p {
-  color: var(--muted);
-  font-size: 11px;
-  padding-bottom: 4px;
-}
-.skill-category-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-.skill-category-card {
-  min-width: 0;
-  padding: 25px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--bg);
-}
-.category-card-top {
-  display: flex;
-  justify-content: space-between;
-  color: var(--subtle);
-  font-family: monospace;
-  font-size: 10px;
-  margin-bottom: 20px;
-}
-.category-card-top > span:first-child {
-  color: var(--accent);
-}
-.skill-category-card h3 {
-  font-size: 18px;
-  letter-spacing: -0.5px;
-  line-height: 1.4;
-}
-.skill-category-card > p {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 8px;
-  line-height: 1.8;
-}
-.skill-category-card ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 12px;
-  padding: 0;
-  margin: 20px 0 0;
-}
-.skill-category-card li {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--muted);
-  font-size: 11px;
-}
-.catalog-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  background: #e8e6dc;
-  border-radius: 5px;
-  padding: 5px;
-}
-.catalog-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
 .lab-topic-tabs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -678,9 +594,6 @@ html[data-motion='on'] .design-gallery-card:hover img {
   .keyboard-canvas {
     height: 430px;
   }
-  .skill-category-card {
-    padding: 22px;
-  }
   .pipeline-stages {
     gap: 40px 45px;
     padding-inline: 0;
@@ -777,9 +690,6 @@ html[data-motion='on'] .design-gallery-card:hover img {
   }
   .skill-detail > p {
     margin-top: 22px;
-  }
-  .skill-category-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .lab-console-layout {
     grid-template-columns: 1fr;
@@ -908,35 +818,6 @@ html[data-motion='on'] .design-gallery-card:hover img {
   }
   .keyboard-hint > svg:last-child {
     display: none;
-  }
-  .toolkit-catalog-heading {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    margin-top: 40px;
-  }
-  .toolkit-catalog-heading h3 {
-    font-size: 24px;
-  }
-  .skill-category-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  .skill-category-card {
-    padding: 23px;
-  }
-  .skill-category-card h3 {
-    font-size: 21px;
-  }
-  .skill-category-card ul {
-    gap: 12px 15px;
-  }
-  .skill-category-card li {
-    font-size: 12px;
-  }
-  .catalog-icon {
-    width: 29px;
-    height: 29px;
   }
   .lab-topic-tabs {
     gap: 7px;

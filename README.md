@@ -4,7 +4,7 @@ A personal portfolio for a Data Science undergraduate at SLIIT, bringing togethe
 AI/ML, computer vision, RAG systems, data engineering, and full-stack development.
 
 The redesign combines a warm portrait hero, Remotion motion sequences, a live 3D
-48-key skills keyboard, all nine original skill categories, and all 22 existing
+48-key skills keyboard preserving the original toolkit, and all 22 existing
 projects visible without expanding a truncated list. It includes dark/light themes,
 reduced-motion support, an accessible skills list, GitHub activity, résumé
 downloads, and the existing Web3Forms contact integration.

@@ -1,19 +1,15 @@
 'use client';
 
-import { Suspense, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { RoundedBox, useTexture } from '@react-three/drei';
-import { DoubleSide, MathUtils, SRGBColorSpace } from 'three';
+import { RoundedBox } from '@react-three/drei';
+import { DoubleSide, MathUtils } from 'three';
 import { skills } from '../data/portfolio';
-
-function prepareLogo(texture) {
-  texture.colorSpace = SRGBColorSpace;
-  texture.needsUpdate = true;
-}
+import useKeyLogoTexture from './useKeyLogoTexture';
 
 function Keycap({ skill, index, columns, rows, active, onSelect, motionEnabled }) {
   const ref = useRef(null);
-  const texture = useTexture(`/tech/${skill.id}.svg`, prepareLogo);
+  const texture = useKeyLogoTexture(skill.id);
   const selected = active === skill.id;
   const x = ((index % columns) - (columns - 1) / 2) * 1.07;
   const z = (Math.floor(index / columns) - (rows - 1) / 2) * 1.07;
@@ -55,20 +51,22 @@ function Keycap({ skill, index, columns, rows, active, onSelect, motionEnabled }
           emissiveIntensity={selected ? 0.06 : 0}
         />
       </RoundedBox>
-      <mesh position={[0, 0.28, -0.015]} rotation={[-Math.PI / 2, 0, 0]} raycast={() => null}>
-        <planeGeometry args={[0.6, 0.6]} />
-        <meshBasicMaterial
-          map={texture}
-          transparent
-          alphaTest={0.03}
-          side={DoubleSide}
-          toneMapped={false}
-          depthWrite={false}
-          polygonOffset
-          polygonOffsetFactor={-2}
-          opacity={1}
-        />
-      </mesh>
+      {texture && (
+        <mesh position={[0, 0.28, -0.015]} rotation={[-Math.PI / 2, 0, 0]} raycast={() => null}>
+          <planeGeometry args={[0.6, 0.6]} />
+          <meshBasicMaterial
+            map={texture}
+            transparent
+            alphaTest={0.03}
+            side={DoubleSide}
+            toneMapped={false}
+            depthWrite={false}
+            polygonOffset
+            polygonOffsetFactor={-2}
+            opacity={1}
+          />
+        </mesh>
+      )}
     </group>
   );
 }
@@ -227,19 +225,17 @@ export default function KeyboardScene({ active, onSelect, group, motionEnabled, 
           shadow-normalBias={0.05}
         />
         <directionalLight position={[5, 3, -2]} intensity={1.3} color="#e9b175" />
-        <Suspense fallback={null}>
-          <Keyboard
-            active={active}
-            onSelect={onSelect}
-            visibleSkills={visibleSkills}
-            columns={columns}
-            rows={rows}
-            width={width}
-            depth={depth}
-            motionEnabled={motionEnabled}
-            interacting={interacting}
-          />
-        </Suspense>
+        <Keyboard
+          active={active}
+          onSelect={onSelect}
+          visibleSkills={visibleSkills}
+          columns={columns}
+          rows={rows}
+          width={width}
+          depth={depth}
+          motionEnabled={motionEnabled}
+          interacting={interacting}
+        />
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.37, 0]} receiveShadow>
           <planeGeometry args={[40, 40]} />
           <shadowMaterial transparent opacity={0.25} />

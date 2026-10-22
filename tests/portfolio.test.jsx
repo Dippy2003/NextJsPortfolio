@@ -67,10 +67,12 @@ describe('skills keyboard', () => {
     viewport.visible = true;
   });
 
-  it('keeps the original nine categories visible and includes every original technology', () => {
+  it('keeps every original technology in one explorer without a duplicate catalog', () => {
     render(<Skills />);
-    const catalog = document.querySelector('.skill-category-grid');
-    expect(within(catalog).getAllByRole('heading', { level: 3 })).toHaveLength(9);
+    const explorer = screen.getByRole('group', { name: 'Explore skills' });
+    expect(within(explorer).getAllByRole('button')).toHaveLength(48);
+    expect(document.querySelector('.skill-category-grid')).toBeNull();
+    expect(screen.queryByText('Every layer. Every possibility.')).toBeNull();
     const original = [
       'JavaScript',
       'TypeScript',
@@ -117,7 +119,7 @@ describe('skills keyboard', () => {
       'Groq',
     ];
     for (const name of original)
-      expect(within(catalog).getAllByText(name).length, name).toBeGreaterThan(0);
+      expect(within(explorer).getByText(name, { selector: 'span' }), name).toBeTruthy();
   });
 
   it('selects a skill and exposes its related project links', async () => {
@@ -152,11 +154,16 @@ describe('expanded portfolio integrity', () => {
     expect(skills).toHaveLength(48);
     const keys = skills.map((skill) => skill.key).filter(Boolean);
     expect(new Set(keys).size).toBe(keys.length);
-    for (const skill of skills)
+    for (const skill of skills) {
       expect(
         existsSync(resolve(process.cwd(), 'public', 'tech', `${skill.id}.svg`)),
         skill.name,
       ).toBe(true);
+      expect(
+        existsSync(resolve(process.cwd(), 'public', 'tech', `${skill.id}.png`)),
+        `${skill.name} WebGL texture`,
+      ).toBe(true);
+    }
     const visibleIds = new Set(skillCategories.flatMap((category) => category.ids));
     expect(skills.every((skill) => visibleIds.has(skill.id))).toBe(true);
   });
