@@ -4,7 +4,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Work from '../app/components/Work';
 import Skills from '../app/components/Skills';
 import Contact from '../app/components/Contact';
-import { projects } from '../app/data/portfolio';
+import { projects, skills, skillCategories } from '../app/data/portfolio';
+import SystemsLab from '../app/components/SystemsLab';
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 const viewport = vi.hoisted(() => ({ visible: true }));
 
@@ -33,9 +36,8 @@ describe('project discovery', () => {
   });
 
   it('makes every existing project reachable without a dead-end filter', async () => {
-    const user = userEvent.setup();
     render(<Work />);
-    await user.click(screen.getByRole('button', { name: /Explore all \d+ projects/ }));
+    expect(within(document.querySelector('.archive-list')).getAllByRole('link')).toHaveLength(19);
     for (const project of projects) {
       const link = [...document.querySelectorAll('a')].find((a) => a.href === project.link);
       expect(link, project.title).toBeTruthy();
@@ -43,11 +45,79 @@ describe('project discovery', () => {
       expect(link.rel).toContain('noopener');
     }
   });
+
+  it('searches across the entire collection and can clear an empty result', async () => {
+    const user = userEvent.setup();
+    render(<Work />);
+    const search = screen.getByRole('textbox', { name: 'Search projects' });
+    await user.type(search, 'pinecone');
+    const directory = document.querySelector('.archive-list');
+    expect(within(directory).getAllByRole('link')).toHaveLength(1);
+    expect(within(directory).getByText('Pinecone RAG Studio')).toBeTruthy();
+    await user.clear(search);
+    await user.type(search, 'no-such-project');
+    expect(within(directory).queryAllByRole('link')).toHaveLength(0);
+    await user.click(screen.getByRole('button', { name: 'Clear project search' }));
+    expect(within(directory).getAllByRole('link')).toHaveLength(19);
+  });
 });
 
 describe('skills keyboard', () => {
   beforeEach(() => {
     viewport.visible = true;
+  });
+
+  it('keeps the original nine categories visible and includes every original technology', () => {
+    render(<Skills />);
+    const catalog = document.querySelector('.skill-category-grid');
+    expect(within(catalog).getAllByRole('heading', { level: 3 })).toHaveLength(9);
+    const original = [
+      'JavaScript',
+      'TypeScript',
+      'Java',
+      'PHP',
+      'Kotlin',
+      'Python',
+      'C++',
+      'C',
+      'SQL',
+      'HTML',
+      'CSS',
+      'TensorFlow',
+      'PyTorch',
+      'Scikit-learn',
+      'OpenCV',
+      'Pandas',
+      'NumPy',
+      'Jupyter',
+      'React',
+      'Next.js',
+      'Tailwind CSS',
+      'Node.js',
+      'Express.js',
+      'Django',
+      'Android',
+      'MongoDB',
+      'Firebase',
+      'MySQL',
+      'SQL Server',
+      'SSAS',
+      'Power BI',
+      'ETL',
+      'Git',
+      'GitHub',
+      'VSCode',
+      'Figma',
+      'AWS',
+      'OpenAI',
+      'LangChain',
+      'CrewAI',
+      'RAG',
+      'n8n',
+      'Groq',
+    ];
+    for (const name of original)
+      expect(within(catalog).getAllByText(name).length, name).toBeGreaterThan(0);
   });
 
   it('selects a skill and exposes its related project links', async () => {
@@ -74,6 +144,34 @@ describe('skills keyboard', () => {
     rerender(<Skills />);
     fireEvent.keyDown(document.body, { key: 'p' });
     expect(screen.getByRole('heading', { name: 'React', exact: true })).toBeTruthy();
+  });
+});
+
+describe('expanded portfolio integrity', () => {
+  it('provides an asset for every key, unique shortcuts, and complete category references', () => {
+    expect(skills).toHaveLength(48);
+    const keys = skills.map((skill) => skill.key).filter(Boolean);
+    expect(new Set(keys).size).toBe(keys.length);
+    for (const skill of skills)
+      expect(
+        existsSync(resolve(process.cwd(), 'public', 'tech', `${skill.id}.svg`)),
+        skill.name,
+      ).toBe(true);
+    const visibleIds = new Set(skillCategories.flatMap((category) => category.ids));
+    expect(skills.every((skill) => visibleIds.has(skill.id))).toBe(true);
+  });
+
+  it('switches system topics and explains the selected workflow stage', async () => {
+    const user = userEvent.setup();
+    render(<SystemsLab />);
+    await user.click(screen.getByRole('button', { name: 'RAG & agents' }));
+    await user.click(screen.getByRole('button', { name: /Vector search/ }));
+    expect(screen.getByRole('heading', { name: 'Vector search' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Pinecone RAG Studio' }).href).toContain(
+      'pinecone-rag-studio',
+    );
+    await user.click(screen.getByRole('button', { name: 'Data engineering' }));
+    expect(screen.getByRole('heading', { name: 'Source data' })).toBeTruthy();
   });
 });
 

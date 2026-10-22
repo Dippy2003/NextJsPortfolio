@@ -7,6 +7,7 @@ import { usePreferences } from './Preferences';
 const links = [
   ['Work', '#work'],
   ['My toolkit', '#skills'],
+  ['The lab', '#lab'],
   ['About', '#about'],
 ];
 

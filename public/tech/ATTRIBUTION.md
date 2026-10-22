@@ -6,3 +6,11 @@ Brand marks remain the property of their respective owners.
 
 powerbi.svg is an original illustrative bar-chart symbol, not an official logo.
 rag.svg and automation.svg are original illustrative symbols for concepts.
+
+The expanded catalog also uses Devicon marks, Simple Icons marks
+(https://github.com/simple-icons/simple-icons, CC0), LangChain and Groq marks
+from Lobe Icons (https://github.com/lobehub/lobe-icons, MIT; see LOBE-LICENSE),
+and the Pinecone icon from https://github.com/gilbarbara/logos.
+Brand marks are used to identify technologies; ownership remains with each brand.
+
+sql-language.svg, ssas.svg, and etl.svg are original concept illustrations.

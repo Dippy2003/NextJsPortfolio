@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useEffect, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { RoundedBox, useTexture } from '@react-three/drei';
 import { DoubleSide, MathUtils, SRGBColorSpace } from 'three';
 import { skills } from '../data/portfolio';
@@ -11,13 +11,12 @@ function prepareLogo(texture) {
   texture.needsUpdate = true;
 }
 
-function Keycap({ skill, index, active, onSelect, group, motionEnabled }) {
+function Keycap({ skill, index, columns, rows, active, onSelect, motionEnabled }) {
   const ref = useRef(null);
   const texture = useTexture(`/tech/${skill.id}.svg`, prepareLogo);
   const selected = active === skill.id;
-  const dim = group !== 'All keys' && skill.group !== group;
-  const x = ((index % 5) - 2) * 1.07;
-  const z = (Math.floor(index / 5) - 1.5) * 1.07;
+  const x = ((index % columns) - (columns - 1) / 2) * 1.07;
+  const z = (Math.floor(index / columns) - (rows - 1) / 2) * 1.07;
 
   useFrame((_, delta) => {
     if (!ref.current) return;
@@ -49,7 +48,7 @@ function Keycap({ skill, index, active, onSelect, group, motionEnabled }) {
         }}
       >
         <meshStandardMaterial
-          color={dim ? '#787b70' : selected ? '#dfc391' : '#e6e4dc'}
+          color={selected ? '#dfc391' : '#e6e4dc'}
           roughness={0.48}
           metalness={0.05}
           emissive={selected ? '#b18442' : '#000000'}
@@ -67,18 +66,56 @@ function Keycap({ skill, index, active, onSelect, group, motionEnabled }) {
           depthWrite={false}
           polygonOffset
           polygonOffsetFactor={-2}
-          opacity={dim ? 0.35 : 1}
+          opacity={1}
         />
       </mesh>
     </group>
   );
 }
 
-function Keyboard({ active, onSelect, group, motionEnabled, interacting }) {
+function CameraFraming({ width, depth, motionEnabled }) {
+  const { camera, invalidate } = useThree();
+  const target = useRef(null);
+  useEffect(() => {
+    const scale = Math.hypot(width, depth) / Math.hypot(5.68, 4.58);
+    const firstFrame = !target.current;
+    target.current = [5.7 * scale, 7.2 * scale, 8.4 * scale];
+    if (firstFrame || !motionEnabled) camera.position.set(...target.current);
+    camera.lookAt(0, 0, 0);
+    camera.updateProjectionMatrix();
+    invalidate();
+  }, [camera, invalidate, width, depth, motionEnabled]);
+  useFrame(({ camera: frameCamera }, delta) => {
+    if (!motionEnabled || !target.current) return;
+    frameCamera.position.set(
+      MathUtils.damp(frameCamera.position.x, target.current[0], 6, delta),
+      MathUtils.damp(frameCamera.position.y, target.current[1], 6, delta),
+      MathUtils.damp(frameCamera.position.z, target.current[2], 6, delta),
+    );
+    frameCamera.lookAt(0, 0, 0);
+  });
+  return null;
+}
+
+function Keyboard({
+  active,
+  onSelect,
+  visibleSkills,
+  columns,
+  rows,
+  width,
+  depth,
+  motionEnabled,
+  interacting,
+}) {
   const keyboard = useRef(null);
+  const elapsed = useRef(0);
   useFrame((_, delta) => {
     if (!keyboard.current || !motionEnabled || interacting.current) return;
-    keyboard.current.rotation.y += Math.min(delta, 0.05) * 0.16;
+    const step = Math.min(delta, 0.05);
+    elapsed.current += step;
+    keyboard.current.rotation.y += step * 0.12;
+    keyboard.current.position.y = Math.sin(elapsed.current * 0.8) * 0.09;
   });
 
   useEffect(
@@ -91,7 +128,7 @@ function Keyboard({ active, onSelect, group, motionEnabled, interacting }) {
   return (
     <group ref={keyboard} rotation={[0, -0.26, 0]}>
       <RoundedBox
-        args={[5.68, 0.35, 4.58]}
+        args={[width, 0.35, depth]}
         radius={0.22}
         position={[0, -0.16, 0]}
         castShadow
@@ -99,30 +136,54 @@ function Keyboard({ active, onSelect, group, motionEnabled, interacting }) {
       >
         <meshStandardMaterial color="#242622" roughness={0.4} metalness={0.65} />
       </RoundedBox>
-      <RoundedBox args={[5.5, 0.08, 4.4]} radius={0.18} position={[0, 0.035, 0]} receiveShadow>
+      <RoundedBox
+        args={[width - 0.18, 0.08, depth - 0.18]}
+        radius={0.18}
+        position={[0, 0.035, 0]}
+        receiveShadow
+      >
         <meshStandardMaterial color="#151713" roughness={0.65} />
       </RoundedBox>
-      {skills.map((skill, index) => (
+      {visibleSkills.map((skill, index) => (
         <Keycap
           key={skill.id}
           skill={skill}
           index={index}
+          columns={columns}
+          rows={rows}
           active={active}
           onSelect={onSelect}
-          group={group}
           motionEnabled={motionEnabled}
         />
       ))}
-      <mesh position={[0, -0.06, 2.298]}>
-        <boxGeometry args={[3.5, 0.025, 0.01]} />
+      <mesh position={[0, -0.06, depth / 2 + 0.008]}>
+        <boxGeometry args={[width * 0.65, 0.025, 0.01]} />
         <meshBasicMaterial color="#dca65f" />
       </mesh>
+      {[-1, 1].flatMap((x) =>
+        [-1, 1].map((z) => (
+          <mesh
+            key={`${x}-${z}`}
+            position={[x * (width / 2 - 0.14), 0.065, z * (depth / 2 - 0.14)]}
+          >
+            <cylinderGeometry args={[0.04, 0.04, 0.02, 12]} />
+            <meshStandardMaterial color="#777b6c" metalness={0.8} roughness={0.3} />
+          </mesh>
+        )),
+      )}
     </group>
   );
 }
 
 export default function KeyboardScene({ active, onSelect, group, motionEnabled, inView }) {
   const interacting = useRef(false);
+  const visibleSkills =
+    group === 'All keys' ? skills : skills.filter((skill) => skill.group === group);
+  const columns =
+    group === 'All keys' ? 8 : Math.min(6, Math.ceil(Math.sqrt(visibleSkills.length * 1.3)));
+  const rows = Math.ceil(visibleSkills.length / columns);
+  const width = columns * 1.07 + 0.33;
+  const depth = rows * 1.07 + 0.3;
   return (
     <div
       style={{ width: '100%', height: '100%' }}
@@ -156,6 +217,7 @@ export default function KeyboardScene({ active, onSelect, group, motionEnabled, 
           gl.setClearColor('#000000', 0);
         }}
       >
+        <CameraFraming width={width} depth={depth} motionEnabled={motionEnabled} />
         <ambientLight intensity={0.9} />
         <directionalLight
           position={[-3, 8, 3]}
@@ -169,7 +231,11 @@ export default function KeyboardScene({ active, onSelect, group, motionEnabled, 
           <Keyboard
             active={active}
             onSelect={onSelect}
-            group={group}
+            visibleSkills={visibleSkills}
+            columns={columns}
+            rows={rows}
+            width={width}
+            depth={depth}
             motionEnabled={motionEnabled}
             interacting={interacting}
           />
