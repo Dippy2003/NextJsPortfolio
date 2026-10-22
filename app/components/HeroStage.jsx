@@ -6,7 +6,7 @@ import { Player } from '@remotion/player';
 import { useInView } from 'motion/react';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import portrait from '@/public/portrait-cutout.png';
-import HeroComposition from '../remotion/HeroComposition';
+import HeroComposition, { HERO_IDLE_START } from '../remotion/HeroComposition';
 import { usePreferences } from './Preferences';
 
 export default function HeroStage() {
@@ -16,17 +16,26 @@ export default function HeroStage() {
   const { motionEnabled, theme } = usePreferences();
 
   useEffect(() => {
+    const instance = player.current;
+    if (!instance) return;
     const sync = () => {
-      if (!player.current) return;
-      if (motionEnabled && inView && !document.hidden) player.current.play();
+      if (motionEnabled && inView && !document.hidden) instance.play();
       else {
-        player.current.pause();
-        if (!motionEnabled) player.current.seekTo(90);
+        instance.pause();
+        if (!motionEnabled) instance.seekTo(HERO_IDLE_START);
       }
     };
+    const repeatIdle = () => {
+      instance.seekTo(HERO_IDLE_START);
+      sync();
+    };
     sync();
+    instance.addEventListener('ended', repeatIdle);
     document.addEventListener('visibilitychange', sync);
-    return () => document.removeEventListener('visibilitychange', sync);
+    return () => {
+      instance.removeEventListener('ended', repeatIdle);
+      document.removeEventListener('visibilitychange', sync);
+    };
   }, [motionEnabled, inView]);
 
   return (
@@ -50,7 +59,7 @@ export default function HeroStage() {
           compositionWidth={600}
           compositionHeight={680}
           fps={30}
-          loop
+          moveToBeginningWhenEnded={false}
           muted
           controls={false}
           clickToPlay={false}
