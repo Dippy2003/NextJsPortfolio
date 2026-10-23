@@ -305,6 +305,11 @@ html[data-motion='on'] .design-gallery-card:hover img {
 .project-directory .empty-projects {
   grid-column: 1/-1;
 }
+.project-more-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
 .toolkit-layout {
   grid-template-columns: minmax(0, 1fr) 285px;
   gap: 35px;
