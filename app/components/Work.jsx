@@ -55,7 +55,7 @@ export default function Work() {
   return (
     <section id="work" className="work-section section shell">
       <Reveal>
-        <SectionLabel number="02">SELECTED EXPLORATIONS</SectionLabel>
+        <SectionLabel number="03">SELECTED EXPLORATIONS</SectionLabel>
         <div className="section-heading">
           <h2>
             Built with intent.

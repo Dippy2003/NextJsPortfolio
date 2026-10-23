@@ -121,7 +121,7 @@ export default function SystemsLab() {
   return (
     <section className="systems-lab section shell" id="lab">
       <Reveal>
-        <SectionLabel number="03">INSIDE THE EXPLORATION</SectionLabel>
+        <SectionLabel number="04">INSIDE THE EXPLORATION</SectionLabel>
         <div className="section-heading">
           <h2>
             Follow the signal.

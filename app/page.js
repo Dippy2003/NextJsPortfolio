@@ -20,11 +20,11 @@ export default function Home() {
       <PNavbar />
       <main id="main">
         <Header />
+        <About />
         <PortfolioOverview />
         <Skills />
         <Work />
         <SystemsLab />
-        <About />
         <Services />
         <GithubActivity />
         <Contact />
