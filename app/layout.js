@@ -1,5 +1,7 @@
 import { Outfit, Space_Grotesk } from 'next/font/google';
 import './globals.css';
+import './expanded.css';
+import './atmosphere.css';
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-body', display: 'swap' });
 const grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-display', display: 'swap' });

@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ArrowDown, ArrowUpRight, Play } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowUpRight, Play, Search, X } from 'lucide-react';
 import { Github } from './BrandIcons';
-import { featuredProjects, profile, projects } from '../data/portfolio';
+import { featuredProjects, profile, projects, skills } from '../data/portfolio';
 import SectionLabel from './SectionLabel';
 import Reveal from './Reveal';
 import ProjectArt from './ProjectArt';
+import DesignGallery from './DesignGallery';
 
 const ProjectPreview = dynamic(() => import('./ProjectPreview'), { ssr: false });
 const filters = [
@@ -21,21 +23,39 @@ const filters = [
   'UI/UX & Design',
 ];
 
+const projectNotes = [
+  [
+    'Movement into feedback',
+    'Explore exercise movement through pose estimation, repetition counting, and form feedback. The toolkit brings together Python, YOLO, OpenCV, and PyTorch.',
+  ],
+  [
+    'Understand the workload',
+    'Explore explainable football workload and fatigue-risk analytics. The project brings together Python, FastAPI, React, and TypeScript.',
+  ],
+  [
+    'Give information context',
+    'Explore semantic search over lecture notes using vector embeddings, Pinecone, and a Streamlit interface. Retrieval connects the question with relevant information.',
+  ],
+];
+
 export default function Work() {
   const [category, setCategory] = useState('All projects');
-  const [expanded, setExpanded] = useState(false);
+  const [query, setQuery] = useState('');
   const [preview, setPreview] = useState(null);
   const archive = projects.filter((project) => !featuredProjects.includes(project));
-  const filtered =
-    category === 'All projects'
-      ? archive
-      : projects.filter((project) => project.category === category);
-  const visible = expanded ? filtered : filtered.slice(0, 6);
+  const pool = category === 'All projects' && !query.trim() ? archive : projects;
+  const filtered = pool.filter(
+    (project) =>
+      (category === 'All projects' || project.category === category) &&
+      `${project.title} ${project.description} ${project.category} ${project.technologies.join(' ')}`
+        .toLowerCase()
+        .includes(query.trim().toLowerCase()),
+  );
 
   return (
     <section id="work" className="work-section section shell">
       <Reveal>
-        <SectionLabel number="01">SELECTED EXPLORATIONS</SectionLabel>
+        <SectionLabel number="03">SELECTED EXPLORATIONS</SectionLabel>
         <div className="section-heading">
           <h2>
             Built with intent.
@@ -91,13 +111,31 @@ export default function Work() {
                   <span key={tech}>{tech}</span>
                 ))}
               </div>
+              <details className="project-notes">
+                <summary>
+                  Inside the project <span aria-hidden="true">+</span>
+                </summary>
+                <h4>{projectNotes[index][0]}</h4>
+                <p>{projectNotes[index][1]}</p>
+                <a
+                  className="text-link"
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Explore the implementation
+                  <ArrowUpRight size={14} />
+                </a>
+              </details>
             </div>
           </Reveal>
         ))}
       </div>
+      <DesignGallery />
       <div className="archive-heading">
         <h3>
-          The exploration continues<span> / {archive.length.toString().padStart(2, '0')}</span>
+          Every experiment, in one place
+          <span> / {projects.length.toString().padStart(2, '0')}</span>
         </h3>
         <a
           className="text-link"
@@ -109,6 +147,27 @@ export default function Work() {
           <ArrowUpRight size={14} />
         </a>
       </div>
+      <div className="project-search-row">
+        <label className="project-search">
+          <Search size={17} />
+          <span className="sr-only">Search projects</span>
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search projects, technologies, or topics…"
+          />
+          {query && (
+            <button aria-label="Clear project search" onClick={() => setQuery('')}>
+              <X size={15} />
+            </button>
+          )}
+        </label>
+        <span>
+          {query || category !== 'All projects'
+            ? `${filtered.length} matching projects`
+            : `${featuredProjects.length} featured + ${archive.length} more explorations`}
+        </span>
+      </div>
       <div className="filter-tabs project-filters" role="group" aria-label="Filter projects">
         {filters.map((filter) => (
           <button
@@ -117,7 +176,6 @@ export default function Work() {
             className={category === filter ? 'active' : ''}
             onClick={() => {
               setCategory(filter);
-              setExpanded(false);
             }}
           >
             {filter === 'AI & Machine Learning'
@@ -129,14 +187,19 @@ export default function Work() {
                   : filter === 'Mobile Development'
                     ? 'Mobile'
                     : filter}
+            <span className="filter-count" aria-hidden="true">
+              {filter === 'All projects'
+                ? projects.length
+                : projects.filter((project) => project.category === filter).length}
+            </span>
           </button>
         ))}
       </div>
-      <div className="archive-list" aria-live="polite">
-        {visible.map((project) => (
+      <div className="archive-list project-directory" aria-live="polite">
+        {filtered.map((project) => (
           <a
             key={project.title}
-            className="archive-row"
+            className="archive-row directory-card"
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
@@ -150,25 +213,25 @@ export default function Work() {
             </div>
             <span className="archive-category">{project.category}</span>
             <div className="archive-tech">
-              {project.technologies.slice(0, 2).map((tech) => (
-                <span key={tech}>{tech}</span>
-              ))}
+              {project.technologies.map((tech) => {
+                const skill = skills.find((item) => item.name === tech);
+                return (
+                  <span key={tech}>
+                    {skill && <Image src={`/tech/${skill.id}.svg`} width={13} height={13} alt="" />}
+                    {tech}
+                  </span>
+                );
+              })}
             </div>
             <ArrowUpRight size={19} />
           </a>
         ))}
-        {!visible.length && (
+        {!filtered.length && (
           <p className="empty-projects">
-            These projects are featured above. Explore their concept films or repositories.
+            No projects match this search. Try another technology or choose another category.
           </p>
         )}
       </div>
-      {filtered.length > 6 && (
-        <button className="archive-more text-button" onClick={() => setExpanded(!expanded)}>
-          {expanded ? 'Show fewer projects' : `Explore all ${filtered.length} projects`}
-          <ArrowDown size={15} className={expanded ? 'rotate-up' : ''} />
-        </button>
-      )}
       {preview !== null && (
         <ProjectPreview
           project={featuredProjects[preview]}

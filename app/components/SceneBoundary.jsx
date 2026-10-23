@@ -11,9 +11,16 @@ export default class SceneBoundary extends Component {
     if (this.state.failed)
       return (
         <div className="scene-fallback">
-          The interactive scene is unavailable on this device.
+          The keyboard could not load.
           <br />
           You can explore every skill using the buttons below.
+          <button
+            type="button"
+            className="text-button"
+            onClick={() => this.setState({ failed: false })}
+          >
+            Try the keyboard again
+          </button>
         </div>
       );
     return this.props.children;

@@ -206,6 +206,7 @@ img {
   display: none;
 }
 .hero {
+  overflow: clip;
   position: relative;
   display: grid;
   grid-template-columns: 1.04fr 1fr;
@@ -355,6 +356,7 @@ img {
 }
 .portrait-arch {
   position: absolute;
+  z-index: 2;
   width: 76%;
   height: 82%;
   left: 15%;
@@ -378,11 +380,12 @@ img {
 .hero-animation {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
 }
 .portrait-caption {
   position: absolute;
+  z-index: 3;
   top: 8%;
   left: 40%;
   display: flex;

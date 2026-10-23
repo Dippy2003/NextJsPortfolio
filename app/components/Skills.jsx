@@ -5,7 +5,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useInView } from 'motion/react';
 import { ArrowUpRight, CornerDownLeft, Keyboard, List, Sparkles } from 'lucide-react';
-import { allSkillCategories, projects, skillGroups, skills } from '../data/portfolio';
+import { projects, skillGroups, skills } from '../data/portfolio';
 import { usePreferences } from './Preferences';
 import SectionLabel from './SectionLabel';
 import Reveal from './Reveal';
@@ -61,14 +61,14 @@ export default function Skills() {
           <SectionLabel number="02">THE TOOLKIT</SectionLabel>
           <div className="section-heading">
             <h2>
-              A few keys.
+              {skills.length} keys.
               <br />
-              <span className="muted-heading">Endless possibilities.</span>
+              <span className="muted-heading">One curious mind.</span>
             </h2>
             <p>
-              Tools I reach for to turn
+              From programming foundations to intelligent systems.
               <br />
-              “what if” into something real.
+              Explore the whole stack, one key at a time.
             </p>
           </div>
         </Reveal>
@@ -101,7 +101,7 @@ export default function Skills() {
         <div className="toolkit-layout">
           <div className="keyboard-display">
             {!listView && !reduced && (
-              <div className="keyboard-canvas" aria-hidden="true">
+              <div className="keyboard-canvas">
                 <SceneBoundary>
                   {near && (
                     <KeyboardScene
@@ -120,25 +120,29 @@ export default function Skills() {
               role="group"
               aria-label="Explore skills"
             >
-              {skills.map((skill) => (
-                <button
-                  key={skill.id}
-                  className={`skill-button ${active === skill.id ? 'selected' : ''} ${group !== 'All keys' && group !== skill.group ? 'dimmed' : ''}`}
-                  aria-pressed={active === skill.id}
-                  aria-label={`${skill.name}, shortcut ${skill.key.toUpperCase()}`}
-                  aria-keyshortcuts={skill.key}
-                  onClick={() => setActive(skill.id)}
-                  style={{ '--key-color': skill.color }}
-                >
-                  <Image src={`/tech/${skill.id}.svg`} width={16} height={16} alt="" />
-                  <span>{skill.name}</span>
-                  <kbd>{skill.key.toUpperCase()}</kbd>
-                </button>
-              ))}
+              {skills
+                .filter((skill) => group === 'All keys' || skill.group === group)
+                .map((skill) => (
+                  <button
+                    key={skill.id}
+                    className={`skill-button ${active === skill.id ? 'selected' : ''} ${group !== 'All keys' && group !== skill.group ? 'dimmed' : ''}`}
+                    aria-pressed={active === skill.id}
+                    aria-label={
+                      skill.key ? `${skill.name}, shortcut ${skill.key.toUpperCase()}` : skill.name
+                    }
+                    aria-keyshortcuts={skill.key}
+                    onClick={() => setActive(skill.id)}
+                    style={{ '--key-color': skill.color }}
+                  >
+                    <Image src={`/tech/${skill.id}.svg`} width={16} height={16} alt="" />
+                    <span>{skill.name}</span>
+                    {skill.key && <kbd>{skill.key.toUpperCase()}</kbd>}
+                  </button>
+                ))}
             </div>
             <p className="keyboard-hint">
               <Keyboard size={14} />
-              Click a key. Tap a skill. Or type its letter.
+              Hover to pause. Pick a key. Choose a category to zoom in.
               <CornerDownLeft size={13} />
             </p>
           </div>
@@ -149,7 +153,7 @@ export default function Skills() {
             </div>
             <div className="detail-key" style={{ '--key-color': selected.color }}>
               <Image src={`/tech/${selected.id}.svg`} width={42} height={42} alt="" />
-              <kbd>{selected.key.toUpperCase()}</kbd>
+              {selected.key && <kbd>{selected.key.toUpperCase()}</kbd>}
             </div>
             <span className="skill-category">{selected.group}</span>
             <h3>{selected.name}</h3>
@@ -178,22 +182,6 @@ export default function Skills() {
             </div>
           </aside>
         </div>
-        <details className="full-toolkit">
-          <summary>
-            The complete toolkit{' '}
-            <span>
-              All languages, frameworks & tools <span aria-hidden="true">+</span>
-            </span>
-          </summary>
-          <dl>
-            {allSkillCategories.map(([name, items]) => (
-              <div key={name}>
-                <dt>{name}</dt>
-                <dd>{items}</dd>
-              </div>
-            ))}
-          </dl>
-        </details>
       </div>
     </section>
   );

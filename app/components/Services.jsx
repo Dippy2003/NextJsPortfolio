@@ -1,66 +1,147 @@
-import { ArrowUpRight, BrainCircuit, ChartNoAxesCombined, Code2, Workflow } from 'lucide-react';
+import {
+  ArrowUpRight,
+  BrainCircuit,
+  Code2,
+  Database,
+  PenTool,
+  Smartphone,
+  Workflow,
+} from 'lucide-react';
+import { projects } from '../data/portfolio';
 import Reveal from './Reveal';
+import SectionLabel from './SectionLabel';
 
 const areas = [
   {
     icon: BrainCircuit,
-    title: 'Intelligent systems',
-    number: '01',
-    description:
-      'Machine learning, computer vision, and experiments that turn data into useful predictions.',
-    tags: 'AI / ML · COMPUTER VISION',
+    title: 'AI & machine learning',
+    description: 'Explore information through models, experiments, and visual intelligence.',
+    capabilities: [
+      'Classification & prediction',
+      'Computer vision & pose estimation',
+      'Deep learning experiments',
+    ],
+    project: 'RepVision',
+    tags: 'PYTHON · PYTORCH · OPENCV',
   },
   {
-    icon: ChartNoAxesCombined,
-    title: 'Data into direction',
-    number: '02',
-    description:
-      'From ETL pipelines and data warehouses to dashboards that help information tell its story.',
-    tags: 'DATA ENGINEERING · ANALYTICS',
+    icon: Database,
+    title: 'Data engineering & BI',
+    description: 'Connect the parts between raw data and an insight someone can use.',
+    capabilities: [
+      'ETL pipelines & data warehouses',
+      'OLAP cubes & analytical models',
+      'Power BI dashboards',
+    ],
+    project: 'Hotel Data Warehouse ETL',
+    tags: 'SQL SERVER · SSAS · POWER BI',
   },
   {
     icon: Code2,
-    title: 'Ideas into interfaces',
-    number: '03',
-    description:
-      'Thoughtful web and mobile experiences, from the first Figma prototype to a working application.',
-    tags: 'FULL STACK · MOBILE · UI/UX',
+    title: 'Web development',
+    description: 'Bring application ideas to life through connected frontends and backends.',
+    capabilities: [
+      'Responsive React interfaces',
+      'Backend APIs & application logic',
+      'MERN application development',
+    ],
+    project: 'Mern project',
+    tags: 'REACT · NODE.JS · MONGODB',
+  },
+  {
+    icon: Smartphone,
+    title: 'Mobile applications',
+    description: 'Build useful, focused experiences that fit naturally into a mobile interface.',
+    capabilities: [
+      'Android application development',
+      'Kotlin-based mobile interfaces',
+      'Health & everyday utility apps',
+    ],
+    project: 'Health tracker app',
+    tags: 'KOTLIN · ANDROID',
+  },
+  {
+    icon: PenTool,
+    title: 'UI/UX & interface design',
+    description: 'Work through the structure and visual language before an idea becomes code.',
+    capabilities: [
+      'Interface exploration & layouts',
+      'Figma prototypes',
+      'Web & mobile design concepts',
+    ],
+    project: 'Jewelry shop website',
+    tags: 'FIGMA · PROTOTYPING · UI DESIGN',
   },
   {
     icon: Workflow,
-    title: 'Connected intelligence',
-    number: '04',
-    description:
-      'Context-aware RAG systems, AI agents, and workflows that connect tools and information.',
-    tags: 'LLM AGENTS · AUTOMATION',
+    title: 'AI agents & automation',
+    description: 'Connect information, language models, and tools into a useful workflow.',
+    capabilities: [
+      'RAG & semantic retrieval',
+      'Multi-agent content workflows',
+      'Automated support-ticket routing',
+    ],
+    project: 'Pinecone RAG Studio',
+    tags: 'RAG · CREWAI · N8N',
   },
 ];
 
 export default function Services() {
   return (
-    <section className="services-section shell" aria-labelledby="services-title">
+    <section className="services-section shell" id="services" aria-labelledby="services-title">
       <Reveal>
-        <div className="services-intro">
+        <SectionLabel number="05">HOW I CAN CONTRIBUTE</SectionLabel>
+        <div className="section-heading">
           <h2 id="services-title">
-            Where I like to <span>make an impact.</span>
+            More than one way
+            <br />
+            <span className="muted-heading">to make an impact.</span>
           </h2>
-          <a className="text-link" href="#contact">
-            Have something in mind? <ArrowUpRight size={16} />
-          </a>
+          <p>
+            From a first interface to an intelligent workflow.
+            <br />
+            Explore the areas I work across.
+          </p>
         </div>
       </Reveal>
-      <div className="services-grid">
-        {areas.map(({ icon: Icon, title, number, description, tags }, index) => (
-          <Reveal key={title} delay={index * 0.05} className="service-item">
-            <div className="service-top">
-              <Icon size={26} strokeWidth={1.3} />
-              <span>{number}</span>
-            </div>
-            <h3>{title}</h3>
-            <p>{description}</p>
-            <span className="service-tags">{tags}</span>
-          </Reveal>
-        ))}
+      <div className="services-grid expanded-services">
+        {areas.map(
+          (
+            { icon: Icon, title, description, capabilities, project: projectTitle, tags },
+            index,
+          ) => {
+            const project = projects.find((item) => item.title === projectTitle);
+            return (
+              <Reveal key={title} delay={(index % 3) * 0.04} className="service-item">
+                <div className="service-top">
+                  <span className="service-icon">
+                    <Icon size={28} strokeWidth={1.3} />
+                  </span>
+                  <span>0{index + 1}</span>
+                </div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <ul>
+                  {capabilities.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <span className="service-tags">{tags}</span>
+                <a href={project.link} target="_blank" rel="noopener noreferrer">
+                  See related work
+                  <ArrowUpRight size={15} />
+                </a>
+              </Reveal>
+            );
+          },
+        )}
+      </div>
+      <div className="services-closing">
+        <p>A project, an internship, or a chance to build something useful.</p>
+        <a className="text-link" href="#contact">
+          Let’s start a conversation
+          <ArrowUpRight size={17} />
+        </a>
       </div>
     </section>
   );

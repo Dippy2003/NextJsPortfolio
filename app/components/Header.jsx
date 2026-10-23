@@ -2,8 +2,12 @@ import { ArrowDown, ArrowDownRight, ArrowUpRight, Download } from 'lucide-react'
 import { Github, Linkedin } from './BrandIcons';
 import { profile, projects } from '../data/portfolio';
 import HeroStage from './HeroStage';
+import { preload } from 'react-dom';
+import { HERO_ITEMS } from '../remotion/heroMotion';
 
 export default function Header() {
+  for (const item of HERO_ITEMS)
+    preload(`/tech/${item.id}.png`, { as: 'image', fetchPriority: 'high' });
   return (
     <section id="home" className="hero shell">
       <div className="hero-copy">
@@ -28,6 +32,11 @@ export default function Header() {
           <br className="desktop-break" /> A Data Science undergraduate exploring the intersection
           of <strong>AI, data, and thoughtful development.</strong>
         </p>
+        <div className="hero-expertise">
+          <span>Computer vision</span>
+          <span>RAG & AI agents</span>
+          <span>Data engineering</span>
+        </div>
         <div className="hero-buttons">
           <a className="button button-primary" href="#work">
             Explore my work <ArrowUpRight size={18} />

@@ -8,19 +8,25 @@ import GithubActivity from './components/GithubActivity';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { PreferencesProvider } from './components/Preferences';
+import PortfolioOverview from './components/PortfolioOverview';
+import SystemsLab from './components/SystemsLab';
+import ScrollEnergy from './components/ScrollEnergy';
 
 export default function Home() {
   return (
     <PreferencesProvider>
+      <ScrollEnergy />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
       <PNavbar />
       <main id="main">
         <Header />
-        <Work />
-        <Skills />
         <About />
+        <PortfolioOverview />
+        <Skills />
+        <Work />
+        <SystemsLab />
         <Services />
         <GithubActivity />
         <Contact />

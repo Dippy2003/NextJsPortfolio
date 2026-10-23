@@ -1,7 +1,7 @@
 # Portfolio redesign
 
-Branch: `feat/portfolio-3d-redesign`. Development is local; no remote branch,
-pull request, merge, or deployment is created without publishing authorization.
+Development branch: `feat/portfolio-3d-redesign`. The work is published for review
+as [seven focused pull requests](PR_STACK.md).
 
 ## Reference direction
 
@@ -18,18 +18,64 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
 
 - `app/page.js` remains a Server Component. Interactivity is isolated in client
   components rather than making the whole route a client entry.
+- `ClientRemotionPlayer.jsx` keeps animated frame markup out of server rendering
+  and the matching first hydration pass. It mounts the already-imported Player
+  immediately afterward, without timers or an additional lazy-loading request.
+  Hero and About initialize playback from the ready player callback; the static
+  portrait, headings, and body content retain server rendering.
 - `app/data/portfolio.js` reuses all existing projects in `assets/assets.js`.
   It adds skill descriptions, shortcut mappings, and relevant repository links.
+  All 43 technologies from the original nine categories are preserved in one
+  skills explorer; the interactive board exposes 48 technologies in total.
+  The duplicate category catalog has been removed.
+  Category banks reconfigure the keyboard and smoothly reframe its camera.
 - `KeyboardScene.jsx` uses React Three Fiber 9 (React 19 compatible), Three.js,
   and rounded Drei geometry. The renderer loads near the toolkit section,
   lowers pixel density, and stops continuous rendering outside the viewport.
+  The board rotates slowly until the pointer enters its scene, then stays still
+  for selection and resumes on exit. Neutral keycaps carry full-color technology
+  logos. WebGL uses 256px PNG derivatives of the local SVG marks, rendered in sRGB
+  on raised, double-sided label planes. Each logo loads independently, so a failed
+  image cannot take down the keyboard. Textures are disposed on unmount, and a
+  scene error offers a retry without blaming the visitor's device.
 - Skill buttons are always present. The list view also works without WebGL,
   and system reduced motion uses that view automatically.
+- About follows the hero. `AboutComposition.jsx` uses Remotion and CSS perspective
+  to animate a layered portrait, orbit rings, six-faced wireframe cubes, and
+  floating technology cards. `AboutStage.jsx` adds pointer tilt and pauses playback
+  offscreen or in a hidden tab. Motion-disabled visitors see a settled still.
+- `ScrollEnergy.jsx` draws an amber and teal trail behind the entire page. Its
+  position follows scroll progress and its brightness follows scrolling activity.
+  It fades at rest, then stops scheduling animation frames. Pixel density is
+  capped, listeners and animation frames have cleanup, and global motion controls apply.
 - `HeroComposition.jsx` powers the orbiting technologies through Remotion Player.
+  On every page load, cards fly in from different directions and settle within
+  1.2 seconds of playback. The server preloads all nine PNG icons, the Player
+  autoplays with `initiallyMuted` and no shared audio tags, and the hero starts
+  before viewport detection. Hero, About, and project players use Remotion's
+  `initiallyMuted` API rather than the unsupported `muted` Player prop, so these
+  silent animations do not create an audio context or wait for user activation.
+  A real-player regression test hydrates the hero three times in Strict Mode with
+  Web Audio locked: all icons appear within 1.4 seconds and continue orbiting
+  without a click. The test reproduces invisible icons with the previous prop.
+  After frame 36, native Player looping repeats only the slow, 48-second elliptical
+  orbit; a fresh mount resets the entrance to frame zero. The animation sits below
+  the portrait in the stacking order, so the cutout naturally occludes cards as
+  they pass behind the subject instead of covering the face.
+  HeroStage declares the layer order directly on its containers and paints the
+  portrait after the animation. This preserves occlusion even when the development
+  server serves an older global stylesheet. A regression test uses those older
+  styles, and an HTTP check verifies the live page's explicit layer priorities.
   Playback pauses offscreen, in a hidden tab, or when the visitor disables motion.
 - `ProjectReel.jsx` powers the three project concept films. These are explicitly
   labeled illustrations, not claimed screenshots or measured outcomes.
-- `remotion/Root.jsx` exposes four compositions for Studio and local export.
+- `DesignGallery.jsx` uses the actual jewelry and UniMate interface assets from
+  the existing portfolio. The project directory defaults to every remaining
+  project, supports search, and shows all technology tags.
+- `SystemsLab.jsx` explains four stages each for three illustrative workflows:
+  computer vision, retrieval-augmented generation, and data engineering.
+- Six service cards distinguish AI/ML, data/BI, web, mobile, UI/UX, and agents.
+- `remotion/Root.jsx` exposes five compositions for Studio and local export.
 - Native HTML dialogs provide the project-film modal and its focus containment.
 - The existing Web3Forms destination is retained. The form adds native validation,
   a bot trap, a duplicate-send guard, a 15-second timeout, and success/retry states.
@@ -70,14 +116,15 @@ project reachability/filtering, skill selection and shortcut boundaries,
 contact success/error/duplicate states, reduced motion, theme persistence,
 and mobile navigation disclosure. They do not replace browser visual review.
 
-Browser automation was stopped by the computer-use tool because it could not
-reliably determine the active Chrome URL. Desktop/mobile visual review, WebGL
+Browser automation could not reliably capture the portfolio window. Desktop/mobile
+visual review, WebGL
 interaction, modal focus behavior, and performance scores remain unverified.
 Check those in a normal browser before publishing.
 
-Validated locally: ten interaction tests, ESLint, formatting, the production
+Validated locally: twenty-eight interaction/integrity tests, ESLint, formatting, the production
 build, HTTP checks for the page/assets/résumé/404, an eight-second RepVision MP4,
-and a HeroOrbit still. The production dependency audit is clean. Five advisories
+and HeroOrbit, keyboard, and dark/light AboutPortrait stills. The production
+dependency audit is clean. Five advisories
 remain in the development-only Next ESLint / fast-glob / micromatch / braces chain;
 the available npm suggestion would downgrade the ESLint configuration across major
 versions, so it was not applied.
