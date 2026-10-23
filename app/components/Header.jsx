@@ -2,8 +2,12 @@ import { ArrowDown, ArrowDownRight, ArrowUpRight, Download } from 'lucide-react'
 import { Github, Linkedin } from './BrandIcons';
 import { profile, projects } from '../data/portfolio';
 import HeroStage from './HeroStage';
+import { preload } from 'react-dom';
+import { HERO_ITEMS } from '../remotion/heroMotion';
 
 export default function Header() {
+  for (const item of HERO_ITEMS)
+    preload(`/tech/${item.id}.png`, { as: 'image', fetchPriority: 'high' });
   return (
     <section id="home" className="hero shell">
       <div className="hero-copy">

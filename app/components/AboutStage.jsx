@@ -1,19 +1,19 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { Player } from '@remotion/player';
+import { useEffect, useRef, useState } from 'react';
+import ClientRemotionPlayer from './ClientRemotionPlayer';
 import { useInView } from 'motion/react';
 import AboutComposition from '../remotion/AboutComposition';
 import { usePreferences } from './Preferences';
 
 export default function AboutStage() {
   const container = useRef(null);
-  const player = useRef(null);
+  const [player, setPlayer] = useState(null);
   const inView = useInView(container, { amount: 0.15 });
   const { theme, motionEnabled } = usePreferences();
 
   useEffect(() => {
-    const instance = player.current;
+    const instance = player;
     if (!instance) return;
     const sync = () => {
       if (motionEnabled && inView && !document.hidden) instance.play();
@@ -25,7 +25,7 @@ export default function AboutStage() {
     sync();
     document.addEventListener('visibilitychange', sync);
     return () => document.removeEventListener('visibilitychange', sync);
-  }, [motionEnabled, inView]);
+  }, [player, motionEnabled, inView]);
 
   return (
     <div
@@ -53,8 +53,8 @@ export default function AboutStage() {
         <span>↗</span>
       </div>
       <div className="about-sculpture-player" aria-hidden="true">
-        <Player
-          ref={player}
+        <ClientRemotionPlayer
+          playerRef={setPlayer}
           component={AboutComposition}
           inputProps={{ theme }}
           durationInFrames={360}
@@ -62,7 +62,7 @@ export default function AboutStage() {
           compositionHeight={640}
           fps={30}
           loop
-          muted
+          initiallyMuted
           controls={false}
           clickToPlay={false}
           spaceKeyToPlayOrPause={false}

@@ -1,7 +1,7 @@
 # Portfolio redesign
 
-Branch: `feat/portfolio-3d-redesign`. Development is local; no remote branch,
-pull request, merge, or deployment is created without publishing authorization.
+Development branch: `feat/portfolio-3d-redesign`. The work is published for review
+as [seven focused pull requests](PR_STACK.md).
 
 ## Reference direction
 
@@ -18,6 +18,11 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
 
 - `app/page.js` remains a Server Component. Interactivity is isolated in client
   components rather than making the whole route a client entry.
+- `ClientRemotionPlayer.jsx` keeps animated frame markup out of server rendering
+  and the matching first hydration pass. It mounts the already-imported Player
+  immediately afterward, without timers or an additional lazy-loading request.
+  Hero and About initialize playback from the ready player callback; the static
+  portrait, headings, and body content retain server rendering.
 - `app/data/portfolio.js` reuses all existing projects in `assets/assets.js`.
   It adds skill descriptions, shortcut mappings, and relevant repository links.
   All 43 technologies from the original nine categories are preserved in one
@@ -44,9 +49,23 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
   It fades at rest, then stops scheduling animation frames. Pixel density is
   capped, listeners and animation frames have cleanup, and global motion controls apply.
 - `HeroComposition.jsx` powers the orbiting technologies through Remotion Player.
-  On first opening, cards fly in from different directions with staggered spring
-  motion and settle around the portrait. Later playback repeats only the periodic
-  idle range, so the entrance does not replay or fade away every twenty seconds.
+  On every page load, cards fly in from different directions and settle within
+  1.2 seconds of playback. The server preloads all nine PNG icons, the Player
+  autoplays with `initiallyMuted` and no shared audio tags, and the hero starts
+  before viewport detection. Hero, About, and project players use Remotion's
+  `initiallyMuted` API rather than the unsupported `muted` Player prop, so these
+  silent animations do not create an audio context or wait for user activation.
+  A real-player regression test hydrates the hero three times in Strict Mode with
+  Web Audio locked: all icons appear within 1.4 seconds and continue orbiting
+  without a click. The test reproduces invisible icons with the previous prop.
+  After frame 36, native Player looping repeats only the slow, 48-second elliptical
+  orbit; a fresh mount resets the entrance to frame zero. The animation sits below
+  the portrait in the stacking order, so the cutout naturally occludes cards as
+  they pass behind the subject instead of covering the face.
+  HeroStage declares the layer order directly on its containers and paints the
+  portrait after the animation. This preserves occlusion even when the development
+  server serves an older global stylesheet. A regression test uses those older
+  styles, and an HTTP check verifies the live page's explicit layer priorities.
   Playback pauses offscreen, in a hidden tab, or when the visitor disables motion.
 - `ProjectReel.jsx` powers the three project concept films. These are explicitly
   labeled illustrations, not claimed screenshots or measured outcomes.
@@ -102,7 +121,7 @@ visual review, WebGL
 interaction, modal focus behavior, and performance scores remain unverified.
 Check those in a normal browser before publishing.
 
-Validated locally: nineteen interaction/integrity tests, ESLint, formatting, the production
+Validated locally: twenty-eight interaction/integrity tests, ESLint, formatting, the production
 build, HTTP checks for the page/assets/résumé/404, an eight-second RepVision MP4,
 and HeroOrbit, keyboard, and dark/light AboutPortrait stills. The production
 dependency audit is clean. Five advisories

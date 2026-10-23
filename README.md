@@ -13,6 +13,9 @@ The expanded experience adds six service areas, a visual systems explorer for
 computer vision/RAG/data engineering, original interface screenshots, project
 notes, and project search across the complete collection.
 
+The work is organized into [seven focused pull requests](docs/PR_STACK.md),
+with the review and merge order documented there.
+
 ## Run locally
 
 Requires Node.js 22.12+ (or 24 LTS) and npm. Validated on Node.js 24.

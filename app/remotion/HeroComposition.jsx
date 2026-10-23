@@ -8,109 +8,7 @@ import {
   useVideoConfig,
 } from 'remotion';
 
-export const HERO_IDLE_START = 120;
-
-const orbitItems = [
-  {
-    id: 'opencv',
-    x: 80,
-    y: 255,
-    size: 42,
-    rotate: 8,
-    fromX: -650,
-    fromY: -120,
-    spin: -90,
-    delay: 32,
-  },
-  {
-    id: 'figma',
-    x: 520,
-    y: 275,
-    size: 42,
-    rotate: -9,
-    fromX: 520,
-    fromY: -80,
-    spin: 120,
-    delay: 36,
-  },
-  {
-    id: 'numpy',
-    x: 275,
-    y: 605,
-    size: 38,
-    rotate: 7,
-    fromX: 120,
-    fromY: 580,
-    spin: -120,
-    delay: 40,
-  },
-  {
-    id: 'python',
-    x: 70,
-    y: 140,
-    size: 66,
-    rotate: -12,
-    fromX: -560,
-    fromY: -380,
-    spin: -110,
-    delay: 6,
-  },
-  {
-    id: 'react',
-    x: 462,
-    y: 170,
-    size: 64,
-    rotate: 12,
-    fromX: 530,
-    fromY: -350,
-    spin: 105,
-    delay: 13,
-  },
-  {
-    id: 'pytorch',
-    x: 30,
-    y: 355,
-    size: 54,
-    rotate: -8,
-    fromX: -650,
-    fromY: 150,
-    spin: -150,
-    delay: 18,
-  },
-  {
-    id: 'typescript',
-    x: 480,
-    y: 382,
-    size: 48,
-    rotate: 10,
-    fromX: 560,
-    fromY: 240,
-    spin: 135,
-    delay: 10,
-  },
-  {
-    id: 'tensorflow',
-    x: 115,
-    y: 510,
-    size: 48,
-    rotate: -10,
-    fromX: -350,
-    fromY: 520,
-    spin: 95,
-    delay: 23,
-  },
-  {
-    id: 'git',
-    x: 430,
-    y: 535,
-    size: 48,
-    rotate: 12,
-    fromX: 420,
-    fromY: 530,
-    spin: -100,
-    delay: 28,
-  },
-];
+import { HERO_ITEMS, HERO_INTRO_FRAMES, HERO_IDLE_START, getHeroOrbitPose } from './heroMotion';
 
 export default function HeroComposition({ theme = 'dark' }) {
   const frame = useCurrentFrame();
@@ -120,9 +18,10 @@ export default function HeroComposition({ theme = 'dark' }) {
   const idlePhase =
     (Math.max(0, frame - HERO_IDLE_START) / (durationInFrames - HERO_IDLE_START)) * Math.PI * 2;
   const noteEntry = spring({
-    frame: frame - 38,
+    frame: frame - 7,
+    durationInFrames: HERO_INTRO_FRAMES,
     fps,
-    config: { damping: 19, stiffness: 70, mass: 1.1 },
+    config: { damping: 20, stiffness: 190, mass: 0.65 },
   });
   return (
     <AbsoluteFill style={{ overflow: 'visible', pointerEvents: 'none' }}>
@@ -150,22 +49,23 @@ export default function HeroComposition({ theme = 'dark' }) {
           }}
         />
       ))}
-      {orbitItems.map((item, i) => {
+      {HERO_ITEMS.map((item, i) => {
         const entry = spring({
           frame: frame - item.delay,
+          durationInFrames: HERO_INTRO_FRAMES,
           fps,
-          config: { damping: 18, stiffness: 70, mass: 1.1 },
+          config: { damping: 20, stiffness: 190, mass: 0.65 },
         });
         const remaining = 1 - entry;
         const arc = Math.sin(Math.PI * entry);
-        const drift = Math.sin(idlePhase + i * 0.8);
+        const pose = getHeroOrbitPose(item, frame, durationInFrames);
         return (
           <div
             key={item.id}
             style={{
               position: 'absolute',
-              left: item.x,
-              top: item.y,
+              left: pose.x,
+              top: pose.y,
               width: item.size,
               height: item.size,
               display: 'flex',
@@ -175,15 +75,21 @@ export default function HeroComposition({ theme = 'dark' }) {
               border: `1px solid ${light ? '#ded4c4' : '#39352d'}`,
               borderRadius: 17,
               boxShadow: '0 12px 30px rgba(0,0,0,.16)',
-              opacity: interpolate(frame, [item.delay, item.delay + 5], [0, 1], {
+              opacity: interpolate(frame, [item.delay, item.delay + 3], [0, 1], {
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
               }),
               willChange: 'transform',
-              transform: `perspective(900px) translate3d(${remaining * item.fromX + arc * (i % 2 ? -70 : 70)}px, ${remaining * item.fromY - arc * 45 + drift * 7}px, 0) rotateX(${remaining * 45}deg) rotateY(${remaining * (i % 2 ? -55 : 55)}deg) rotateZ(${item.rotate + remaining * item.spin + drift * 3}deg) scale(${0.36 + entry * 0.64})`,
+              transform: `perspective(900px) translate3d(${remaining * item.fromX + arc * (i % 2 ? -70 : 70)}px, ${remaining * item.fromY - arc * 45}px, 0) rotateX(${remaining * 45}deg) rotateY(${remaining * (i % 2 ? -55 : 55)}deg) rotateZ(${pose.rotate + remaining * item.spin}deg) scale(${(0.36 + entry * 0.64) * pose.scale})`,
             }}
           >
-            <Img src={staticFile(`tech/${item.id}.svg`)} style={{ width: '51%', height: '51%' }} />
+            <Img
+              src={staticFile(`tech/${item.id}.png`)}
+              pauseWhenLoading={false}
+              loading="eager"
+              fetchPriority="high"
+              style={{ width: '51%', height: '51%' }}
+            />
           </div>
         );
       })}
@@ -191,7 +97,7 @@ export default function HeroComposition({ theme = 'dark' }) {
         style={{
           position: 'absolute',
           left: 5,
-          top: 465,
+          top: 625,
           padding: '13px 17px',
           border: `1px solid ${light ? '#d5cab6' : '#39352d'}`,
           borderRadius: 12,
@@ -200,7 +106,7 @@ export default function HeroComposition({ theme = 'dark' }) {
           fontSize: 13,
           fontFamily: 'monospace',
           transform: `translate3d(${(1 - noteEntry) * -480}px, ${(1 - noteEntry) * 220 + Math.sin(idlePhase) * 5}px, 0) rotate(${(1 - noteEntry) * -20}deg)`,
-          opacity: interpolate(frame, [38, 44], [0, 1], {
+          opacity: interpolate(frame, [7, 10], [0, 1], {
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp',
           }),
