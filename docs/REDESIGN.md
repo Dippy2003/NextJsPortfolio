@@ -18,6 +18,11 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
 
 - `app/page.js` remains a Server Component. Interactivity is isolated in client
   components rather than making the whole route a client entry.
+- `ClientRemotionPlayer.jsx` keeps animated frame markup out of server rendering
+  and the matching first hydration pass. It mounts the already-imported Player
+  immediately afterward, without timers or an additional lazy-loading request.
+  Hero and About initialize playback from the ready player callback; the static
+  portrait, headings, and body content retain server rendering.
 - `app/data/portfolio.js` reuses all existing projects in `assets/assets.js`.
   It adds skill descriptions, shortcut mappings, and relevant repository links.
   All 43 technologies from the original nine categories are preserved in one
@@ -104,7 +109,7 @@ visual review, WebGL
 interaction, modal focus behavior, and performance scores remain unverified.
 Check those in a normal browser before publishing.
 
-Validated locally: twenty-three interaction/integrity tests, ESLint, formatting, the production
+Validated locally: twenty-five interaction/integrity tests, ESLint, formatting, the production
 build, HTTP checks for the page/assets/résumé/404, an eight-second RepVision MP4,
 and HeroOrbit, keyboard, and dark/light AboutPortrait stills. The production
 dependency audit is clean. Five advisories

@@ -24,15 +24,19 @@ vi.mock('@remotion/player', async () => {
   return {
     Player: forwardRef(function Player(props, ref) {
       state.playerProps = props;
-      useImperativeHandle(ref, () => ({
-        play: state.play,
-        pause: state.pause,
-        seekTo: state.seekTo,
-        addEventListener: (name, listener) => state.events.set(name, listener),
-        removeEventListener: (name, listener) => {
-          if (state.events.get(name) === listener) state.events.delete(name);
-        },
-      }));
+      useImperativeHandle(
+        ref,
+        () => ({
+          play: state.play,
+          pause: state.pause,
+          seekTo: state.seekTo,
+          addEventListener: (name, listener) => state.events.set(name, listener),
+          removeEventListener: (name, listener) => {
+            if (state.events.get(name) === listener) state.events.delete(name);
+          },
+        }),
+        [],
+      );
       return <div data-testid="portrait-player" />;
     }),
   };

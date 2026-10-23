@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { Player } from '@remotion/player';
+import ClientRemotionPlayer from './ClientRemotionPlayer';
 import { useInView } from 'motion/react';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import portrait from '@/public/portrait-cutout.png';
@@ -12,14 +12,14 @@ import { usePreferences } from './Preferences';
 
 export default function HeroStage() {
   const container = useRef(null);
-  const player = useRef(null);
+  const [player, setPlayer] = useState(null);
   // Start the above-the-fold hero immediately, before IntersectionObserver runs.
   const inView = useInView(container, { initial: true });
   const [entryComplete, setEntryComplete] = useState(false);
   const { motionEnabled, theme } = usePreferences();
 
   useEffect(() => {
-    const instance = player.current;
+    const instance = player;
     if (!instance) return;
     const sync = () => {
       if (motionEnabled && inView && !document.hidden) instance.play();
@@ -40,7 +40,7 @@ export default function HeroStage() {
       instance.removeEventListener('frameupdate', finishEntry);
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [motionEnabled, inView]);
+  }, [player, motionEnabled, inView]);
 
   return (
     <div className="hero-stage" ref={container}>
@@ -55,8 +55,8 @@ export default function HeroStage() {
         />
       </div>
       <div className="hero-animation" aria-hidden="true">
-        <Player
-          ref={player}
+        <ClientRemotionPlayer
+          playerRef={setPlayer}
           component={HeroComposition}
           inputProps={{ theme }}
           durationInFrames={HERO_DURATION}

@@ -21,7 +21,7 @@ require rebasing the remaining parts onto `main` before continuing.
 The stack contains every development commit from `843d818` through `a5c9abe`.
 Part 7 also includes this review index and the current documentation.
 
-The final combined implementation passed 23 tests, lint, formatting, the
+The final combined implementation passed 25 tests, lint, formatting, the
 production build, and HTTP asset checks. Rendered stills cover the keyboard,
 hero entrance/orbit, and About animation; the About scene also exported to MP4.
 Full-page desktop/mobile browser review and cold browser startup timing remain

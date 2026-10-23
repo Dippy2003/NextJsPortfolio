@@ -13,6 +13,12 @@ for viewport detection or shared audio initialization. After the entrance, nativ
 Player looping keeps the cards moving around an elliptical orbit. Reduced-motion
 visitors see the settled composition.
 
+Hero and About animation players mount immediately after hydration, keeping their
+generated frame styles out of the server/client attribute comparison. The portrait
+and page text remain server-rendered. Playback setup follows player readiness, so
+mounting the animation after hydration still starts autoplay and attaches looping
+and visibility handlers correctly.
+
 The skills keyboard rotates slowly and pauses while hovered. Neutral keycaps show
 large, full-color technology marks. Local PNG textures avoid SVG decoding problems,
 and independent logo loading keeps an image failure from rejecting the scene.
@@ -49,7 +55,7 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 ## Validation
 
 - ESLint passes.
-- Twenty-three interaction and integrity tests pass, using mocked network requests.
+- Twenty-five interaction and integrity tests pass, using mocked network requests.
 - Production build passes and `/` is statically prerendered.
 - Local page responds with HTTP 200.
 - Production HTTP checks confirm the résumé, portrait, technology assets, favicon,
@@ -59,6 +65,8 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 - HeroOrbit renders with the locally hosted technology assets.
 - Hero tests cover fresh-mount entrance playback, continuous orbit looping,
   settling within 1.2 seconds, bounds, and a seamless orbit loop boundary.
+- Hero and About SSR/hydration tests verify that frames mount after hydration and
+  playback starts when the player ref becomes available.
 - The expanded 48-key keyboard renders with visible local technology logos.
 - AboutPortrait renders in dark and light themes. Motion lifecycle tests cover
   offscreen/hidden-tab playback and scroll-animation settling and cancellation.
