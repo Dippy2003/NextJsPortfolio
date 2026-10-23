@@ -35,6 +35,14 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
   scene error offers a retry without blaming the visitor's device.
 - Skill buttons are always present. The list view also works without WebGL,
   and system reduced motion uses that view automatically.
+- About follows the hero. `AboutComposition.jsx` uses Remotion and CSS perspective
+  to animate a layered portrait, orbit rings, six-faced wireframe cubes, and
+  floating technology cards. `AboutStage.jsx` adds pointer tilt and pauses playback
+  offscreen or in a hidden tab. Motion-disabled visitors see a settled still.
+- `ScrollEnergy.jsx` draws an amber and teal trail behind the entire page. Its
+  position follows scroll progress and its brightness follows scrolling activity.
+  It fades at rest, then stops scheduling animation frames. Pixel density is
+  capped, listeners and animation frames have cleanup, and global motion controls apply.
 - `HeroComposition.jsx` powers the orbiting technologies through Remotion Player.
   On first opening, cards fly in from different directions with staggered spring
   motion and settle around the portrait. Later playback repeats only the periodic
@@ -48,7 +56,7 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
 - `SystemsLab.jsx` explains four stages each for three illustrative workflows:
   computer vision, retrieval-augmented generation, and data engineering.
 - Six service cards distinguish AI/ML, data/BI, web, mobile, UI/UX, and agents.
-- `remotion/Root.jsx` exposes four compositions for Studio and local export.
+- `remotion/Root.jsx` exposes five compositions for Studio and local export.
 - Native HTML dialogs provide the project-film modal and its focus containment.
 - The existing Web3Forms destination is retained. The form adds native validation,
   a bot trap, a duplicate-send guard, a 15-second timeout, and success/retry states.
@@ -89,14 +97,15 @@ project reachability/filtering, skill selection and shortcut boundaries,
 contact success/error/duplicate states, reduced motion, theme persistence,
 and mobile navigation disclosure. They do not replace browser visual review.
 
-Browser automation was stopped by the computer-use tool because it could not
-reliably determine the active Chrome URL. Desktop/mobile visual review, WebGL
+Browser automation could not reliably capture the portfolio window. Desktop/mobile
+visual review, WebGL
 interaction, modal focus behavior, and performance scores remain unverified.
 Check those in a normal browser before publishing.
 
-Validated locally: fourteen interaction/integrity tests, ESLint, formatting, the production
+Validated locally: nineteen interaction/integrity tests, ESLint, formatting, the production
 build, HTTP checks for the page/assets/résumé/404, an eight-second RepVision MP4,
-and a HeroOrbit still. The production dependency audit is clean. Five advisories
+and HeroOrbit, keyboard, and dark/light AboutPortrait stills. The production
+dependency audit is clean. Five advisories
 remain in the development-only Next ESLint / fast-glob / micromatch / braces chain;
 the available npm suggestion would downgrade the ESLint configuration across major
 versions, so it was not applied.

@@ -1,66 +1,58 @@
-import Image from 'next/image';
-import { ArrowUpRight, GraduationCap, MapPin } from 'lucide-react';
-import portrait from '@/assets/userdipna.png';
-import { profile, projects } from '../data/portfolio';
+import { ArrowUpRight, BrainCircuit, Code2, GraduationCap, Workflow } from 'lucide-react';
+import { profile } from '../data/portfolio';
 import Reveal from './Reveal';
 import SectionLabel from './SectionLabel';
+import AboutStage from './AboutStage';
 
 export default function About() {
   return (
-    <section id="about" className="about-section section shell">
+    <section id="about" className="about-immersive section shell">
       <Reveal>
         <SectionLabel number="01">THE PERSON BEHIND THE PROJECTS</SectionLabel>
       </Reveal>
-      <div className="about-layout">
-        <Reveal className="about-photo">
-          <Image
-            src={portrait}
-            alt="Dipna Wijesinghe, Data Science undergraduate"
-            sizes="(max-width: 700px) 80vw, 360px"
-          />
-          <div className="photo-label">
-            <MapPin size={13} />
-            Sri Lanka<span>✳</span>
-          </div>
-          <span className="photo-corner corner-tl" />
-          <span className="photo-corner corner-br" />
-        </Reveal>
-        <Reveal className="about-copy">
+      <div className="about-immersive-layout">
+        <AboutStage />
+        <Reveal className="about-story">
+          <span className="about-eyebrow">
+            <span /> ALWAYS A WORK IN PROGRESS
+          </span>
           <h2>
-            A curious mind.
+            Curiosity is my
             <br />
-            <span className="muted-heading">A builder at heart.</span>
+            <span>starting point.</span>
           </h2>
-          <p className="about-lead">
-            Hi, I’m Dipna. I like asking questions.
-            <br />
-            Even more, I like building the answers.
+          <p className="about-introduction">
+            Hi, I’m Dipna.
+            <br />I connect the dots. Then build something with them.
           </p>
           <p>
-            I’m a Data Science undergraduate at SLIIT, exploring how intelligent systems and
-            thoughtful software can turn complex problems into useful experiences.
+            I’m a Data Science undergraduate at SLIIT, exploring the space between intelligent
+            systems and thoughtful software.
           </p>
           <p>
-            My work takes me from computer vision and machine learning to RAG systems, data
-            pipelines, and full-stack applications. I learn by experimenting, connecting ideas, and
-            making things.
+            From understanding movement with computer vision to connecting information through RAG,
+            I learn by experimenting—and bringing the ideas to life.
           </p>
-          <div className="about-facts">
+          <div className="about-interests" aria-label="My areas of interest">
+            <span>
+              <BrainCircuit size={18} /> Intelligence
+            </span>
+            <span>
+              <Workflow size={18} /> Connected data
+            </span>
+            <span>
+              <Code2 size={18} /> Useful interfaces
+            </span>
+          </div>
+          <div className="about-education">
+            <span className="education-symbol">
+              <GraduationCap size={24} strokeWidth={1.3} />
+            </span>
             <div>
-              <GraduationCap size={19} />
-              <span>
-                BSc (Hons) in Data Science<small>SLIIT · Undergraduate</small>
-              </span>
+              <span>BSc (Hons) in Data Science</span>
+              <small>SLIIT · Undergraduate</small>
             </div>
-            <div>
-              <span className="fact-number">
-                {projects.length}
-                <span>+</span>
-              </span>
-              <span>
-                Projects & experiments<small>Across AI, data, web & mobile</small>
-              </span>
-            </div>
+            <span className="education-index">01 / THE FOUNDATION</span>
           </div>
           <a
             className="text-link"
@@ -68,9 +60,14 @@ export default function About() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            A little more about me <ArrowUpRight size={17} />
+            Get to know me <ArrowUpRight size={17} />
           </a>
         </Reveal>
+      </div>
+      <div className="about-manifesto">
+        <span>A LITTLE CURIOSITY.</span>
+        <span>A LOT OF POSSIBILITY.</span>
+        <ArrowUpRight size={19} />
       </div>
     </section>
   );

@@ -31,6 +31,12 @@ responsive layouts. The contact form now handles invalid fields, duplicate
 submissions, failed delivery, and timeouts. The page retains server-rendered
 content and loads the WebGL scene on approach.
 
+About sits immediately after the hero and now includes a Remotion portrait scene
+with CSS 3D layers, rotating cubes, orbital rings, floating technology cards, and
+pointer tilt. An amber/teal energy trail follows scrolling behind the page content.
+It fades when scrolling stops and stops scheduling frames at rest. Both effects
+respect motion controls and hidden tabs; the portrait also pauses offscreen.
+
 Next.js and its ESLint configuration are updated together within version 16.
 Compatible dependency updates remove the production dependency advisories found
 during implementation. Five high advisories remain in the development-only
@@ -40,7 +46,7 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 ## Validation
 
 - ESLint passes.
-- Sixteen interaction and integrity tests pass, using mocked network requests.
+- Nineteen interaction and integrity tests pass, using mocked network requests.
 - Production build passes and `/` is statically prerendered.
 - Local page responds with HTTP 200.
 - Production HTTP checks confirm the résumé, portrait, technology assets, favicon,
@@ -49,6 +55,8 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 - RepVision exports to an eight-second 1280×720 H.264 MP4 at 30 fps.
 - HeroOrbit renders with the locally hosted technology assets.
 - The expanded 48-key keyboard renders with visible local technology logos.
+- AboutPortrait renders in dark and light themes. Motion lifecycle tests cover
+  offscreen/hidden-tab playback and scroll-animation settling and cancellation.
 - Production dependency audit reports zero vulnerabilities.
 
 ## Review limits

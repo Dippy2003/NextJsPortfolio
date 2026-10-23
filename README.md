@@ -43,7 +43,9 @@ npm run remotion:render -- RepVision output/repvision.mp4
 ```
 
 Studio runs on port 3100 and local rendering uses 3101, separate from Next.js.
-The composition IDs are `HeroOrbit`, `RepVision`, `PlayerPulse`, and `PineconeRAG`.
+The composition IDs are `HeroOrbit`, `AboutPortrait`, `RepVision`, `PlayerPulse`,
+and `PineconeRAG`. `AboutPortrait` is the looping 3D profile scene in the About
+section. A scroll-driven canvas energy trail runs behind the page content.
 The three project films are labeled concept visualizations.
 
 Keep `remotion`, `@remotion/player`, and `@remotion/cli` on the same exact version;
