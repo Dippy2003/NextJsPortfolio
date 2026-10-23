@@ -9,7 +9,7 @@ export default function About() {
   return (
     <section id="about" className="about-section section shell">
       <Reveal>
-        <SectionLabel number="04">THE PERSON BEHIND THE PROJECTS</SectionLabel>
+        <SectionLabel number="01">THE PERSON BEHIND THE PROJECTS</SectionLabel>
       </Reveal>
       <div className="about-layout">
         <Reveal className="about-photo">
