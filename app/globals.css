@@ -1837,9 +1837,10 @@ html[data-motion='off'] {
   }
   .hero {
     grid-template-columns: 1fr;
-    padding-top: 37px;
+    padding-top: 12px;
   }
   .hero-copy {
+    grid-row: 2;
     padding: 0;
   }
   .availability {
@@ -1888,8 +1889,9 @@ html[data-motion='off'] {
     font-size: 6px;
   }
   .hero-stage {
+    grid-row: 1;
     width: min(450px, 100%);
-    margin: 5px auto -3px;
+    margin: 0 auto 16px;
   }
   .portrait-caption {
     font-size: 6px;
