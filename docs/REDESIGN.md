@@ -51,7 +51,13 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
 - `HeroComposition.jsx` powers the orbiting technologies through Remotion Player.
   On every page load, cards fly in from different directions and settle within
   1.2 seconds of playback. The server preloads all nine PNG icons, the Player
-  autoplays with no shared audio tags, and the hero starts before viewport detection.
+  autoplays with `initiallyMuted` and no shared audio tags, and the hero starts
+  before viewport detection. Hero, About, and project players use Remotion's
+  `initiallyMuted` API rather than the unsupported `muted` Player prop, so these
+  silent animations do not create an audio context or wait for user activation.
+  A real-player regression test hydrates the hero three times in Strict Mode with
+  Web Audio locked: all icons appear within 1.4 seconds and continue orbiting
+  without a click. The test reproduces invisible icons with the previous prop.
   After frame 36, native Player looping repeats only the slow, 48-second elliptical
   orbit; a fresh mount resets the entrance to frame zero. The animation sits below
   the portrait in the stacking order, so the cutout naturally occludes cards as
@@ -115,7 +121,7 @@ visual review, WebGL
 interaction, modal focus behavior, and performance scores remain unverified.
 Check those in a normal browser before publishing.
 
-Validated locally: twenty-seven interaction/integrity tests, ESLint, formatting, the production
+Validated locally: twenty-eight interaction/integrity tests, ESLint, formatting, the production
 build, HTTP checks for the page/assets/résumé/404, an eight-second RepVision MP4,
 and HeroOrbit, keyboard, and dark/light AboutPortrait stills. The production
 dependency audit is clean. Five advisories

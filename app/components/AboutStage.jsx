@@ -62,7 +62,7 @@ export default function AboutStage() {
           compositionHeight={640}
           fps={30}
           loop
-          muted
+          initiallyMuted
           controls={false}
           clickToPlay={false}
           spaceKeyToPlayOrPause={false}

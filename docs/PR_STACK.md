@@ -21,8 +21,10 @@ require rebasing the remaining parts onto `main` before continuing.
 The stack contains every development commit from `843d818` through `a5c9abe`.
 Part 7 also includes this review index and the current documentation.
 
-The final combined implementation passed 27 tests, lint, formatting, the
+The final combined implementation passed 28 tests, lint, formatting, the
 production build, and HTTP asset checks. Rendered stills cover the keyboard,
 hero entrance/orbit, and About animation; the About scene also exported to MP4.
 Full-page desktop/mobile browser review and cold browser startup timing remain
-unverified. Contact tests used mocked network requests.
+unverified. A real-player test covers three successive hero hydrations without
+user activation; it verifies icon visibility and continuing movement with Web
+Audio locked. Contact tests used mocked network requests.

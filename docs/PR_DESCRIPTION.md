@@ -58,7 +58,7 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 ## Validation
 
 - ESLint passes.
-- Twenty-seven interaction and integrity tests pass, using mocked network requests.
+- Twenty-eight interaction and integrity tests pass, using mocked network requests.
 - Production build passes and `/` is statically prerendered.
 - Local page responds with HTTP 200.
 - Production HTTP checks confirm the résumé, portrait, technology assets, favicon,
@@ -70,6 +70,10 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
   settling within 1.2 seconds, bounds, and a seamless orbit loop boundary.
 - Hero and About SSR/hydration tests verify that frames mount after hydration and
   playback starts when the player ref becomes available.
+- A real Remotion Player regression test hydrates the hero three times with Web
+  Audio locked until user activation. Icons appear within 1.4 seconds and keep
+  moving without a click or an audio context. All players use `initiallyMuted`,
+  removing the unnecessary audio startup path that could stall the entrance.
 - A regression test reproduces the old global layer styles and verifies that the
   portrait remains in front. The live HTTP response confirms the explicit layers.
 - The expanded 48-key keyboard renders with visible local technology logos.

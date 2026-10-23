@@ -64,7 +64,7 @@ export default function ProjectPreview({ project, kind, onDismiss }) {
         durationInFrames={240}
         controls
         autoPlay={motionEnabled}
-        muted
+        initiallyMuted
         style={{ width: '100%', aspectRatio: '16 / 9', borderRadius: 8 }}
         errorFallback={() => (
           <div className="scene-fallback">

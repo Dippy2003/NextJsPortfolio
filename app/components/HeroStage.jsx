@@ -63,7 +63,7 @@ export default function HeroStage() {
           loop
           inFrame={entryComplete ? HERO_IDLE_START : 0}
           numberOfSharedAudioTags={0}
-          muted
+          initiallyMuted
           controls={false}
           clickToPlay={false}
           spaceKeyToPlayOrPause={false}
