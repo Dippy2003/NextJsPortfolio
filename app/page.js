@@ -21,8 +21,8 @@ export default function Home() {
       <main id="main">
         <Header />
         <PortfolioOverview />
-        <Work />
         <Skills />
+        <Work />
         <SystemsLab />
         <About />
         <Services />

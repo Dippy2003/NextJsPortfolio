@@ -5,8 +5,8 @@ import { ArrowUpRight, Menu, Moon, Pause, Play, Sun, X } from 'lucide-react';
 import { usePreferences } from './Preferences';
 
 const links = [
-  ['Work', '#work'],
   ['My toolkit', '#skills'],
+  ['Work', '#work'],
   ['The lab', '#lab'],
   ['About', '#about'],
 ];

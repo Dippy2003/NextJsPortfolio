@@ -58,7 +58,7 @@ export default function Skills() {
     <section className="toolkit-section section" id="skills" ref={section}>
       <div className="shell">
         <Reveal>
-          <SectionLabel number="02">THE TOOLKIT</SectionLabel>
+          <SectionLabel number="01">THE TOOLKIT</SectionLabel>
           <div className="section-heading">
             <h2>
               {skills.length} keys.
