@@ -6,9 +6,12 @@ The duplicate category catalog has been removed. All 43 technologies
 from the original portfolio are preserved and five project-related technologies
 extend the interactive board.
 
-On first opening, technology cards fly in from the top, sides, and bottom with
-staggered spring motion, then settle around the portrait. Only the gentle idle
-motion repeats afterward. Reduced-motion visitors see the settled composition.
+On every page load, technology cards fly in from the top, sides, and bottom with
+staggered spring motion, arriving within 1.2 seconds of playback. PNG icons are
+preloaded in the server response, and the muted hero autoplays without waiting
+for viewport detection or shared audio initialization. After the entrance, native
+Player looping keeps the cards moving around an elliptical orbit. Reduced-motion
+visitors see the settled composition.
 
 The skills keyboard rotates slowly and pauses while hovered. Neutral keycaps show
 large, full-color technology marks. Local PNG textures avoid SVG decoding problems,
@@ -46,7 +49,7 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 ## Validation
 
 - ESLint passes.
-- Nineteen interaction and integrity tests pass, using mocked network requests.
+- Twenty-three interaction and integrity tests pass, using mocked network requests.
 - Production build passes and `/` is statically prerendered.
 - Local page responds with HTTP 200.
 - Production HTTP checks confirm the résumé, portrait, technology assets, favicon,
@@ -54,6 +57,8 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 - Formatting and Git whitespace checks pass.
 - RepVision exports to an eight-second 1280×720 H.264 MP4 at 30 fps.
 - HeroOrbit renders with the locally hosted technology assets.
+- Hero tests cover fresh-mount entrance playback, continuous orbit looping,
+  settling within 1.2 seconds, bounds, and a seamless orbit loop boundary.
 - The expanded 48-key keyboard renders with visible local technology logos.
 - AboutPortrait renders in dark and light themes. Motion lifecycle tests cover
   offscreen/hidden-tab playback and scroll-animation settling and cancellation.

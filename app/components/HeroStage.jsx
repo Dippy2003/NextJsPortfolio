@@ -1,18 +1,21 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Player } from '@remotion/player';
 import { useInView } from 'motion/react';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import portrait from '@/public/portrait-cutout.png';
-import HeroComposition, { HERO_IDLE_START } from '../remotion/HeroComposition';
+import HeroComposition from '../remotion/HeroComposition';
+import { HERO_DURATION, HERO_FPS, HERO_IDLE_START } from '../remotion/heroMotion';
 import { usePreferences } from './Preferences';
 
 export default function HeroStage() {
   const container = useRef(null);
   const player = useRef(null);
-  const inView = useInView(container);
+  // Start the above-the-fold hero immediately, before IntersectionObserver runs.
+  const inView = useInView(container, { initial: true });
+  const [entryComplete, setEntryComplete] = useState(false);
   const { motionEnabled, theme } = usePreferences();
 
   useEffect(() => {
@@ -25,15 +28,16 @@ export default function HeroStage() {
         if (!motionEnabled) instance.seekTo(HERO_IDLE_START);
       }
     };
-    const repeatIdle = () => {
-      instance.seekTo(HERO_IDLE_START);
-      sync();
+    const finishEntry = (event) => {
+      if (event.detail.frame < HERO_IDLE_START) return;
+      setEntryComplete(true);
+      instance.removeEventListener('frameupdate', finishEntry);
     };
+    instance.addEventListener('frameupdate', finishEntry);
     sync();
-    instance.addEventListener('ended', repeatIdle);
     document.addEventListener('visibilitychange', sync);
     return () => {
-      instance.removeEventListener('ended', repeatIdle);
+      instance.removeEventListener('frameupdate', finishEntry);
       document.removeEventListener('visibilitychange', sync);
     };
   }, [motionEnabled, inView]);
@@ -55,11 +59,15 @@ export default function HeroStage() {
           ref={player}
           component={HeroComposition}
           inputProps={{ theme }}
-          durationInFrames={600}
+          durationInFrames={HERO_DURATION}
           compositionWidth={600}
           compositionHeight={680}
-          fps={30}
-          moveToBeginningWhenEnded={false}
+          fps={HERO_FPS}
+          initialFrame={0}
+          autoPlay={motionEnabled}
+          loop
+          inFrame={entryComplete ? HERO_IDLE_START : 0}
+          numberOfSharedAudioTags={0}
           muted
           controls={false}
           clickToPlay={false}

@@ -2,6 +2,8 @@ import { act, fireEvent, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import AboutStage from '../app/components/AboutStage';
 import ScrollEnergy from '../app/components/ScrollEnergy';
+import HeroStage from '../app/components/HeroStage';
+import { HERO_IDLE_START } from '../app/remotion/heroMotion';
 
 const state = vi.hoisted(() => ({
   motionEnabled: true,
@@ -11,17 +13,25 @@ const state = vi.hoisted(() => ({
   pause: vi.fn(),
   seekTo: vi.fn(),
   disconnect: vi.fn(),
+  events: new Map(),
+  playerProps: null,
 }));
 vi.mock('../app/components/Preferences', () => ({ usePreferences: () => state }));
 vi.mock('motion/react', () => ({ useInView: () => state.inView }));
+vi.mock('next/image', () => ({ default: () => <span role="img" aria-label="Dipna Wijesinghe" /> }));
 vi.mock('@remotion/player', async () => {
   const { forwardRef, useImperativeHandle } = await import('react');
   return {
     Player: forwardRef(function Player(props, ref) {
+      state.playerProps = props;
       useImperativeHandle(ref, () => ({
         play: state.play,
         pause: state.pause,
         seekTo: state.seekTo,
+        addEventListener: (name, listener) => state.events.set(name, listener),
+        removeEventListener: (name, listener) => {
+          if (state.events.get(name) === listener) state.events.delete(name);
+        },
       }));
       return <div data-testid="portrait-player" />;
     }),
@@ -33,7 +43,45 @@ beforeEach(() => {
   state.theme = 'dark';
   state.inView = true;
   vi.clearAllMocks();
+  state.events.clear();
+  state.playerProps = null;
   vi.spyOn(document, 'hidden', 'get').mockReturnValue(false);
+});
+
+describe('hero startup and reloads', () => {
+  it('autoplays a fresh entrance on every mount and then loops only the orbit', () => {
+    const first = render(<HeroStage />);
+    expect(state.playerProps.autoPlay).toBe(true);
+    expect(state.playerProps.initialFrame).toBe(0);
+    expect(state.playerProps.inFrame).toBe(0);
+    expect(state.playerProps.numberOfSharedAudioTags).toBe(0);
+    expect(state.play).toHaveBeenCalled();
+    act(() => state.events.get('frameupdate')({ detail: { frame: HERO_IDLE_START } }));
+    expect(state.playerProps.loop).toBe(true);
+    expect(state.playerProps.inFrame).toBe(HERO_IDLE_START);
+    first.unmount();
+    expect(state.events.size).toBe(0);
+    render(<HeroStage />);
+    expect(state.playerProps.initialFrame).toBe(0);
+    expect(state.playerProps.inFrame).toBe(0);
+    expect(state.playerProps.autoPlay).toBe(true);
+  });
+
+  it('resumes the orbit after leaving the viewport and honors disabled motion', () => {
+    const { rerender } = render(<HeroStage />);
+    act(() => state.events.get('frameupdate')({ detail: { frame: HERO_IDLE_START } }));
+    state.inView = false;
+    rerender(<HeroStage />);
+    expect(state.pause).toHaveBeenCalled();
+    state.inView = true;
+    rerender(<HeroStage />);
+    expect(state.playerProps.inFrame).toBe(HERO_IDLE_START);
+    expect(state.play).toHaveBeenCalledTimes(2);
+    state.motionEnabled = false;
+    rerender(<HeroStage />);
+    expect(state.playerProps.autoPlay).toBe(false);
+    expect(state.seekTo).toHaveBeenLastCalledWith(HERO_IDLE_START);
+  });
 });
 afterEach(() => {
   vi.restoreAllMocks();
