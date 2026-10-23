@@ -55,7 +55,7 @@ export default function Contact() {
     <section id="contact" className="contact-section section">
       <div className="shell">
         <Reveal>
-          <SectionLabel number="04">GOOD THINGS START WITH A CONVERSATION</SectionLabel>
+          <SectionLabel number="06">GOOD THINGS START WITH A CONVERSATION</SectionLabel>
         </Reveal>
         <div className="contact-layout">
           <Reveal className="contact-copy">

@@ -8,6 +8,8 @@ import GithubActivity from './components/GithubActivity';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { PreferencesProvider } from './components/Preferences';
+import PortfolioOverview from './components/PortfolioOverview';
+import SystemsLab from './components/SystemsLab';
 
 export default function Home() {
   return (
@@ -18,8 +20,10 @@ export default function Home() {
       <PNavbar />
       <main id="main">
         <Header />
+        <PortfolioOverview />
         <Work />
         <Skills />
+        <SystemsLab />
         <About />
         <Services />
         <GithubActivity />

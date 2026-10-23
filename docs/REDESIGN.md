@@ -20,13 +20,19 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
   components rather than making the whole route a client entry.
 - `app/data/portfolio.js` reuses all existing projects in `assets/assets.js`.
   It adds skill descriptions, shortcut mappings, and relevant repository links.
+  All 43 technologies from the original nine categories are preserved in one
+  skills explorer; the interactive board exposes 48 technologies in total.
+  The duplicate category catalog has been removed.
+  Category banks reconfigure the keyboard and smoothly reframe its camera.
 - `KeyboardScene.jsx` uses React Three Fiber 9 (React 19 compatible), Three.js,
   and rounded Drei geometry. The renderer loads near the toolkit section,
   lowers pixel density, and stops continuous rendering outside the viewport.
   The board rotates slowly until the pointer enters its scene, then stays still
   for selection and resumes on exit. Neutral keycaps carry full-color technology
-  logos. SVG assets have explicit texture dimensions and are rendered in sRGB
-  on raised, double-sided label planes.
+  logos. WebGL uses 256px PNG derivatives of the local SVG marks, rendered in sRGB
+  on raised, double-sided label planes. Each logo loads independently, so a failed
+  image cannot take down the keyboard. Textures are disposed on unmount, and a
+  scene error offers a retry without blaming the visitor's device.
 - Skill buttons are always present. The list view also works without WebGL,
   and system reduced motion uses that view automatically.
 - `HeroComposition.jsx` powers the orbiting technologies through Remotion Player.
@@ -36,6 +42,12 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
   Playback pauses offscreen, in a hidden tab, or when the visitor disables motion.
 - `ProjectReel.jsx` powers the three project concept films. These are explicitly
   labeled illustrations, not claimed screenshots or measured outcomes.
+- `DesignGallery.jsx` uses the actual jewelry and UniMate interface assets from
+  the existing portfolio. The project directory defaults to every remaining
+  project, supports search, and shows all technology tags.
+- `SystemsLab.jsx` explains four stages each for three illustrative workflows:
+  computer vision, retrieval-augmented generation, and data engineering.
+- Six service cards distinguish AI/ML, data/BI, web, mobile, UI/UX, and agents.
 - `remotion/Root.jsx` exposes four compositions for Studio and local export.
 - Native HTML dialogs provide the project-film modal and its focus containment.
 - The existing Web3Forms destination is retained. The form adds native validation,
@@ -82,7 +94,7 @@ reliably determine the active Chrome URL. Desktop/mobile visual review, WebGL
 interaction, modal focus behavior, and performance scores remain unverified.
 Check those in a normal browser before publishing.
 
-Validated locally: ten interaction tests, ESLint, formatting, the production
+Validated locally: fourteen interaction/integrity tests, ESLint, formatting, the production
 build, HTTP checks for the page/assets/résumé/404, an eight-second RepVision MP4,
 and a HeroOrbit still. The production dependency audit is clean. Five advisories
 remain in the development-only Next ESLint / fast-glob / micromatch / braces chain;

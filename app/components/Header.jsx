@@ -28,6 +28,11 @@ export default function Header() {
           <br className="desktop-break" /> A Data Science undergraduate exploring the intersection
           of <strong>AI, data, and thoughtful development.</strong>
         </p>
+        <div className="hero-expertise">
+          <span>Computer vision</span>
+          <span>RAG & AI agents</span>
+          <span>Data engineering</span>
+        </div>
         <div className="hero-buttons">
           <a className="button button-primary" href="#work">
             Explore my work <ArrowUpRight size={18} />
