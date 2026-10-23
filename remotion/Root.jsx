@@ -1,9 +1,19 @@
 import { Composition } from 'remotion';
 import HeroComposition from '../app/remotion/HeroComposition';
 import ProjectReel from '../app/remotion/ProjectReel';
+import AboutComposition from '../app/remotion/AboutComposition';
 
 export const RemotionRoot = () => (
   <>
+    <Composition
+      id="AboutPortrait"
+      component={AboutComposition}
+      durationInFrames={360}
+      fps={30}
+      width={600}
+      height={640}
+      defaultProps={{ theme: 'dark' }}
+    />
     <Composition
       id="HeroOrbit"
       component={HeroComposition}
