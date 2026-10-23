@@ -53,6 +53,23 @@ beforeEach(() => {
 });
 
 describe('hero startup and reloads', () => {
+  it('keeps the portrait in front even if an older global stylesheet is cached', () => {
+    const stylesheet = document.createElement('style');
+    stylesheet.textContent =
+      '.portrait-arch { position: absolute; } .hero-animation { position: absolute; z-index: 2; }';
+    document.head.append(stylesheet);
+    try {
+      const { container } = render(<HeroStage />);
+      const portrait = container.querySelector('.portrait-arch');
+      const orbit = container.querySelector('.hero-animation');
+      expect(Number(getComputedStyle(portrait).zIndex)).toBeGreaterThan(
+        Number(getComputedStyle(orbit).zIndex),
+      );
+    } finally {
+      stylesheet.remove();
+    }
+  });
+
   it('autoplays a fresh entrance on every mount and then loops only the orbit', () => {
     const first = render(<HeroStage />);
     expect(state.playerProps.autoPlay).toBe(true);

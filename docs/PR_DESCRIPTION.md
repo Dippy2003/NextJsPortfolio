@@ -13,6 +13,8 @@ for viewport detection or shared audio initialization. After the entrance, nativ
 Player looping keeps the cards moving around a slow, 48-second elliptical orbit.
 The portrait is layered above the cards so they pass behind the subject rather
 than across the face. Reduced-motion visitors see the settled composition.
+Layer priorities are declared on the hero containers, with the portrait rendered
+after the animation, so older cached global styles cannot put cards in front.
 
 Hero and About animation players mount immediately after hydration, keeping their
 generated frame styles out of the server/client attribute comparison. The portrait
@@ -56,7 +58,7 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 ## Validation
 
 - ESLint passes.
-- Twenty-six interaction and integrity tests pass, using mocked network requests.
+- Twenty-seven interaction and integrity tests pass, using mocked network requests.
 - Production build passes and `/` is statically prerendered.
 - Local page responds with HTTP 200.
 - Production HTTP checks confirm the résumé, portrait, technology assets, favicon,
@@ -68,6 +70,8 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
   settling within 1.2 seconds, bounds, and a seamless orbit loop boundary.
 - Hero and About SSR/hydration tests verify that frames mount after hydration and
   playback starts when the player ref becomes available.
+- A regression test reproduces the old global layer styles and verifies that the
+  portrait remains in front. The live HTTP response confirms the explicit layers.
 - The expanded 48-key keyboard renders with visible local technology logos.
 - AboutPortrait renders in dark and light themes. Motion lifecycle tests cover
   offscreen/hidden-tab playback and scroll-animation settling and cancellation.

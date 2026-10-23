@@ -45,16 +45,11 @@ export default function HeroStage() {
   return (
     <div className="hero-stage" ref={container}>
       <div className="portrait-halo" />
-      <div className="portrait-arch">
-        <Image
-          src={portrait}
-          alt="Dipna Wijesinghe"
-          preload
-          sizes="(max-width: 600px) 72vw, (max-width: 1000px) 45vw, 420px"
-          className="hero-portrait"
-        />
-      </div>
-      <div className="hero-animation" aria-hidden="true">
+      <div
+        className="hero-animation"
+        aria-hidden="true"
+        style={{ position: 'absolute', inset: 0, zIndex: 0, isolation: 'isolate' }}
+      >
         <ClientRemotionPlayer
           playerRef={setPlayer}
           component={HeroComposition}
@@ -76,7 +71,17 @@ export default function HeroStage() {
           errorFallback={() => null}
         />
       </div>
-      <div className="portrait-caption">
+      {/* Layer order is a component invariant, including with cached global CSS. */}
+      <div className="portrait-arch" style={{ position: 'absolute', zIndex: 2 }}>
+        <Image
+          src={portrait}
+          alt="Dipna Wijesinghe"
+          preload
+          sizes="(max-width: 600px) 72vw, (max-width: 1000px) 45vw, 420px"
+          className="hero-portrait"
+        />
+      </div>
+      <div className="portrait-caption" style={{ zIndex: 3 }}>
         <span className="tiny-cross">+</span>
         <span>BUILDING WITH PURPOSE</span>
         <Sparkles size={13} />

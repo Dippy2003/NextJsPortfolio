@@ -56,6 +56,10 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
   orbit; a fresh mount resets the entrance to frame zero. The animation sits below
   the portrait in the stacking order, so the cutout naturally occludes cards as
   they pass behind the subject instead of covering the face.
+  HeroStage declares the layer order directly on its containers and paints the
+  portrait after the animation. This preserves occlusion even when the development
+  server serves an older global stylesheet. A regression test uses those older
+  styles, and an HTTP check verifies the live page's explicit layer priorities.
   Playback pauses offscreen, in a hidden tab, or when the visitor disables motion.
 - `ProjectReel.jsx` powers the three project concept films. These are explicitly
   labeled illustrations, not claimed screenshots or measured outcomes.
@@ -111,7 +115,7 @@ visual review, WebGL
 interaction, modal focus behavior, and performance scores remain unverified.
 Check those in a normal browser before publishing.
 
-Validated locally: twenty-six interaction/integrity tests, ESLint, formatting, the production
+Validated locally: twenty-seven interaction/integrity tests, ESLint, formatting, the production
 build, HTTP checks for the page/assets/résumé/404, an eight-second RepVision MP4,
 and HeroOrbit, keyboard, and dark/light AboutPortrait stills. The production
 dependency audit is clean. Five advisories
