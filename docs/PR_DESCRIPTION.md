@@ -10,8 +10,9 @@ On every page load, technology cards fly in from the top, sides, and bottom with
 staggered spring motion, arriving within 1.2 seconds of playback. PNG icons are
 preloaded in the server response, and the muted hero autoplays without waiting
 for viewport detection or shared audio initialization. After the entrance, native
-Player looping keeps the cards moving around an elliptical orbit. Reduced-motion
-visitors see the settled composition.
+Player looping keeps the cards moving around a slow, 48-second elliptical orbit.
+The portrait is layered above the cards so they pass behind the subject rather
+than across the face. Reduced-motion visitors see the settled composition.
 
 Hero and About animation players mount immediately after hydration, keeping their
 generated frame styles out of the server/client attribute comparison. The portrait
@@ -55,7 +56,7 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 ## Validation
 
 - ESLint passes.
-- Twenty-five interaction and integrity tests pass, using mocked network requests.
+- Twenty-six interaction and integrity tests pass, using mocked network requests.
 - Production build passes and `/` is statically prerendered.
 - Local page responds with HTTP 200.
 - Production HTTP checks confirm the résumé, portrait, technology assets, favicon,

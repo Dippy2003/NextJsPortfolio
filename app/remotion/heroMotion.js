@@ -1,7 +1,8 @@
 export const HERO_FPS = 30;
 export const HERO_INTRO_FRAMES = 24;
 export const HERO_IDLE_START = 36;
-export const HERO_DURATION = HERO_IDLE_START + 480;
+export const HERO_ORBIT_FRAMES = HERO_FPS * 48;
+export const HERO_DURATION = HERO_IDLE_START + HERO_ORBIT_FRAMES;
 
 export const HERO_ITEMS = [
   {

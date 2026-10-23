@@ -7,6 +7,7 @@ import {
   HERO_FPS,
   HERO_IDLE_START,
   HERO_ITEMS,
+  HERO_ORBIT_FRAMES,
 } from '../app/remotion/heroMotion';
 
 const timeline = vi.hoisted(() => ({ frame: 0 }));
@@ -42,7 +43,7 @@ describe('hero entrance timing and orbit', () => {
   it('moves around the portrait and joins the orbit loop without a position jump', () => {
     for (const item of HERO_ITEMS) {
       const start = getHeroOrbitPose(item, HERO_IDLE_START);
-      const quarter = getHeroOrbitPose(item, HERO_IDLE_START + 120);
+      const quarter = getHeroOrbitPose(item, HERO_IDLE_START + HERO_ORBIT_FRAMES / 4);
       const end = getHeroOrbitPose(item, HERO_DURATION);
       expect(Math.hypot(quarter.x - start.x, quarter.y - start.y)).toBeGreaterThan(200);
       for (const field of ['x', 'y', 'rotate', 'scale'])
@@ -56,6 +57,16 @@ describe('hero entrance timing and orbit', () => {
         expect(
           Math.hypot(pose.x + item.size / 2 - 300, pose.y + item.size / 2 - 350),
         ).toBeGreaterThan(230);
+      }
+    }
+  });
+
+  it('keeps the orbit slow and smooth after the quick entrance', () => {
+    for (const item of HERO_ITEMS) {
+      for (let offset = 0; offset < HERO_ORBIT_FRAMES; offset += HERO_FPS) {
+        const before = getHeroOrbitPose(item, HERO_IDLE_START + offset);
+        const after = getHeroOrbitPose(item, HERO_IDLE_START + offset + HERO_FPS);
+        expect(Math.hypot(after.x - before.x, after.y - before.y)).toBeLessThan(36);
       }
     }
   });
