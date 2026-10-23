@@ -1,76 +1,83 @@
-# Dipna Wijesinghe Portfolio
+# Dipna Wijesinghe — Portfolio
 
-A personal portfolio site built with Next.js, showcasing projects across AI/ML, data engineering & BI, LLM agents, and full-stack development, with a live GitHub contributions graph pulled in real time.
+A personal portfolio for a Data Science undergraduate at SLIIT, bringing together
+AI/ML, computer vision, RAG systems, data engineering, and full-stack development.
 
-![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![Motion](https://img.shields.io/badge/Motion-12-FF0055?style=for-the-badge&logo=framer&logoColor=white)
-![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
+The redesign combines a warm portrait hero, Remotion motion sequences, a live 3D
+skills keyboard, and all 22 existing projects. It includes dark/light themes,
+reduced-motion support, an accessible skills list, GitHub activity, résumé
+downloads, and the existing Web3Forms contact integration.
 
-## Features
+## Run locally
 
-- **Dark / light mode** with system-preference detection and a manual toggle
-- **About & Skills**: categorized tech skills (AI/ML, Data Engineering & BI, AI Agents & LLM Tooling, Web, Mobile, DevOps) with live logo icons
-- **Services**: web, mobile, UI/UX, AI/ML, and AI-agent/automation offerings
-- **Live GitHub contribution graph**: fetched client-side in real time from the public GitHub contributions API, no token required
-- **Work**: projects grouped by category (Sports Analytics, AI & Machine Learning, AI Agents & RAG, Data Engineering & BI, Software & Desktop Apps, Mobile Development, UI/UX & Design), newest work flagged with a "New" badge, every card links straight to its GitHub repository
-- **Contact form** powered by Web3Forms
-- Built with the React Compiler enabled for automatic memoization
+Requires Node.js 22.12+ (or 24 LTS) and npm. Validated on Node.js 24.
 
-## Tech Stack
-
-| Technology | Purpose |
-|---|---|
-| [Next.js 16](https://nextjs.org) (App Router, Turbopack) | Framework / rendering |
-| [React 19](https://react.dev) | UI library |
-| [Tailwind CSS 4](https://tailwindcss.com) | Styling |
-| [Motion](https://motion.dev) | Animations |
-| [react-github-calendar](https://github.com/grubersjoe/react-github-calendar) | Live GitHub contributions graph |
-| [ESLint 9](https://eslint.org) | Linting |
-
-## Project Structure
-
-```
-app/
-├── components/    # Navbar, Header, About, Skills, Services, GithubActivity, Work, Contact, Footer
-├── layout.js      # Root layout, fonts, metadata
-├── page.js        # Assembles all sections, handles dark mode state
-└── globals.css    # Tailwind theme + custom utilities
-assets/
-└── assets.js      # Work/skills/services data and local image imports
-public/            # Static files (resume, misc images)
-```
-
-## Getting Started
-
-Install dependencies and start the development server:
-
-```bash
-npm install
+```sh
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page auto-updates as you edit files under `app/` or `assets/assets.js`.
+Open [localhost:3000](http://localhost:3000).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to load the Outfit and Ovo font families.
+## Checks
 
-## Available Scripts
+```sh
+npm run lint
+npm test
+npm run format:check
+npm run build
+```
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start the development server (Turbopack) |
-| `npm run build` | Create a production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | Run ESLint |
+Tests use mocked network requests; they never send actual contact messages.
 
-## Deployment
+## Remotion
 
-The easiest way to deploy this app is via the [Vercel Platform](https://vercel.com/new). Import the repository, keep the default Next.js build settings, and deploy. See the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for other hosting options.
+```sh
+npm run remotion:studio
+npm run remotion:render -- RepVision output/repvision.mp4
+```
 
-## Author
+Studio runs on port 3100 and local rendering uses 3101, separate from Next.js.
+The composition IDs are `HeroOrbit`, `RepVision`, `PlayerPulse`, and `PineconeRAG`.
+The three project films are labeled concept visualizations.
 
-**Dipna Wijesinghe** is a Data Science undergraduate (SLIIT), focused on AI/ML, data engineering & BI, and full-stack development.
+Keep `remotion`, `@remotion/player`, and `@remotion/cli` on the same exact version;
+the CLI also requires the pinned Zod version. On its first export, Remotion may
+download its supported headless browser. Exports are ignored by Git.
 
-- GitHub: [@Dippy2003](https://github.com/Dippy2003)
-- LinkedIn: [dipna-wijesinghe](https://www.linkedin.com/in/dipna-wijesinghe-50401a396/)
+## Main files
+
+| Path                    | Purpose                                                  |
+| ----------------------- | -------------------------------------------------------- |
+| `app/page.js`           | Server-rendered page composition                         |
+| `app/components/`       | Sections, preferences, 3D scene, and project-film dialog |
+| `app/data/portfolio.js` | Profile links, skill mapping, and featured projects      |
+| `assets/assets.js`      | Existing project source data                             |
+| `app/remotion/`         | Website motion compositions                              |
+| `remotion/`             | Studio composition registration                          |
+| `app/globals.css`       | Responsive design system and both themes                 |
+| `tests/`                | Interaction and preference tests                         |
+| `docs/REDESIGN.md`      | Design decisions, assets, and verification limits        |
+
+Technology logos are local assets with attribution in `public/tech/`. The original
+portrait remains in `assets/`; its generated cutout is `public/portrait-cutout.png`.
+The asset prompt and provenance are documented in [the redesign notes](docs/REDESIGN.md).
+
+## Contact configuration
+
+The existing public Web3Forms form identifier is retained. Set
+`NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` in `.env.local` to use another form identifier.
+Web3Forms identifiers are intended for client-side use. No private API token is
+required. Production delivery depends on the Web3Forms account/domain settings.
+
+## Stack
+
+Next.js 16 · React 19 · Tailwind CSS 4 · Motion · Remotion · Three.js ·
+React Three Fiber 9 · Drei · Lucide · Vitest · Testing Library
+
+## Review workflow
+
+Work is isolated on `feat/portfolio-3d-redesign`. Publishing the branch, opening
+the remote PR, merging, and deploying require the owner's authorization. See
+[the prepared PR description](docs/PR_DESCRIPTION.md) and the verification limits
+in [the redesign notes](docs/REDESIGN.md).

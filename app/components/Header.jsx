@@ -1,61 +1,85 @@
-import React from 'react'
-import { assets } from '@/assets/assets'
-import Image from 'next/image';
-import { motion } from "motion/react"
+import { ArrowDown, ArrowDownRight, ArrowUpRight, Download } from 'lucide-react';
+import { Github, Linkedin } from './BrandIcons';
+import { profile, projects } from '../data/portfolio';
+import HeroStage from './HeroStage';
 
-const Header = ({isDarkMode}) => {
+export default function Header() {
   return (
-   <div className='w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4 pt-32'>
-        <motion.div 
-        initial={{scale:0}}
-        whileInView={{scale:1}}
-        transition={{duration:0.8 ,type: 'spring',stiffness:100}}
-        >
-            <Image src={assets.dipnaheader} alt='' width={128} height={128} className='rounded-full w-32'/>
-            
-    </motion.div>
-    <motion.h3 
-    initial={{y:-20, opacity:0}}
-        whileInView={{y:0, opacity:1}}
-        transition={{duration:0.6 ,delay:0.3}}
-    
-    className='flex items-end gap-2 text-xl md:text-2xl mb-3 font-ovo'
-             >Hi! I&apos;m Dipna Wijesinghe <Image src={assets.hand_icon} alt='' width={24} height={24} className='w-6'/> </motion.h3>
-             <motion.h1 
-             initial={{y:-30, opacity:0}}
-        whileInView={{y:0, opacity:1}}
-        transition={{duration:0.8 ,delay:0.5}}
-             
-             
-             className=' text-3xl sm:text-6xl lg:text-[66px] font-ovo'>AI/ML Enthusiast /Web Developer</motion.h1>
-             <motion.p 
-
-             initial={{opacity:0}}
-        whileInView={{opacity:1}}
-        transition={{duration:0.6 ,delay:0.7}}
-             
-             
-             className='max-w-2xl mx-auto font-ovo'>
-                I’m a self-driven Data Science undergraduate passionate about turning data into meaningful insights. With strong analytical skills and a problem-solving mindset, I aim to contribute to impactful, innovative projects while continuously learning and improving.
-             </motion.p>
-             <div className=' flex flex-col sm:flex-row items-center gap-4 mt-4' >
-                <motion.a
-                initial={{y:30, opacity:0}}
-        whileInView={{y:0, opacity:1}}
-        transition={{duration:0.6 ,delay:1}}
-                
-                href='#contact' className='px-10 py-3 border border-white rounded-full bg-black text-white flex items-center gap-2 dark:bg-transparent '>
-                    contact me <Image src={assets.right_arrow_white} alt='' width={16} height={16} className='w-4'/> </motion.a>
-                <motion.a 
-                 initial={{y:30, opacity:0}}
-        whileInView={{y:0, opacity:1}}
-        transition={{duration:0.6 ,delay:1.2}}
-                
-                href="/DIPNA%20WIJESINGHE-DM.pdf" download="Dipna_Wijesinghe_Resume.pdf" className='px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 bg-white dark:text-black'>Download
-                my resume <Image src={assets.download_icon} alt='' width={16} height={16} className='w-4'/> </motion.a>
-             </div>
+    <section id="home" className="hero shell">
+      <div className="hero-copy">
+        <div className="availability">
+          <span className="status-dot" />
+          Open to opportunities<span className="availability-divider">/</span>Sri Lanka
         </div>
-  )
+        <p className="hero-intro">
+          HEY THERE, I’M DIPNA WIJESINGHE <span className="hello-star">✳</span>
+        </p>
+        <h1>
+          Curiosity.
+          <br />
+          Code.
+          <br />
+          <span className="accent-word">
+            Possibility<span className="accent-period">.</span>
+          </span>
+        </h1>
+        <p className="hero-description">
+          I turn data into insights and ideas into experiences.
+          <br className="desktop-break" /> A Data Science undergraduate exploring the intersection
+          of <strong>AI, data, and thoughtful development.</strong>
+        </p>
+        <div className="hero-buttons">
+          <a className="button button-primary" href="#work">
+            Explore my work <ArrowUpRight size={18} />
+          </a>
+          <a
+            className="button button-ghost"
+            href={profile.resume}
+            download="Dipna_Wijesinghe_Resume.pdf"
+          >
+            My résumé <Download size={16} />
+          </a>
+        </div>
+        <div className="hero-socials">
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Dipna on GitHub"
+          >
+            <Github size={18} />
+          </a>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Dipna on LinkedIn"
+          >
+            <Linkedin size={18} />
+          </a>
+          <span className="social-rule" />
+          <span>ALWAYS LEARNING. ALWAYS BUILDING.</span>
+        </div>
+      </div>
+      <HeroStage />
+      <div className="hero-bottom">
+        <a className="scroll-cue" href="#work">
+          <span className="scroll-circle">
+            <ArrowDown size={15} />
+          </span>
+          SCROLL TO DISCOVER
+        </a>
+        <span className="hero-coordinate">
+          LOCAL IDEAS <span>·</span> GLOBAL POSSIBILITIES
+        </span>
+        <span className="hero-project-count">
+          <strong>{projects.length}</strong> projects & counting <ArrowDownRight size={18} />
+        </span>
+      </div>
+      <div className="hero-rail" aria-hidden="true">
+        DATA SCIENCE <span>✳</span> INTELLIGENT SYSTEMS <span>✳</span> THOUGHTFUL INTERFACES{' '}
+        <span>✳</span> NEVER STOP EXPLORING <ArrowUpRight size={18} />
+      </div>
+    </section>
+  );
 }
-
-export default Header

@@ -1,129 +1,162 @@
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { assets } from '@/assets/assets'
-import { motion } from "motion/react"
+'use client';
 
-const Contact = () => {
-  const [result, setResult] = useState("");
+import { useRef, useState } from 'react';
+import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react';
+import { Github, Linkedin } from './BrandIcons';
+import { profile } from '../data/portfolio';
+import Reveal from './Reveal';
+import SectionLabel from './SectionLabel';
 
+export default function Contact() {
+  const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
+  const submitting = useRef(false);
   const onSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    formData.append("access_key", "27b9bde2-2cc1-41ab-a92c-d1123430e015");
-
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
-
-    const data = await response.json();
-    setResult(data.success ? "Success!" : "Error");
+    if (submitting.current) return;
+    const form = event.currentTarget;
+    if (!form.reportValidity()) return;
+    const formData = new FormData(form);
+    if (formData.get('botcheck')) return;
+    // Web3Forms access keys are public form identifiers, not private API credentials.
+    formData.append(
+      'access_key',
+      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '27b9bde2-2cc1-41ab-a92c-d1123430e015',
+    );
+    formData.append('subject', 'Portfolio — new conversation');
+    submitting.current = true;
+    setStatus('sending');
+    setMessage('Sending your message…');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal,
+      });
+      const data = await response.json();
+      if (!response.ok || !data.success) throw new Error('Message delivery failed');
+      setStatus('success');
+      setMessage('Thanks for reaching out. Your message has been sent!');
+      form.reset();
+    } catch {
+      setStatus('error');
+      setMessage(
+        'Your message could not be sent. Please try again, or connect with me on LinkedIn.',
+      );
+    } finally {
+      clearTimeout(timeout);
+      submitting.current = false;
+    }
   };
 
   return (
-    <motion.div 
-      id="contact"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="w-full px-[12%] py-10 scroll-mt-20 bg-[url('/footer-bg-color.png')] bg-no-repeat bg-center bg-[length:90%_auto] dark:bg-none"
-    >
-
-      {/* Heading */}
-      <motion.h4
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, delay: 0.4 }}
-        className="text-center mb-2 text-lg font-ovo"
-      >
-        Contact with me
-      </motion.h4>
-
-      <motion.h2
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="text-center text-5xl font-ovo"
-      >
-        Get in touch
-      </motion.h2>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.5 }}
-        className="text-center max-w-2xl mx-auto mt-5 mb-12 font-ovo"
-      >
-        I am currently open to new opportunities and collaborations. Whether you
-        have a project in mind, a question, or just want to say hello, feel free
-        to reach out!
-      </motion.p>
-
-      {/* Contact Form */}
-      <motion.form 
-        onSubmit={onSubmit}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.6 }}
-        className="max-w-2xl mx-auto"
-      >
-
-        {/* Name + Email Inputs */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10 mb-8">
-
-          <motion.input
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.6 }}
-            name="name"
-            type="text"
-            placeholder="Enter your name"
-            required
-            className="flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-darkHover/30 dark:border-white/90 shadow-[4px_4px_0_#000]"
-          />
-
-          <motion.input
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.7 }}
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            required
-            className="flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-darkHover/30 dark:border-white/90 shadow-[4px_4px_0_#000]"
-          />
-
+    <section id="contact" className="contact-section section">
+      <div className="shell">
+        <Reveal>
+          <SectionLabel number="04">GOOD THINGS START WITH A CONVERSATION</SectionLabel>
+        </Reveal>
+        <div className="contact-layout">
+          <Reveal className="contact-copy">
+            <span className="contact-star" aria-hidden="true">
+              ✳
+            </span>
+            <h2>
+              Have an idea?
+              <br />
+              Let’s make
+              <br />
+              <span>it happen.</span>
+            </h2>
+            <p>
+              A project, an opportunity, or an interesting question.
+              <br />
+              I’d love to hear what you’re thinking.
+            </p>
+            <div className="contact-socials">
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+                <Linkedin size={17} />
+                LinkedIn
+                <ArrowUpRight size={14} />
+              </a>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer">
+                <Github size={17} />
+                GitHub
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
+          </Reveal>
+          <Reveal className="contact-form-wrap">
+            <form onSubmit={onSubmit} className="contact-form">
+              <p className="form-intro">Tell me a little about it.</p>
+              <div className="form-row">
+                <label>
+                  Your name
+                  <input
+                    name="name"
+                    autoComplete="name"
+                    placeholder="What should I call you?"
+                    required
+                    maxLength={100}
+                  />
+                </label>
+                <label>
+                  Email address
+                  <input
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    required
+                    maxLength={254}
+                  />
+                </label>
+              </div>
+              <label>
+                What’s on your mind?
+                <textarea
+                  name="message"
+                  placeholder="A little about your idea, project, or question…"
+                  rows={4}
+                  required
+                  minLength={10}
+                  maxLength={5000}
+                />
+              </label>
+              <input
+                name="botcheck"
+                className="honeypot"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
+              <button
+                className="button button-primary send-button"
+                type="submit"
+                disabled={status === 'sending'}
+              >
+                {status === 'sending'
+                  ? 'Sending…'
+                  : status === 'success'
+                    ? 'Send another message'
+                    : 'Send your message'}
+                {status === 'sending' ? (
+                  <LoaderCircle size={17} className="spinner" />
+                ) : status === 'success' ? (
+                  <Check size={18} />
+                ) : (
+                  <ArrowUpRight size={18} />
+                )}
+              </button>
+              <p className={`form-status ${status}`} role="status" aria-live="polite">
+                {message}
+              </p>
+              <p className="form-privacy">Messages are delivered through Web3Forms.</p>
+            </form>
+          </Reveal>
         </div>
-
-        {/* Message Box */}
-        <motion.textarea
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.8 }}
-          name="message"
-          rows="6"
-          placeholder="Enter your message"
-          required
-          className="w-full p-4 outline-none border-[0.5px] border-gray-400 rounded-md bg-white mb-6 dark:bg-darkHover/30 dark:border-white/90 shadow-[4px_4px_0_#000] focus:shadow-[6px_6px_0_#000] transition"
-        ></motion.textarea>
-
-        {/* Submit Button */}
-        <motion.button
-          type="submit"
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.9 }}
-          whileHover={{ scale: 1.05 }}
-          className="px-10 py-3 rounded-full border border-black bg-black text-white hover:bg-white hover:text-black shadow-[4px_4px_0_#000] hover:shadow-[6px_6px_0_#000] transition font-ovo mx-auto block dark:bg-transparent dark:border-white dark:text-white dark:hover:bg-darkHover dark:hover:text-white"
-        >
-          Submit now
-        </motion.button>
-
-        <p className="mt-4 text-center">{result}</p>
-
-      </motion.form>
-    </motion.div>
+      </div>
+    </section>
   );
-};
-
-export default Contact;
+}
