@@ -30,8 +30,10 @@ Selecting a category reconfigures the board and reframes the camera.
 The page adds original interface screenshots, expandable project notes, six
 service areas with concrete capabilities, a portfolio overview, and an
 interactive systems explorer covering vision, RAG, and data pipelines. The project
-directory displays all remaining projects by default rather than hiding them
-behind an expansion button.
+directory starts with six projects total: three featured cards and three directory
+cards. Show more projects reveals the rest and the interface gallery; Show fewer
+projects restores the compact view. Search and category filters cover all 22
+projects, show up to six matches initially, and reset expansion when changed.
 
 Three Remotion concept films introduce RepVision, PlayerPulse, and Pinecone RAG
 Studio. The films have explicit concept labels. The project links, résumé,
@@ -58,7 +60,9 @@ downgrade of eslint-config-next to resolve them. No forced downgrade was applied
 ## Validation
 
 - ESLint passes.
-- Twenty-eight interaction and integrity tests pass, using mocked network requests.
+- Twenty-nine interaction and integrity tests pass, using mocked network requests.
+- Project tests cover the six-card default, keyboard expansion, collapse, all-project
+  reachability, hidden-project search, and resetting expansion on search/filter changes.
 - Production build passes and `/` is statically prerendered.
 - Local page responds with HTTP 200.
 - Production HTTP checks confirm the résumé, portrait, technology assets, favicon,

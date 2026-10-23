@@ -22,6 +22,26 @@ vi.mock('next/dynamic', () => ({ default: () => () => null }));
 vi.mock('next/image', () => ({ default: (props) => <span role="img" aria-label={props.alt} /> }));
 
 describe('project discovery', () => {
+  it('starts with six projects and expands or collapses the full collection', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Work />);
+    expect(container.querySelectorAll('.featured-card, .directory-card')).toHaveLength(6);
+    expect(container.querySelector('.design-gallery')).toBeNull();
+    expect(screen.getByText('Showing 6 of 22 projects')).toBeTruthy();
+    const more = screen.getByRole('button', { name: 'Show more projects' });
+    expect(more.getAttribute('aria-expanded')).toBe('false');
+    expect(document.getElementById(more.getAttribute('aria-controls'))).toBeTruthy();
+    more.focus();
+    await user.keyboard('{Enter}');
+    expect(container.querySelectorAll('.featured-card, .directory-card')).toHaveLength(22);
+    expect(container.querySelector('.design-gallery')).toBeTruthy();
+    const fewer = screen.getByRole('button', { name: 'Show fewer projects' });
+    expect(fewer.getAttribute('aria-expanded')).toBe('true');
+    await user.click(fewer);
+    expect(container.querySelectorAll('.featured-card, .directory-card')).toHaveLength(6);
+    expect(container.querySelector('.design-gallery')).toBeNull();
+  });
+
   it('filters the whole collection, including featured sports projects', async () => {
     const user = userEvent.setup();
     render(<Work />);
@@ -33,10 +53,19 @@ describe('project discovery', () => {
     await user.click(screen.getByRole('button', { name: 'Mobile', exact: true }));
     expect(within(rows).getAllByRole('link')).toHaveLength(2);
     expect(within(rows).getByText('Health tracker app')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Show more projects' })).toBeNull();
+    await user.click(screen.getByRole('button', { name: 'All projects' }));
+    await user.click(screen.getByRole('button', { name: 'Show more projects' }));
+    await user.click(screen.getByRole('button', { name: 'Sports Analytics' }));
+    await user.click(screen.getByRole('button', { name: 'All projects' }));
+    expect(within(rows).getAllByRole('link')).toHaveLength(3);
   });
 
   it('makes every existing project reachable without a dead-end filter', async () => {
+    const user = userEvent.setup();
     render(<Work />);
+    expect(within(document.querySelector('.archive-list')).getAllByRole('link')).toHaveLength(3);
+    await user.click(screen.getByRole('button', { name: 'Show more projects' }));
     expect(within(document.querySelector('.archive-list')).getAllByRole('link')).toHaveLength(19);
     for (const project of projects) {
       const link = [...document.querySelectorAll('a')].find((a) => a.href === project.link);
@@ -49,16 +78,28 @@ describe('project discovery', () => {
   it('searches across the entire collection and can clear an empty result', async () => {
     const user = userEvent.setup();
     render(<Work />);
+    await user.click(screen.getByRole('button', { name: 'Show more projects' }));
     const search = screen.getByRole('textbox', { name: 'Search projects' });
-    await user.type(search, 'pinecone');
+    await user.type(search, 'python');
     const directory = document.querySelector('.archive-list');
+    expect(within(directory).getAllByRole('link')).toHaveLength(6);
+    const more = screen.getByRole('button', { name: 'Show more projects' });
+    expect(more.getAttribute('aria-expanded')).toBe('false');
+    await user.click(more);
+    expect(within(directory).getAllByRole('link').length).toBeGreaterThan(6);
+    await user.clear(search);
+    expect(within(directory).getAllByRole('link')).toHaveLength(3);
+    await user.type(search, 'health tracker');
+    expect(within(directory).getByText('Health tracker app')).toBeTruthy();
+    await user.clear(search);
+    await user.type(search, 'pinecone');
     expect(within(directory).getAllByRole('link')).toHaveLength(1);
     expect(within(directory).getByText('Pinecone RAG Studio')).toBeTruthy();
     await user.clear(search);
     await user.type(search, 'no-such-project');
     expect(within(directory).queryAllByRole('link')).toHaveLength(0);
     await user.click(screen.getByRole('button', { name: 'Clear project search' }));
-    expect(within(directory).getAllByRole('link')).toHaveLength(19);
+    expect(within(directory).getAllByRole('link')).toHaveLength(3);
   });
 });
 

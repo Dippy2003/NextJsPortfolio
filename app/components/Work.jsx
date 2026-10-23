@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { ArrowUpRight, Play, Search, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, ChevronUp, Play, Search, X } from 'lucide-react';
 import { Github } from './BrandIcons';
 import { featuredProjects, profile, projects, skills } from '../data/portfolio';
 import SectionLabel from './SectionLabel';
@@ -12,6 +12,7 @@ import ProjectArt from './ProjectArt';
 import DesignGallery from './DesignGallery';
 
 const ProjectPreview = dynamic(() => import('./ProjectPreview'), { ssr: false });
+const INITIAL_PROJECT_COUNT = 6;
 const filters = [
   'All projects',
   'AI & Machine Learning',
@@ -42,8 +43,10 @@ export default function Work() {
   const [category, setCategory] = useState('All projects');
   const [query, setQuery] = useState('');
   const [preview, setPreview] = useState(null);
+  const [expanded, setExpanded] = useState(false);
   const archive = projects.filter((project) => !featuredProjects.includes(project));
-  const pool = category === 'All projects' && !query.trim() ? archive : projects;
+  const browsingAll = category === 'All projects' && !query.trim();
+  const pool = browsingAll ? archive : projects;
   const filtered = pool.filter(
     (project) =>
       (category === 'All projects' || project.category === category) &&
@@ -51,6 +54,9 @@ export default function Work() {
         .toLowerCase()
         .includes(query.trim().toLowerCase()),
   );
+  const featuredCount = browsingAll ? featuredProjects.length : 0;
+  const initialLimit = INITIAL_PROJECT_COUNT - featuredCount;
+  const visibleProjects = expanded ? filtered : filtered.slice(0, initialLimit);
 
   return (
     <section id="work" className="work-section section shell">
@@ -69,69 +75,70 @@ export default function Work() {
           </p>
         </div>
       </Reveal>
-      <div className="featured-grid">
-        {featuredProjects.map((project, index) => (
-          <Reveal
-            key={project.title}
-            delay={index * 0.08}
-            className={`featured-card featured-${index}`}
-          >
-            <div className="project-art">
-              <div className="project-art-top">
-                <span>EXPLORATION 0{index + 1}</span>
-                <span>↗</span>
+      {browsingAll && (
+        <div className="featured-grid">
+          {featuredProjects.map((project, index) => (
+            <Reveal
+              key={project.title}
+              delay={index * 0.08}
+              className={`featured-card featured-${index}`}
+            >
+              <div className="project-art">
+                <div className="project-art-top">
+                  <span>EXPLORATION 0{index + 1}</span>
+                  <span>↗</span>
+                </div>
+                <ProjectArt kind={index} />
+                <button
+                  className="preview-button"
+                  onClick={() => setPreview(index)}
+                  aria-label={`Watch ${project.title} concept film`}
+                >
+                  <Play size={12} fill="currentColor" />
+                  Play concept
+                </button>
               </div>
-              <ProjectArt kind={index} />
-              <button
-                className="preview-button"
-                onClick={() => setPreview(index)}
-                aria-label={`Watch ${project.title} concept film`}
-              >
-                <Play size={12} fill="currentColor" />
-                Play concept
-              </button>
-            </div>
-            <div className="featured-content">
-              <div className="project-category">
-                <span>{project.category}</span>
-                <span>0{index + 1}</span>
-              </div>
-              <a
-                className="project-title-link"
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <h3>{project.title}</h3>
-                <ArrowUpRight size={23} />
-              </a>
-              <p>{project.description}.</p>
-              <div className="tech-tags">
-                {project.technologies.map((tech) => (
-                  <span key={tech}>{tech}</span>
-                ))}
-              </div>
-              <details className="project-notes">
-                <summary>
-                  Inside the project <span aria-hidden="true">+</span>
-                </summary>
-                <h4>{projectNotes[index][0]}</h4>
-                <p>{projectNotes[index][1]}</p>
+              <div className="featured-content">
+                <div className="project-category">
+                  <span>{project.category}</span>
+                  <span>0{index + 1}</span>
+                </div>
                 <a
-                  className="text-link"
+                  className="project-title-link"
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Explore the implementation
-                  <ArrowUpRight size={14} />
+                  <h3>{project.title}</h3>
+                  <ArrowUpRight size={23} />
                 </a>
-              </details>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-      <DesignGallery />
+                <p>{project.description}.</p>
+                <div className="tech-tags">
+                  {project.technologies.map((tech) => (
+                    <span key={tech}>{tech}</span>
+                  ))}
+                </div>
+                <details className="project-notes">
+                  <summary>
+                    Inside the project <span aria-hidden="true">+</span>
+                  </summary>
+                  <h4>{projectNotes[index][0]}</h4>
+                  <p>{projectNotes[index][1]}</p>
+                  <a
+                    className="text-link"
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Explore the implementation
+                    <ArrowUpRight size={14} />
+                  </a>
+                </details>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      )}
       <div className="archive-heading">
         <h3>
           Every experiment, in one place
@@ -153,19 +160,27 @@ export default function Work() {
           <span className="sr-only">Search projects</span>
           <input
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setExpanded(false);
+            }}
             placeholder="Search projects, technologies, or topics…"
           />
           {query && (
-            <button aria-label="Clear project search" onClick={() => setQuery('')}>
+            <button
+              aria-label="Clear project search"
+              onClick={() => {
+                setQuery('');
+                setExpanded(false);
+              }}
+            >
               <X size={15} />
             </button>
           )}
         </label>
         <span>
-          {query || category !== 'All projects'
-            ? `${filtered.length} matching projects`
-            : `${featuredProjects.length} featured + ${archive.length} more explorations`}
+          Showing {featuredCount + visibleProjects.length} of {featuredCount + filtered.length}{' '}
+          {browsingAll ? 'projects' : 'matching projects'}
         </span>
       </div>
       <div className="filter-tabs project-filters" role="group" aria-label="Filter projects">
@@ -176,6 +191,7 @@ export default function Work() {
             className={category === filter ? 'active' : ''}
             onClick={() => {
               setCategory(filter);
+              setExpanded(false);
             }}
           >
             {filter === 'AI & Machine Learning'
@@ -195,8 +211,8 @@ export default function Work() {
           </button>
         ))}
       </div>
-      <div className="archive-list project-directory" aria-live="polite">
-        {filtered.map((project) => (
+      <div id="project-directory" className="archive-list project-directory" aria-live="polite">
+        {visibleProjects.map((project) => (
           <a
             key={project.title}
             className="archive-row directory-card"
@@ -232,6 +248,21 @@ export default function Work() {
           </p>
         )}
       </div>
+      {filtered.length > initialLimit && (
+        <div className="project-more-actions">
+          <button
+            type="button"
+            className="button button-ghost"
+            aria-expanded={expanded}
+            aria-controls="project-directory"
+            onClick={() => setExpanded((value) => !value)}
+          >
+            {expanded ? 'Show fewer projects' : 'Show more projects'}
+            {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </button>
+        </div>
+      )}
+      {browsingAll && expanded && <DesignGallery />}
       {preview !== null && (
         <ProjectPreview
           project={featuredProjects[preview]}

@@ -70,8 +70,12 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
 - `ProjectReel.jsx` powers the three project concept films. These are explicitly
   labeled illustrations, not claimed screenshots or measured outcomes.
 - `DesignGallery.jsx` uses the actual jewelry and UniMate interface assets from
-  the existing portfolio. The project directory defaults to every remaining
-  project, supports search, and shows all technology tags.
+  the existing portfolio, shown below the directory after expansion. The work
+  section starts with six projects total (three featured and three directory
+  cards). Show more projects reveals the full collection and Show fewer projects
+  restores the compact selection. Search and category filters query all 22
+  projects without duplicate featured cards, show up to six matches initially,
+  and reset expansion when changed. All technology tags remain visible.
 - `SystemsLab.jsx` explains four stages each for three illustrative workflows:
   computer vision, retrieval-augmented generation, and data engineering.
 - Six service cards distinguish AI/ML, data/BI, web, mobile, UI/UX, and agents.
@@ -121,7 +125,7 @@ visual review, WebGL
 interaction, modal focus behavior, and performance scores remain unverified.
 Check those in a normal browser before publishing.
 
-Validated locally: twenty-eight interaction/integrity tests, ESLint, formatting, the production
+Validated locally: twenty-nine interaction/integrity tests, ESLint, formatting, the production
 build, HTTP checks for the page/assets/résumé/404, an eight-second RepVision MP4,
 and HeroOrbit, keyboard, and dark/light AboutPortrait stills. The production
 dependency audit is clean. Five advisories
