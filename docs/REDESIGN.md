@@ -26,6 +26,9 @@ warm ivory, and amber unify the sections; a complementary light theme is availab
 - Skill buttons are always present. The list view also works without WebGL,
   and system reduced motion uses that view automatically.
 - `HeroComposition.jsx` powers the orbiting technologies through Remotion Player.
+  On first opening, cards fly in from different directions with staggered spring
+  motion and settle around the portrait. Later playback repeats only the periodic
+  idle range, so the entrance does not replay or fade away every twenty seconds.
   Playback pauses offscreen, in a hidden tab, or when the visitor disables motion.
 - `ProjectReel.jsx` powers the three project concept films. These are explicitly
   labeled illustrations, not claimed screenshots or measured outcomes.

@@ -5,6 +5,10 @@ stack of cards. This rebuild introduces a portrait hero with animated technology
 orbits, a live 3D keyboard that connects each skill to relevant work, and a
 filterable collection retaining all 22 projects.
 
+On first opening, technology cards fly in from the top, sides, and bottom with
+staggered spring motion, then settle around the portrait. Only the gentle idle
+motion repeats afterward. Reduced-motion visitors see the settled composition.
+
 Three Remotion concept films introduce RepVision, PlayerPulse, and Pinecone RAG
 Studio. The films have explicit concept labels. The project links, résumé,
 GitHub activity, social profiles, and contact destination are preserved.

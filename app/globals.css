@@ -206,6 +206,7 @@ img {
   display: none;
 }
 .hero {
+  overflow: clip;
   position: relative;
   display: grid;
   grid-template-columns: 1.04fr 1fr;
