@@ -1,7 +1,7 @@
 # Portfolio redesign
 
-Branch: `feat/portfolio-3d-redesign`. Development is local; no remote branch,
-pull request, merge, or deployment is created without publishing authorization.
+Development branch: `feat/portfolio-3d-redesign`. The work is published for review
+as [seven focused pull requests](PR_STACK.md).
 
 ## Reference direction
 

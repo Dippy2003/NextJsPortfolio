@@ -72,4 +72,4 @@ native-dialog focus behavior, and performance scores need a normal browser
 review. No live contact messages were submitted. The hero portrait cutout was
 generated from the original photo; both versions are available for comparison.
 
-This description is prepared locally. No remote branch or PR has been published.
+The changes are published as seven focused pull requests. See [the review stack](PR_STACK.md) for links and merge order.
