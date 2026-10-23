@@ -249,11 +249,6 @@ img {
   gap: 11px;
   margin-bottom: 18px;
 }
-.hello-star {
-  color: var(--accent);
-  font-size: 20px;
-  line-height: 1;
-}
 .hero h1 {
   font-size: clamp(62px, 7.1vw, 103px);
   letter-spacing: -6px;
@@ -473,11 +468,6 @@ img {
   letter-spacing: 1.6px;
   font-size: 9px;
   color: var(--muted);
-}
-.hero-rail span {
-  color: var(--accent);
-  font-size: 17px;
-  line-height: 1;
 }
 .hero-rail > svg {
   color: var(--accent);
@@ -1249,15 +1239,6 @@ img {
 .contact-copy {
   position: relative;
 }
-.contact-star {
-  position: absolute;
-  top: -13px;
-  right: 70px;
-  color: var(--accent);
-  font-size: 72px;
-  line-height: 1;
-  font-weight: 300;
-}
 .contact-copy h2 {
   font-size: clamp(40px, 5.1vw, 70px);
   line-height: 1.12;
@@ -1549,9 +1530,6 @@ html[data-motion='off'] {
   .contact-layout {
     gap: 65px;
   }
-  .contact-star {
-    right: 10px;
-  }
   .services-section {
     padding-bottom: 85px;
   }
@@ -1768,11 +1746,6 @@ html[data-motion='off'] {
     font-size: 47px;
     letter-spacing: -2px;
   }
-  .contact-star {
-    font-size: 55px;
-    top: -3px;
-    right: -7px;
-  }
   .contact-copy > p {
     font-size: 11px;
   }
@@ -1921,9 +1894,6 @@ html[data-motion='off'] {
     padding-block: 18px;
     font-size: 7px;
     letter-spacing: 0.8px;
-  }
-  .hero-rail > span {
-    font-size: 12px;
   }
   .hero-rail > svg {
     display: none;
@@ -2222,11 +2192,6 @@ html[data-motion='off'] {
   }
   .contact-copy > p {
     font-size: 12px;
-  }
-  .contact-star {
-    top: -5px;
-    right: 18px;
-    font-size: 69px;
   }
   .contact-socials {
     margin-top: 23px;

@@ -15,9 +15,7 @@ export default function Header() {
           <span className="status-dot" />
           Open to opportunities<span className="availability-divider">/</span>Sri Lanka
         </div>
-        <p className="hero-intro">
-          HEY THERE, I’M DIPNA WIJESINGHE <span className="hello-star">✳</span>
-        </p>
+        <p className="hero-intro">HEY THERE, I’M DIPNA WIJESINGHE</p>
         <h1>
           Curiosity.
           <br />
@@ -86,8 +84,11 @@ export default function Header() {
         </span>
       </div>
       <div className="hero-rail" aria-hidden="true">
-        DATA SCIENCE <span>✳</span> INTELLIGENT SYSTEMS <span>✳</span> THOUGHTFUL INTERFACES{' '}
-        <span>✳</span> NEVER STOP EXPLORING <ArrowUpRight size={18} />
+        <span>DATA SCIENCE</span>
+        <span>INTELLIGENT SYSTEMS</span>
+        <span>THOUGHTFUL INTERFACES</span>
+        <span>NEVER STOP EXPLORING</span>
+        <ArrowUpRight size={18} />
       </div>
     </section>
   );

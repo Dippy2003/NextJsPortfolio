@@ -59,9 +59,6 @@ export default function Contact() {
         </Reveal>
         <div className="contact-layout">
           <Reveal className="contact-copy">
-            <span className="contact-star" aria-hidden="true">
-              ✳
-            </span>
             <h2>
               Have an idea?
               <br />
